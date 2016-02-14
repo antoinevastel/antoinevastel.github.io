@@ -11,7 +11,7 @@ In this article we will see how it is possible to use python in order to build a
 
 In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you'll find on the internet don't take advantage of the sparsity of the data. However, in our case we'll pay attention to use appropriate data structures in order to increase the speed of our program.
 
-##Read the dataset
+<h2>Read the dataset</h2>
 {% highlight python %}
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -34,7 +34,7 @@ def readUrm():
 
 We read our dataset and store it in sparse matrix using csr format. To do so we use the scipy library. It enables us to store only the non zero elements.
 
-##Retrieve the test users
+<h2>Retrieve the test users</h2>
 First we are going to create a function readUsersTest in order to get the ids of the users for which we want to make a prediction.
 
 {% highlight python %}
@@ -65,7 +65,7 @@ def getMoviesSeen():
 	return moviesSeen
 {% endhighlight %}
 
-##Compute the SVD of our user rating matrix
+<h2>Compute the SVD of our user rating matrix</h2>
 In order to compute the singolar value decomposition of our user rating matrix we need to create a function with two parameters : the user rating matrix, the rank of our SVD. The SVD is computed using the sparsesvd package (https://pypi.python.org/pypi/sparsesvd/)
 
 {% highlight python %}
@@ -90,7 +90,7 @@ def computeSVD(urm, K):
 
 As s is returned as a vector, we want to create a matrix S whose diagonal has for value the elements of vector s. Once again, in order to save memory space and to increase the speed of our program we do not forget to convert our new matrices to csr format.
 
-##Predict the movies for our test users
+<h2>Predict the movies for our test users</h2>
 The final step is to predict recommendations for our test users. To do so we will use the matrices computed in the previous step.
 
 {% highlight python %}
@@ -118,7 +118,7 @@ def computeEstimatedRatings(urm, U, S, Vt, uTest, moviesSeen, K, test):
 
 In our function we retrieve the best 250 estimated ratings. Why 250 ? We choose this number as our goal was to recommend 5 NEW movies for our test users. Therefore, by choosing 250 movies, we are almost sure that we will find at least 5 movies which have not been seen by our user.
 
-#Main of our program
+<h2>Main of our program</h2>
 Finally we obtain the following main : 
 {% highlight python %}
 def main():

@@ -13,7 +13,7 @@
 
 &lt;p&gt;In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you’ll find on the internet don’t take advantage of the sparsity of the data. However, in our case we’ll pay attention to use appropriate data structures in order to increase the speed of our program.&lt;/p&gt;
 
-&lt;h2 id=&quot;read-the-dataset&quot;&gt;Read the dataset&lt;/h2&gt;
+&lt;h2&gt;Read the dataset&lt;/h2&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;np&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;scipy.sparse&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;csr_matrix&lt;/span&gt;
@@ -34,7 +34,7 @@
 
 &lt;p&gt;We read our dataset and store it in sparse matrix using csr format. To do so we use the scipy library. It enables us to store only the non zero elements.&lt;/p&gt;
 
-&lt;h2 id=&quot;retrieve-the-test-users&quot;&gt;Retrieve the test users&lt;/h2&gt;
+&lt;h2&gt;Retrieve the test users&lt;/h2&gt;
 &lt;p&gt;First we are going to create a function readUsersTest in order to get the ids of the users for which we want to make a prediction.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;readUsersTest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
@@ -61,7 +61,7 @@
 
 	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;moviesSeen&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;compute-the-svd-of-our-user-rating-matrix&quot;&gt;Compute the SVD of our user rating matrix&lt;/h2&gt;
+&lt;h2&gt;Compute the SVD of our user rating matrix&lt;/h2&gt;
 &lt;p&gt;In order to compute the singolar value decomposition of our user rating matrix we need to create a function with two parameters : the user rating matrix, the rank of our SVD. The SVD is computed using the sparsesvd package (https://pypi.python.org/pypi/sparsesvd/)&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;math&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;mt&lt;/span&gt;
@@ -84,7 +84,7 @@
 
 &lt;p&gt;As s is returned as a vector, we want to create a matrix S whose diagonal has for value the elements of vector s. Once again, in order to save memory space and to increase the speed of our program we do not forget to convert our new matrices to csr format.&lt;/p&gt;
 
-&lt;h2 id=&quot;predict-the-movies-for-our-test-users&quot;&gt;Predict the movies for our test users&lt;/h2&gt;
+&lt;h2&gt;Predict the movies for our test users&lt;/h2&gt;
 &lt;p&gt;The final step is to predict recommendations for our test users. To do so we will use the matrices computed in the previous step.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;scipy.sparse.linalg&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#used for matrix multiplication&lt;/span&gt;
@@ -110,7 +110,7 @@
 
 &lt;p&gt;In our function we retrieve the best 250 estimated ratings. Why 250 ? We choose this number as our goal was to recommend 5 NEW movies for our test users. Therefore, by choosing 250 movies, we are almost sure that we will find at least 5 movies which have not been seen by our user.&lt;/p&gt;
 
-&lt;h1 id=&quot;main-of-our-program&quot;&gt;Main of our program&lt;/h1&gt;
+&lt;h2&gt;Main of our program&lt;/h2&gt;
 &lt;p&gt;Finally we obtain the following main :&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
