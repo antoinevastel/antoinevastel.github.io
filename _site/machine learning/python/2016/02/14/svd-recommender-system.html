@@ -165,7 +165,7 @@
 	   2016
 	 </span>
 	  <div class="article_body">
-	  <h1 id="svd-recommender-system-for-movies">SVD recommender system for movies</h1>
+	  <h1>SVD recommender system for movies</h1>
 <p>In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python and Scipy.</p>
 
 <p>In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you’ll find on the internet don’t take advantage of the sparsity of the data. However, in our case we’ll pay attention to use appropriate data structures in order to increase the speed of our program.</p>
@@ -181,8 +181,8 @@
 
 <span class="k">def</span> <span class="nf">readUrm</span><span class="p">():</span>
 	<span class="n">urm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">MAX_UID</span><span class="p">,</span><span class="n">MAX_PID</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/PathToTrainFile.csv&#39;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">trainFile</span><span class="p">:</span>
-		<span class="n">urmReader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">trainFile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'/PathToTrainFile.csv'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">trainFile</span><span class="p">:</span>
+		<span class="n">urmReader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">trainFile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">','</span><span class="p">)</span>
 		<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">urmReader</span><span class="p">:</span>
 			<span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">6</span><span class="p">:</span>
 				<span class="n">urm</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
@@ -196,8 +196,8 @@
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">readUsersTest</span><span class="p">():</span>
 	<span class="n">uTest</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;./testSample.csv&quot;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">testFile</span><span class="p">:</span>
-		<span class="n">testReader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">testFile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./testSample.csv"</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">testFile</span><span class="p">:</span>
+		<span class="n">testReader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">testFile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">','</span><span class="p">)</span>
 		<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">testReader</span><span class="p">:</span>
 			<span class="n">uTest</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
@@ -207,8 +207,8 @@
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">getMoviesSeen</span><span class="p">():</span>
 	<span class="n">moviesSeen</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;./trainSample.csv&quot;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">trainFile</span><span class="p">:</span>
-		<span class="n">urmReader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">trainFile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./trainSample.csv"</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">trainFile</span><span class="p">:</span>
+		<span class="n">urmReader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">trainFile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">','</span><span class="p">)</span>
 		<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">urmReader</span><span class="p">:</span>
 			<span class="k">try</span><span class="p">:</span>
 				<span class="n">moviesSeen</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>

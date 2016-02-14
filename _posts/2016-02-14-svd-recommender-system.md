@@ -6,7 +6,7 @@ tags: [python, recommender system, sparse matrix]
 description: In this article we will see how we can build a recommender system for movies using Python and exploiting the sparsity of the data.
 ---
 
-#SVD recommender system for movies
+<h1>SVD recommender system for movies</h1>
 In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python and Scipy.
 
 In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you'll find on the internet don't take advantage of the sparsity of the data. However, in our case we'll pay attention to use appropriate data structures in order to increase the speed of our program.
