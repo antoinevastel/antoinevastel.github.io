@@ -4,6 +4,7 @@ title: A simple SVD recommender system using Python
 categories: [machine learning, python]
 tags: [python, recommender system, sparse matrix]
 description: In this article we will see how we can build a recommender system for movies using Python and exploiting the sparsity of the data.
+comments: true
 ---
 
 <h1>SVD recommender system for movies</h1>
