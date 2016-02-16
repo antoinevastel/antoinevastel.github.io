@@ -8,7 +8,7 @@ comments: true
 ---
 
 <h1>SVD recommender system for movies</h1>
-In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python and Scipy.
+In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python.
 
 In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you'll find on the internet don't take advantage of the sparsity of the data. However, in our case we'll pay attention to use appropriate data structures in order to increase the speed of our program.
 
@@ -67,7 +67,7 @@ def getMoviesSeen():
 {% endhighlight %}
 
 <h2>Compute the SVD of our user rating matrix</h2>
-In order to compute the singolar value decomposition of our user rating matrix we need to create a function with two parameters : the user rating matrix, the rank of our SVD. The SVD is computed using the sparsesvd package (https://pypi.python.org/pypi/sparsesvd/)
+In order to compute the singular value decomposition of our user rating matrix we need to create a function with two parameters : the user rating matrix and the rank of our SVD. The SVD is computed using the <a href="https://pypi.python.org/pypi/sparsesvd/">sparsesvd package</a>
 
 {% highlight python %}
 import math as mt

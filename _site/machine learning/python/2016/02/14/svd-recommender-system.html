@@ -166,7 +166,7 @@
 	 </span>
 	  <div class="article_body">
 	  <h1>SVD recommender system for movies</h1>
-<p>In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python and Scipy.</p>
+<p>In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python.</p>
 
 <p>In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you’ll find on the internet don’t take advantage of the sparsity of the data. However, in our case we’ll pay attention to use appropriate data structures in order to increase the speed of our program.</p>
 
@@ -219,7 +219,7 @@
 	<span class="k">return</span> <span class="n">moviesSeen</span></code></pre></div>
 
 <h2>Compute the SVD of our user rating matrix</h2>
-<p>In order to compute the singolar value decomposition of our user rating matrix we need to create a function with two parameters : the user rating matrix, the rank of our SVD. The SVD is computed using the sparsesvd package (https://pypi.python.org/pypi/sparsesvd/)</p>
+<p>In order to compute the singular value decomposition of our user rating matrix we need to create a function with two parameters : the user rating matrix and the rank of our SVD. The SVD is computed using the <a href="https://pypi.python.org/pypi/sparsesvd/">sparsesvd package</a></p>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">math</span> <span class="kn">as</span> <span class="nn">mt</span>
 <span class="kn">import</span> <span class="nn">csv</span>
@@ -380,6 +380,23 @@
 	</div>
 </article>
 <div class="clearfix"></div>
+
+
+
+    
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'antoinevastel';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 
 

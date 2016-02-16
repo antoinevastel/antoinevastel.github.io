@@ -9,7 +9,7 @@
 			<item>
 				<title>A simple SVD recommender system using Python</title>
 				<description>&lt;h1&gt;SVD recommender system for movies&lt;/h1&gt;
-&lt;p&gt;In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python and Scipy.&lt;/p&gt;
+&lt;p&gt;In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python.&lt;/p&gt;
 
 &lt;p&gt;In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you’ll find on the internet don’t take advantage of the sparsity of the data. However, in our case we’ll pay attention to use appropriate data structures in order to increase the speed of our program.&lt;/p&gt;
 
@@ -62,7 +62,7 @@
 	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;moviesSeen&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;Compute the SVD of our user rating matrix&lt;/h2&gt;
-&lt;p&gt;In order to compute the singolar value decomposition of our user rating matrix we need to create a function with two parameters : the user rating matrix, the rank of our SVD. The SVD is computed using the sparsesvd package (https://pypi.python.org/pypi/sparsesvd/)&lt;/p&gt;
+&lt;p&gt;In order to compute the singular value decomposition of our user rating matrix we need to create a function with two parameters : the user rating matrix and the rank of our SVD. The SVD is computed using the &lt;a href=&quot;https://pypi.python.org/pypi/sparsesvd/&quot;&gt;sparsesvd package&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;math&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;mt&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;csv&lt;/span&gt;
