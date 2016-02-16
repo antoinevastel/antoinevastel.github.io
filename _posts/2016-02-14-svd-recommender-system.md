@@ -26,8 +26,7 @@ def readUrm():
 	with open('/PathToTrainFile.csv', 'rb') as trainFile:
 		urmReader = csv.reader(trainFile, delimiter=',')
 		for row in urmReader:
-			if float(row[2]) >= 6:
-				urm[int(row[0]), int(row[1])] = float(row[2])
+			urm[int(row[0]), int(row[1])] = float(row[2])
 
 	return csr_matrix(urm, dtype=np.float32)
 
