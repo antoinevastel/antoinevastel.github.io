@@ -88,7 +88,7 @@ def computeSVD(urm, K):
 	return U, S, Vt	
 {% endhighlight %}
 
-As s is returned as a vector, we want to create a matrix S whose diagonal has for value the elements of vector s. Once again, in order to save memory space and to increase the speed of our program we do not forget to convert our new matrices to csr format.
+Since s is returned as a vector, we want to create a matrix S whose diagonal has for value the elements of vector s. Once again, in order to save memory space and to increase the speed of our program we do not forget to convert our new matrices to csr format.
 
 <h2>Predict the movies for our test users</h2>
 The final step is to predict recommendations for our test users. To do so we will use the matrices computed in the previous step.
