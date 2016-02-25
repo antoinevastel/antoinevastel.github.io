@@ -3,7 +3,7 @@ layout: post
 title: Une implémentation d'Array List en Java
 categories: [structure de données, java]
 tags: [java, structure de données, array list, tableau dynamique]
-description: implémentation d'array list/tableau dynamique en Java
+description: Implémentation d'array list/tableau dynamique en Java
 comments: true
 ---
 
