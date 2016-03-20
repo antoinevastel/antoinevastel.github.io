@@ -3,7 +3,7 @@ layout: post
 title: Lissage exponentiel simple en Javascript
 categories: [Prédiction, Javascript]
 tags: [Série temporelle, Lissage exponentiel, Javascript, HighchartJs]
-description: Description blabla
+description: Implémentation du lissage exponentiel simple en Javascript
 comments: true
 ---
 Le lissage exponentiel simple est une technique de prévision à t+1 s'appliquant à des séries temporelles sans tendance. L'objectif étant de donner plus ou moins d'importance aux dernières observations grâce à un paramètre alpha. Dans le cas d'une série temporelle avec tendance, il est préférable d'utiliser le lissage exponentiel double.
