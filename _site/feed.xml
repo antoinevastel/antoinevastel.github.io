@@ -7,11 +7,71 @@
 		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Lissage exponentiel simple en Javascript</title>
+				<description>&lt;script src=&quot;/assets/js/les.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    $(function () {
+        $(&#39;#container&#39;).highcharts({
+            title: {
+                text: &#39;Chiffre d\&#39;affaires mensuel&#39;,
+                x: -20 //center
+            },
+            subtitle: {
+                text: &#39;Source: fakeSource.com&#39;,
+                x: -20
+            },
+            xAxis: {
+                categories: [&#39;Jan&#39;, &#39;Fev&#39;, &#39;Mar&#39;, &#39;Avr&#39;, &#39;Mai&#39;, &#39;Juin&#39;,
+                    &#39;Juil&#39;, &#39;Aout&#39;, &#39;Sept&#39;, &#39;Oct&#39;, &#39;Nov&#39;, &#39;Dec&#39;, &#39;Jan&#39;, &#39;Feb&#39;]
+            },
+            yAxis: {
+                title: {
+                    text: &#39;CA (k€)&#39;
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: &#39;#808080&#39;
+                }]
+            },
+            tooltip: {
+                valueSuffix: &#39;k€&#39;
+            },
+            legend: {
+                layout: &#39;vertical&#39;,
+                align: &#39;right&#39;,
+                verticalAlign: &#39;middle&#39;,
+                borderWidth: 0
+            },
+            series: [{
+                name: &#39;Réalisé&#39;,
+                data: data
+            }, {
+                name: &#39;Prévisions&#39;,
+                data: forecast
+            }]
+        });
+    });
+&lt;/script&gt;
+
+&lt;script src=&quot;/assets/js/Highcharts/js/highcharts.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;script src=&quot;/assets/js/Highcharts/js/modules/exporting.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;div id=&quot;container&quot; style=&quot;min-width: 310px; height: 400px; margin: 0 auto&quot;&gt;&lt;/div&gt;
+</description>
+				<pubDate>Sun, 20 Mar 2016 00:00:00 +0100</pubDate>
+				<link>/pr%C3%A9diction/javascript/2016/03/20/lissage-exponentiel-simple.html</link>
+				<guid isPermaLink="true">/pr%C3%A9diction/javascript/2016/03/20/lissage-exponentiel-simple.html</guid>
+			</item>
+		
+			<item>
 				<title>Une implémentation d'Array List en Java</title>
 				<description>&lt;h1&gt;Array List/ Tableau dynamique&lt;/h1&gt;
 &lt;p&gt;Dans cet article nous étudierons une possible implémentation (simpliste) d’une array list. Cette structure de données est également appelée tableau dynamique. Cet article sera rédigé en français car il existe déjà un grand nombre d’articles en anglais traitant de ce sujet.&lt;/p&gt;
 
-&lt;p&gt;Un tableau dynamique est une structure de données dont la taille s’adapte automatiquement à la quantité de données qu’il doit stocker. A l’instar d’un tableau, on accède directement aux élements grâce à leurs indices.&lt;/p&gt;
+&lt;p&gt;Un tableau dynamique est une structure de données dont la taille s’adapte automatiquement à la quantité de données qu’il doit stocker. A l’instar d’un tableau classique, on accède directement aux élements grâce à leurs indices.&lt;/p&gt;
 
 &lt;h2&gt;Attributs&lt;/h2&gt;
 &lt;p&gt;Notre classe de tableau dynamique est constituée de deux attributs :&lt;/p&gt;
@@ -70,7 +130,7 @@
 	&lt;span class=&quot;n&quot;&gt;nbElements&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;On définit également la méthode definirElement. Celle-ci prend en paramètre un indice et l’élément à insérer. Elle retourne l’ancien élément présent à l’indice passé en paramètre.&lt;/p&gt;
+&lt;p&gt;On définit également la méthode definirElement. Celle-ci prend en paramètre un indice et un élément à insérer. Elle retourne l’ancien élément présent à l’indice passé en paramètre.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;definirElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;indice&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IndexOutOfBoundsException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
 	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;indice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;indice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nbElements&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
