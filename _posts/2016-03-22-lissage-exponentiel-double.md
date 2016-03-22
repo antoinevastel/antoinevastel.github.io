@@ -107,7 +107,7 @@ Nous utiliserons les données suivantes :
 
 	<div class="col-md-6">
 		<p>
-		L'objectif du lissage exponentiel double sera de déterminer la valeur du chiffre d'affaires pour le dernier mois de Janvier. La valeur de cette prédiction dépend du paramètre alpha. Nous expliquerons donc également comment sélectionner la valeur optimale d'alpha.
+		L'objectif du lissage exponentiel double sera de déterminer la valeur du chiffre d'affaires pour le dernier mois de Janvier et de Février. La valeur de cette prédiction dépend du paramètre alpha. Nous expliquerons donc également comment sélectionner la valeur optimale d'alpha.
 		</p>
 	</div>
 </div>
