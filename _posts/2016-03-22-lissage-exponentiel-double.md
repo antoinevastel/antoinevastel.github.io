@@ -3,7 +3,7 @@ layout: post
 title: Lissage exponentiel double en Javascript
 categories: [Prédiction, Javascript]
 tags: [Série temporelle, Lissage exponentiel, Javascript, HighchartJs]
-description: Implémentation du lissage exponentiel double en Javascript
+description: Dans la série lissage exponentiel, nous continuons sur le lissage exponentiel double afin de prédire des séries temporelles avec tendance. 
 comments: true
 ---
 Contrairement au lissage exponentiel simple qui ne s'applique qu'aux séries temporelles sans tendance, le lissage exponentiel double (LED) permet d'établir une prévision lorsque la série présente une tendance.
