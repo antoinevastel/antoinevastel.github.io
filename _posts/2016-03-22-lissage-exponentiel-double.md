@@ -1,17 +1,22 @@
 ---
 layout: post
-title: Lissage exponentiel simple en Javascript
+title: Lissage exponentiel double en Javascript
 categories: [Prédiction, Javascript]
 tags: [Série temporelle, Lissage exponentiel, Javascript, HighchartJs]
-description: Implémentation du lissage exponentiel simple en Javascript
+description: Implémentation du lissage exponentiel double en Javascript
 comments: true
 ---
-Le lissage exponentiel simple est une technique de prévision à t+1 s'appliquant à des séries temporelles sans tendance. L'objectif étant de donner plus ou moins d'importance aux dernières observations grâce à un paramètre alpha. Dans le cas d'une série temporelle avec tendance, il est préférable d'utiliser le lissage exponentiel double.
+Contrairement au lissage exponentiel simple qui ne s'applique qu'aux séries temporelles sans tendance, le lissage exponentiel double (LED) permet d'établir une prévision lorsque la série présente une tendance.
 
-Cet article a pour objectif de présenter une implémentation possible du lissage exponentiel simple en Javascript. Nous aborderons également l'utilisation de l'erreur quadratique pour déterminer la valeur optimale de alpha, ainsi que l'utilisation de la librairie HighchartJs afin de représenter graphiquement nos séries temporelles.
+Cet article a pour objectif de présenter une implémentation possible du lissage exponentiel double en Javascript. Il fait suite au <a href="{% post_url 2016-03-20-lissage-exponentiel-simple %}">post sur le lissage exponentiel simple</a>, et portera les mêmes points : 
+<ul>
+	<li>Implémentation du LED en Javascript;</li>
+	<li>Calcul de la valeur optimale d'alpha;</li>
+	<li>Utilisation de la librairie HighchartJs pour générer un graphique.</li>
+</ul>
 
 <h2>Nos données</h2>
-Nous utiliserons les données issues de <a href="http://www.jybaudot.fr/Previsions/les.html">ce site</a>.
+Nous utiliserons les données suivantes :
 
 <style type="text/css">
 	table{
@@ -29,6 +34,7 @@ Nous utiliserons les données issues de <a href="http://www.jybaudot.fr/Previsio
 		border: 1px solid black;
 	}
 </style>
+
 <div class="container">
 	<div class="col-md-5">
 		<p>
@@ -39,56 +45,57 @@ Nous utiliserons les données issues de <a href="http://www.jybaudot.fr/Previsio
 				</tr>
 				<tr>
 					<td>Janvier</td>
-					<td>25</td>
+					<td>112</td>
 				</tr>
 				<tr>
 					<td>Février</td>
-					<td>29</td>
+					<td>108</td>
 				</tr>
 				<tr>
 					<td>Mars</td>
-					<td>24</td>
+					<td>117</td>
 				</tr>
 				<tr>
 					<td>Avril</td>
-					<td>21</td>
+					<td>122</td>
 				</tr>
 				<tr>
 					<td>Mai</td>
-					<td>26</td>
+					<td>119</td>
 				</tr>
 				<tr>
 					<td>Juin</td>
-					<td>23</td>
+					<td>127</td>
 				</tr>
 				<tr>
 					<td>Juillet</td>
-					<td>27</td>
+					<td>132</td>
 				</tr>
 				<tr>
 					<td>Août</td>
-					<td>25</td>
+					<td>131</td>
 				</tr>
 				<tr>
 					<td>Septembre</td>
-					<td>21</td>
+					<td>139</td>
 				</tr>
 				<tr>
 					<td>Octobre</td>
-					<td>24</td>
+					<td>145</td>
 				</tr>
 				<tr>
 					<td>Novembre</td>
-					<td>26</td>
+					<td>148</td>
 				</tr>
 				<tr>
 					<td>Décembre</td>
-					<td>29</td>
+					<td>150</td>
 				</tr>
 				<tr>
 					<td>Janvier</td>
-					<td>25</td>
+					<td>?</td>
 				</tr>
+
 				<tr>
 					<td>Février</td>
 					<td>?</td>
@@ -100,27 +107,65 @@ Nous utiliserons les données issues de <a href="http://www.jybaudot.fr/Previsio
 
 	<div class="col-md-6">
 		<p>
-		L'objectif du lissage exponentiel simple sera de déterminer la valeur du chiffre d'affaires pour le dernier mois de Février. La valeur de cette prédiction dépend du paramètre alpha. Nous expliquerons donc également comment sélectionner la valeur optimale d'alpha.
+		L'objectif du lissage exponentiel double sera de déterminer la valeur du chiffre d'affaires pour le dernier mois de Janvier. La valeur de cette prédiction dépend du paramètre alpha. Nous expliquerons donc également comment sélectionner la valeur optimale d'alpha.
 		</p>
 	</div>
 </div>
 
-<h2>Lissage exponentiel simple</h2>
-La prédiction en t est égale à l'erreur sur la prédiction précédente (valeur(t-1) - prédiction(t-1)) multipliée par le paramètre alpha, auquel on ajoute la prédiction en t-1.
+<h2>Lissage exponentiel double</h2>
+Comme son nom l'indique, nous allons effectuer deux lissages : le premier sur les données d'origines, le second portant sur les données issues du premier lissage.
+
+Une fois les deux lissages effectués, nous calculons les valeurs de deux coefficients (a et b). La valeur de a correspond au coefficient directeur et est égale à (alpha/(1-alpha))*(premier_lissage - second_lissage).
+
+B correspond à une sorte d'ordonnée à l'origine locale et est égale à 2*premier_lissage - second_lissage.
+
+Concernant l'initialisation, plusieurs solutions sont possibles (moyenne, valeur initiale etc.). Pour plus d'informations, n'hésitez pas à consulter l'excellent site <a href="http://www.jybaudot.fr/Previsions/led.html">www.jybaudot.fr</a>
 
 {% highlight javascript %}
-function les(data, alpha)
+function led(data, alpha, horizon)
 {
-	var forecast = Array();
-	forecast[0] = null;
+	var lissage = Object();
 	//on initialise la premiere valeur du lissage avec la moyenne des deux premiers
-	forecast[1] = 0.5*(data[0] + data[1]);
+	//éléments de la série
+	lissage.premier = Array();
+	lissage.second = Array();
+
+	lissage.premier[0] = data[0];
+	lissage.premier[1] = data[1];
+
+	for(var i = 2; i < data.length; ++i)
+	{
+		lissage.premier[i] = alpha*data[i] + (1-alpha)*lissage.premier[i-1];
+	}
+
+	lissage.second[0] = lissage.premier[0];
+	for(var i = 1; i < data.length; ++i)
+	{
+		lissage.second[i] = alpha*lissage.premier[i] + (1-alpha)*lissage.second[i-1];
+	}
+
+	lissage.a = Array();
+	lissage.b = Array();
+	for(var i = 1; i < data.length; ++i)
+	{
+		lissage.a[i] = (alpha/(1-alpha))*(lissage.premier[i] - lissage.second[i]);
+		lissage.b[i] = 2*lissage.premier[i] - lissage.second[i];
+	}
+
+	var previsions = Array();
+	previsions[0] = null;
+	previsions[1] = null;
 	for(var i = 2; i <= data.length; ++i)
 	{
-		forecast[i] = alpha*(data[i-1] - forecast[i-1]) + forecast[i-1];
-		//forecast[i] = alpha * erreur(t-1) + prédiction(t-1)
+		previsions[i] = lissage.a[i-1] + lissage.b[i-1];
 	}
-	return forecast;
+
+	for(var i = data.length +1; i < data.length + horizon; ++i)
+	{
+		previsions[i] = previsions[i-1] + lissage.a[data.length-1];
+	}
+
+	return previsions;
 }
 {% endhighlight %}
 
@@ -168,7 +213,7 @@ function findBestAlpha(data, nbIter)
 Une fois la valeur optimale de alpha trouvée, il suffit de générer les prédictions : 
 {% highlight javascript %}
 var bestAlpha = findBestAlpha(data, 20);
-var forecast = les(data, bestAlpha);
+var forecast = led(data, bestAlpha, 2); //Prévision à t+2
 {% endhighlight %}
 
 <h2>Représentation graphique avec HighchartJs</h2>
@@ -221,12 +266,12 @@ Nous allons utiliser la librairie HighchartJs afin de tracer nos deux séries (c
 
 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 {% endhighlight %}
-Pour plus de graphiques réalisables avec HighchartJs, n'hésitez pas à vous rendre sur leur <a href="http://www.highcharts.com/demo">site</a> où différents exemples sont présentés.
+
 <br/>
 Nous obtenons le résultat ci-dessous : 
 <br/>
 
-<script src='/assets/js/les.js' type="text/javascript"></script>
+<script src='/assets/js/led.js' type="text/javascript"></script>
 
 
 <script type="text/javascript">
