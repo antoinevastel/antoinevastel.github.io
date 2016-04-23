@@ -13,10 +13,10 @@ Dans notre exemple nous nous intéresserons à la régression linéaire. Le but 
 
 <img src="/assets/media/scatter_gradient1.png">
 
-Pour arriver à trouver ces coefficients, il importe de définir un critère de précision. Celui nous permettra de savoir si nos coefficients sont meilleurs ou moins bons. Nous utiliserons l'erreur quadratique moyenne définie de la manière suivante : <br/>
+Pour arriver à trouver ces coefficients, il importe de définir un critère de précision. Celui-ci nous permettra de savoir si nos coefficients sont meilleurs ou moins bons. Nous utiliserons l'erreur quadratique moyenne définie de la manière suivante : <br/>
 <img src="/assets/media/erreur_quad_moy.png">
 
-Pour applique l'algorithme du gradient sur cette fonction d'erreur/coût nous devons commencer par calculer son gradient. Comme notre fonction dépend de deux paramètres, nous devons calculer les dérivées partielles par rapport à chacun de nos paramètres (a et b) :
+Pour appliquer l'algorithme du gradient sur cette fonction d'erreur, nous devons commencer par calculer son gradient. Comme notre fonction dépend de deux paramètres, nous devons calculer les dérivées partielles par rapport à chacun de nos paramètres (a et b) :
 <br/>
 <img src="/assets/media/grad_a.png"/><br/>
 <img src="/assets/media/grad_b.png"/>
@@ -59,7 +59,7 @@ def iterationGradient(points, a, b, tauxApprentissage):
 	return a,b
 {% endhighlight %}
 
-La variable tauxApprentissage indique si lors de chaque itération on fait beaucoup ou peu varier les valeurs de a et b. Comme nous pouvons le voir sur le graphique ci-dessous qui représente l'erreur quadratique moyenne en fonction du nombre d'itérations effectuées, l'erreur décroit rapidement pour se stabiliser aux alentours de 25 au bout d'une dizaine d'itérations : 
+La variable tauxApprentissage indique si lors de chaque itération on décide de faire varier beaucoup ou peu les valeurs de a et b. Comme nous pouvons le voir sur le graphique ci-dessous qui représente l'erreur quadratique moyenne en fonction du nombre d'itérations effectuées, l'erreur décroit rapidement pour se stabiliser aux alentours de 25 au bout d'une dizaine d'itérations : 
 <br/>
 <img src="/assets/media/error_nbiter_gradient.png"/>
 
