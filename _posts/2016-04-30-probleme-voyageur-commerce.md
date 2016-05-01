@@ -349,7 +349,7 @@ if __name__ == '__main__':
 
 
    #on initialise la population avec 50 circuits
-   pop = Population(gc, 50, True);
+   pop = Population(gc, 50, True)
    print "Distance initiale : " + str(pop.getFittest().getDistance())
    
    # On fait evoluer notre population sur 100 generations
