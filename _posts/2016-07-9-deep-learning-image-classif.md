@@ -3,10 +3,10 @@ layout: post
 title: Réseau de neuronnes pré-entrainé appliqué à la classification d'images
 categories: [Deep learning, Machine learning]
 tags: [MxNet , Python, Scikit learn, réseau de neuronnes, classification images]
-description: Utilisation d'un réseau de neuronnes déjà entrainé pour résoudre un problème de classification d'images différente de celle pour lequel le réseau de neuronnes a été entrainé.
+description: Utilisation d'un réseau de neuronnes  pré-entrainé pour résoudre un problème de classification d'images différent de celui pour lequel le réseau de neuronnes a été entrainé.
 ---
 
-Cet article présente comment utiliser un réseau de neuronnes déjà entrainé pour résoudre un problème de classification d'images (tâche différente que celle pour laquelle le réseau a été préalablement entrainé). Dans notre cas, l'objectif est de classer des images satellites de toits en 4 catégories : orientation EST/OUEST, orientation NORD/SUD, toit plat, et catégorie "Autre". Il est important de préciser une nouvelle fois que cette tâche de classification est différente de celle pour laquelle le réseau de neuronnes que nous allons utiliser a été entrainé.
+Cet article présente comment utiliser un réseau de neuronnes pré-entrainé pour résoudre un problème de classification d'images (tâche différente que celle pour laquelle le réseau a été préalablement entrainé). Dans notre cas, l'objectif est de classer des images satellites de toits en 4 catégories : orientation EST/OUEST, orientation NORD/SUD, toit plat, et catégorie "Autre". Il est important de préciser une nouvelle fois que cette tâche de classification est différente de celle pour laquelle le réseau de neuronnes que nous allons utiliser a été entrainé.
 
 <h2>Librairie MxNet</h2>
 La librairie de réseau de neuronnes que nous utiliserons se nomme MxNET. Elle est disponible à la fois sous Linux et Windows, et possède (entre autre) un wrapper en Python et en R. Dans cet article le code a été exécuté sous Ubuntu avec le wrapper Python.
