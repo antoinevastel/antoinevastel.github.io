@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Algorithme du gradient</title>
+	
+	<meta name="description" content="Une introduction à l'algorithme du gradient appliqué à la régression linéaire.">
+	
+	<meta name="author" content="Antoine Vastel">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/antoinevastel">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/xopek59">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:antoine.vastel@gmail.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913?s=35" class="img-circle" />
+				
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913?s=150" class="img-circle" />
+	</a>
+	<h3 class="title">
+        <a href="/"></a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	French J2EE software engineer, passionnate about software engineering and machine learning!
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/antoinevastel">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/xopek59">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:antoine.vastel@gmail.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/antoinevastel">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Algorithme du gradient </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   April 
+	   23rd,
+	     
+	   2016
+	 </span>
+	  <div class="article_body">
+	  <h1>Algorithme du gradient</h1>
+<p>L’algorithme du gradient est un algorithme d’optimisation. Son objectif est de minimiser une fonction de coût définie par un ensemble de paramètres.</p>
+
+<p>Dans notre exemple nous nous intéresserons à la régression linéaire. Le but est d’approximer un ensemble de points par une droite d’équation y = a*x +b. L’objectif sera d’estimer la valeur des coefficients a et b permettant d’obtenir la droite passant au plus près de l’ensemble des points.</p>
+
+<p><img src="/assets/media/scatter_gradient1.png" /></p>
+
+<p>Pour arriver à trouver ces coefficients, il importe de définir un critère de précision. Celui-ci nous permettra de savoir si nos coefficients sont meilleurs ou moins bons. Nous utiliserons l’erreur quadratique moyenne définie de la manière suivante : <br />
+<img src="/assets/media/erreur_quad_moy.png" /></p>
+
+<p>Pour appliquer l’algorithme du gradient sur cette fonction d’erreur, nous devons commencer par calculer son gradient. Comme notre fonction dépend de deux paramètres, nous devons calculer les dérivées partielles par rapport à chacun de nos paramètres (a et b) :
+<br />
+<img src="/assets/media/grad_a.png" /><br />
+<img src="/assets/media/grad_b.png" />
+<br /></p>
+
+<p>Nous pouvons désormais appliquer notre algorithme. Tout d’abord nous allons commencer par générer des couples de données (x,y) linéairement corrélés :</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="c">#premiere etape : generer des donnees x, y  correlees lineairement</span>
+<span class="k">def</span> <span class="nf">genererDonnees</span><span class="p">():</span>
+	<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mi">65</span><span class="p">])</span>
+	<span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">51.5</span><span class="p">])</span>
+	<span class="n">means</span> <span class="o">=</span> <span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">mean</span><span class="p">()]</span>  
+	<span class="n">stds</span> <span class="o">=</span> <span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">/</span> <span class="mi">3</span><span class="p">,</span> <span class="n">yy</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">/</span> <span class="mi">3</span><span class="p">]</span>
+	<span class="n">corr</span> <span class="o">=</span> <span class="mf">0.85</span>
+	<span class="n">covs</span> <span class="o">=</span> <span class="p">[[</span><span class="n">stds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">stds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">stds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">corr</span><span class="p">],</span> 
+	        <span class="p">[</span><span class="n">stds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">stds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">corr</span><span class="p">,</span> <span class="n">stds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">]]</span> 
+
+	<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">covs</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+	<span class="k">return</span> <span class="n">points</span></code></pre></div>
+
+<p>Nous devons choisir une valeur initiale pour nos coefficients a et b. Ici, nous choisirons 0. Lors de chaque itération nous mettrons à jour la valeur de a et b de manière à faire décroître l’erreur quadratique. La direction pour faire varier a et b est déterminée grâce aux dérivées partielles que nous avons déterminées précédemment : </p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">iterationGradient</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tauxApprentissage</span><span class="p">):</span>
+	<span class="n">gradientA</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">gradientB</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">N</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+		<span class="n">gradientB</span> <span class="o">+=</span> <span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+		<span class="n">gradientA</span> <span class="o">+=</span> <span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+
+	<span class="c">#on met a jour a et b</span>
+	<span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="p">(</span><span class="n">tauxApprentissage</span> <span class="o">*</span> <span class="n">gradientB</span><span class="p">)</span>
+	<span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="p">(</span><span class="n">tauxApprentissage</span> <span class="o">*</span> <span class="n">gradientA</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span></code></pre></div>
+
+<p>La variable tauxApprentissage indique si lors de chaque itération on décide de faire varier beaucoup ou peu les valeurs de a et b. Comme nous pouvons le voir sur le graphique ci-dessous qui représente l’erreur quadratique moyenne en fonction du nombre d’itérations effectuées, l’erreur décroit rapidement pour se stabiliser aux alentours de 25 au bout d’une dizaine d’itérations : 
+<br />
+<img src="/assets/media/error_nbiter_gradient.png" /></p>
+
+<p>Voici le reste du code qui permet l’initialisation des variables ainsi que l’appel de la fonction iterationGradient : </p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">gradientDescent</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">aInitial</span><span class="p">,</span> <span class="n">bInitial</span><span class="p">,</span> <span class="n">tauxApprentissage</span><span class="p">,</span> <span class="n">nbIterations</span><span class="p">):</span>
+	<span class="n">a</span> <span class="o">=</span> <span class="n">aInitial</span>
+	<span class="n">b</span> <span class="o">=</span> <span class="n">bInitial</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbIterations</span><span class="p">):</span>
+		<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">iterationGradient</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tauxApprentissage</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">estimationsParametres</span><span class="p">():</span>
+	<span class="n">tauxApprentissage</span> <span class="o">=</span> <span class="mf">0.0001</span>
+	<span class="n">aInitial</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">bInitial</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="n">nbIterations</span> <span class="o">=</span> <span class="mi">20</span>
+	<span class="n">donnees</span> <span class="o">=</span> <span class="n">genererDonnees</span><span class="p">()</span>
+	<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">=</span> <span class="n">gradientDescent</span><span class="p">(</span><span class="n">donnees</span><span class="p">,</span> <span class="n">aInitial</span><span class="p">,</span> <span class="n">bInitial</span><span class="p">,</span> <span class="n">tauxApprentissage</span><span class="p">,</span> <span class="n">nbIterations</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">estimationsParametres</span><span class="p">()</span>
+<span class="c">#a = 0.776207203202</span>
+<span class="c">#b = 0.02282254121</span></code></pre></div>
+
+<p>Graphiquement nous obtenons la droite suivante qui passe relativement près de l’ensemble des points :
+<img src="/assets/media/scatter_gradient2.png" /></p>
+
+<p>Dans notre exemple nous définissons un nombre d’itérations fixe. Une solution plus appropriée serait de définir un critère comme la diminution de l’erreur entre deux itérations.</p>
+
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#algorithme-ref">
+					algorithme <span>(3)</span>
+					,
+				</a></li>
+			 
+				<li><a href="/categories.html#optimisation-ref">
+					optimisation <span>(1)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#Algorithme-ref">
+					Algorithme <span>(3)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#gradient-ref">
+					gradient <span>(1)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#optimisation-ref">
+					optimisation <span>(1)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#python-ref">
+					python <span>(2)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Algorithme du gradient&via=xopek59"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913" class="img-rounded author-image" />
+        <h4 class="section-title author-name">Antoine Vastel</h4>
+        <p class="author-bio">French J2EE software engineer, passionnate about software engineering and machine learning!</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/pr%C3%A9diction/javascript/2016/03/22/lissage-exponentiel-double.html" title="Lissage exponentiel double en Javascript">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/pr%C3%A9diction/javascript/2016/04/23/lissage-holt-winters.html" title="Lissage de Holt Winters (additif et multiplicatif) en Javascript">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+    
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'antoinevastel';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2016 Antoine Vastel with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+</body>
+</html>
+
+
+

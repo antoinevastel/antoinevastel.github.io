@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Problème du voyageur de commerce</title>
+	
+	<meta name="description" content="Application des algorithmes génétiques pour résoudre le problème du voyageur de commerce.">
+	
+	<meta name="author" content="Antoine Vastel">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/antoinevastel">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/xopek59">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:antoine.vastel@gmail.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913?s=35" class="img-circle" />
+				
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913?s=150" class="img-circle" />
+	</a>
+	<h3 class="title">
+        <a href="/"></a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	French J2EE software engineer, passionnate about software engineering and machine learning!
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/antoinevastel">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/xopek59">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:antoine.vastel@gmail.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/antoinevastel">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Problème du voyageur de commerce </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   April 
+	   30th,
+	   
+	   2016
+	 </span>
+	  <div class="article_body">
+	  <p>L’objectif de cet article est de présenter une application des algorithmes génétiques afin de résoudre le problème du voyageur de commerce.</p>
+
+<h2>Présentation des algorithmes génétiques</h2>
+<p>Les algorithmes génétiques s’inspirent de la théorie de l’évolution des espèces. Comme dans la vie, les espèces peuvent se reproduire pour créer de nouveaux individus, et leur ADN peut subir des mutations au cours de leur vie. De plus, à l’instar de ce qu’on observe dans la nature, plus un individu est “fort”, plus il a de chance de se reproduire.</p>
+
+<p>Un algorithme génétique est constitué de 5 grandes étapes que nous détaillerons par la suite lorsque nous résolverons notre problème du voyageur de commerce :</p>
+<ul>
+	<li>Création d'une population initiale</li>
+	<li>Evaluation de la "fitness" (qualité) des individus</li>
+	<li>Création de nouveaux individus</li>
+	<li>Ajout des nouveaux individus dans la population</li>
+	<li>Retour à la seconde étape</li>
+</ul>
+
+<p>Le but de l’algorithme génétique est de faire évoluer notre population initiale vers une population contenant de meilleurs individus.</p>
+
+<h2>Application au problème du voyageur de commerce</h2>
+<p>Le problème du voyageur de commerce consiste à passer par un ensemble de villes en minimisant la distance totale du trajet. C’est un problème dit NP-complet, ce qui signifie qu’il n’existe pas d’algorithme en temps polynomial permettant de trouver une solution exacte à ce problème,.</p>
+
+<p>Commençons par un peu de code. Nous allons créer une classe Ville. Les villes sont définies par leurs coordonnées GPS (longitude et latitude), et leur nom. </p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Ville</span><span class="p">:</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">nom</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">nom</span> <span class="o">=</span> <span class="n">nom</span>
+   
+
+   <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
+      <span class="n">distanceX</span> <span class="o">=</span> <span class="p">(</span><span class="n">ville</span><span class="o">.</span><span class="n">lon</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">lon</span><span class="p">)</span><span class="o">*</span><span class="mi">40000</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lat</span><span class="o">+</span><span class="n">ville</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">360</span><span class="p">)</span><span class="o">/</span><span class="mi">360</span>
+      <span class="n">distanceY</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lat</span><span class="o">-</span><span class="n">ville</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span><span class="o">*</span><span class="mi">40000</span><span class="o">/</span><span class="mi">360</span>
+      <span class="n">distance</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">distanceX</span><span class="o">*</span><span class="n">distanceX</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">distanceY</span><span class="o">*</span><span class="n">distanceY</span><span class="p">)</span> <span class="p">)</span>
+      <span class="k">return</span> <span class="n">distance</span></code></pre></div>
+
+<p>Par la suite nous définissons une classe qui nous permettra de gérer les circuits. Un circuit est caractérisé par un ensemble de villes stocké dans la liste villesDestination. Il est important de mentionner que vu la nature de notre problème, l’ordre des villes a une importance ! Toutefois, un circuit étant une boucle, les circuits Lyon-Paris-Lille-Toulouse et Lille-Toulouse-Lyon-Paris sont équivalents.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GestionnaireCircuit</span><span class="p">:</span>
+   <span class="n">villesDestinations</span> <span class="o">=</span> <span class="p">[]</span>
+   
+   <span class="k">def</span> <span class="nf">ajouterVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">villesDestinations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ville</span><span class="p">)</span>
+   
+   <span class="k">def</span> <span class="nf">getVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">villesDestinations</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+   
+   <span class="k">def</span> <span class="nf">nombreVilles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">villesDestinations</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Circuit</span><span class="p">:</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gestionnaireCircuit</span><span class="p">,</span> <span class="n">circuit</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span> <span class="o">=</span> <span class="n">gestionnaireCircuit</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="mf">0.0</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">if</span> <span class="n">circuit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span> <span class="o">=</span> <span class="n">circuit</span>
+      <span class="k">else</span><span class="p">:</span>
+         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="o">.</span><span class="n">nombreVilles</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">)</span>
+   
+	<span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+	  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+	<span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+	  <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+	<span class="k">def</span> <span class="nf">genererIndividu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	  <span class="k">for</span> <span class="n">indiceVille</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="o">.</span><span class="n">nombreVilles</span><span class="p">()):</span>
+	     <span class="bp">self</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="p">))</span>
+	  <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">getVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuitPosition</span><span class="p">):</span>
+	  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">circuitPosition</span><span class="p">]</span>
+
+	<span class="k">def</span> <span class="nf">setVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuitPosition</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
+	  <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">circuitPosition</span><span class="p">]</span> <span class="o">=</span> <span class="n">ville</span>
+	  <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="mf">0.0</span>
+	  <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
+
+	<span class="k">def</span> <span class="nf">getFitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	  <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+	     <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDistance</span><span class="p">())</span>
+	  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
+
+	<span class="k">def</span> <span class="nf">getDistance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	  <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+	     <span class="n">circuitDistance</span> <span class="o">=</span> <span class="mi">0</span>
+	     <span class="k">for</span> <span class="n">indiceVille</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()):</span>
+	        <span class="n">villeOrigine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="p">)</span>
+	        <span class="n">villeArrivee</span> <span class="o">=</span> <span class="bp">None</span>
+	        <span class="k">if</span> <span class="n">indiceVille</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">():</span>
+	           <span class="n">villeArrivee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+	        <span class="k">else</span><span class="p">:</span>
+	           <span class="n">villeArrivee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+	        <span class="n">circuitDistance</span> <span class="o">+=</span> <span class="n">villeOrigine</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">villeArrivee</span><span class="p">)</span>
+	     <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">circuitDistance</span>
+	  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span>
+
+	<span class="k">def</span> <span class="nf">tailleCircuit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	  <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">contientVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
+	  <span class="k">return</span> <span class="n">ville</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span></code></pre></div>
+
+<p>Vous pouvez remarquer que notre circuit contient un attribut fitness et une méthode getFitness. C’est un attribut indiquant la qualité d’un circuit. Dans notre cas, un circuit aura une meilleure fitness lorsque la distance totale sera faible. En effet, l’objectif de notre algorithme est de trouver un circuit minimisant la distance totale de voyage. C’est la raison pour laquelle notre fonction de fitness retourne l’inverse de la distance totale. Ainsi, lorsque la distance diminue, alors la fitness augmente.</p>
+
+<p>Une autre méthode qui mérite quelques précisions est la méthode genererIndividu. Comme nous l’avons expliqué dans la partie précédente, une des étapes principales de notre algorithme est la génération d’une population. Dans notre méthode nous remplissons une liste avec l’ensemble de nos villes puis nous les réordonnons de manière aléatoire en utilisant la fonction random.shuffle.</p>
+
+<p>Nous continuons notre programme par la création d’une classe Population. Dans le cas général, une population est un ensemble d’individus. Dans notre cas cela correspond à un ensemble de circuits.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Population</span><span class="p">:</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gestionnaireCircuit</span><span class="p">,</span> <span class="n">taillePopulation</span><span class="p">,</span> <span class="n">init</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">circuits</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">taillePopulation</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+      
+      <span class="k">if</span> <span class="n">init</span><span class="p">:</span>
+         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">taillePopulation</span><span class="p">):</span>
+            <span class="n">nouveauCircuit</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="n">gestionnaireCircuit</span><span class="p">)</span>
+            <span class="n">nouveauCircuit</span><span class="o">.</span><span class="n">genererIndividu</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sauvegarderCircuit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">nouveauCircuit</span><span class="p">)</span>
+      
+   <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+   
+   <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+   
+   <span class="k">def</span> <span class="nf">sauvegarderCircuit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">circuit</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">circuit</span>
+   
+   <span class="k">def</span> <span class="nf">getCircuit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+   
+   <span class="k">def</span> <span class="nf">getFittest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="n">fittest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">taillePopulation</span><span class="p">()):</span>
+         <span class="k">if</span> <span class="n">fittest</span><span class="o">.</span><span class="n">getFitness</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCircuit</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">getFitness</span><span class="p">():</span>
+            <span class="n">fittest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCircuit</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">fittest</span>
+   
+   <span class="k">def</span> <span class="nf">taillePopulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">)</span></code></pre></div>
+
+<p>La méthode getFittest nous retourne le circuit ayant la plus grande fitness, ce qui équivaut à la plus faible distance.</p>
+
+<p>Nous allons passer à la création de la classe GA (Genetic Algorithm). Celle-ci contient les principales étapes d’un algorithme génétique : </p>
+<ul>
+	<li>L'évolution de la population</li>
+	<li>Le crossover</li>
+	<li>Les mutations </li>
+	<li>La sélection des individus à reproduire</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GA</span><span class="p">:</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gestionnaireCircuit</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span> <span class="o">=</span> <span class="n">gestionnaireCircuit</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">tauxMutation</span> <span class="o">=</span> <span class="mf">0.015</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">tailleTournoi</span> <span class="o">=</span> <span class="mi">5</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">elitisme</span> <span class="o">=</span> <span class="bp">True</span>
+   
+   	<span class="k">def</span> <span class="nf">evoluerPopulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pop</span><span class="p">):</span>
+      <span class="n">nouvellePopulation</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="p">,</span> <span class="n">pop</span><span class="o">.</span><span class="n">taillePopulation</span><span class="p">(),</span> <span class="bp">False</span><span class="p">)</span>
+      <span class="n">elitismeOffset</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">elitisme</span><span class="p">:</span>
+         <span class="n">nouvellePopulation</span><span class="o">.</span><span class="n">sauvegarderCircuit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pop</span><span class="o">.</span><span class="n">getFittest</span><span class="p">())</span>
+         <span class="n">elitismeOffset</span> <span class="o">=</span> <span class="mi">1</span>
+      
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">elitismeOffset</span><span class="p">,</span> <span class="n">nouvellePopulation</span><span class="o">.</span><span class="n">taillePopulation</span><span class="p">()):</span>
+         <span class="n">parent1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectionTournoi</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+         <span class="n">parent2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectionTournoi</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+         <span class="n">enfant</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossover</span><span class="p">(</span><span class="n">parent1</span><span class="p">,</span> <span class="n">parent2</span><span class="p">)</span>
+         <span class="n">nouvellePopulation</span><span class="o">.</span><span class="n">sauvegarderCircuit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">enfant</span><span class="p">)</span>
+      
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">elitismeOffset</span><span class="p">,</span> <span class="n">nouvellePopulation</span><span class="o">.</span><span class="n">taillePopulation</span><span class="p">()):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">muter</span><span class="p">(</span><span class="n">nouvellePopulation</span><span class="o">.</span><span class="n">getCircuit</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+      
+      <span class="k">return</span> <span class="n">nouvellePopulation</span>
+
+
+    <span class="k">def</span> <span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent1</span><span class="p">,</span> <span class="n">parent2</span><span class="p">):</span>
+      <span class="n">enfant</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="p">)</span>
+      
+      <span class="n">startPos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">parent1</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">())</span>
+      <span class="n">endPos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">parent1</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">())</span>
+      
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">enfant</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()):</span>
+         <span class="k">if</span> <span class="n">startPos</span> <span class="o">&lt;</span> <span class="n">endPos</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">startPos</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">endPos</span><span class="p">:</span>
+            <span class="n">enfant</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">parent1</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+         <span class="k">elif</span> <span class="n">startPos</span> <span class="o">&gt;</span> <span class="n">endPos</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">startPos</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">endPos</span><span class="p">):</span>
+               <span class="n">enfant</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">parent1</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+      
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">parent2</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()):</span>
+         <span class="k">if</span> <span class="ow">not</span> <span class="n">enfant</span><span class="o">.</span><span class="n">contientVille</span><span class="p">(</span><span class="n">parent2</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">i</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">enfant</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()):</span>
+               <span class="k">if</span> <span class="n">enfant</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                  <span class="n">enfant</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span> <span class="n">parent2</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+                  <span class="k">break</span>
+      
+      <span class="k">return</span> <span class="n">enfant</span>
+   
+	<span class="k">def</span> <span class="nf">muter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuit</span><span class="p">):</span>
+	  <span class="k">for</span> <span class="n">circuitPos1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">circuit</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()):</span>
+	     <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tauxMutation</span><span class="p">:</span>
+	        <span class="n">circuitPos2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">circuit</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+	        
+	        <span class="n">ville1</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">circuitPos1</span><span class="p">)</span>
+	        <span class="n">ville2</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">circuitPos2</span><span class="p">)</span>
+	        
+	        <span class="n">circuit</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">circuitPos2</span><span class="p">,</span> <span class="n">ville1</span><span class="p">)</span>
+	        <span class="n">circuit</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">circuitPos1</span><span class="p">,</span> <span class="n">ville2</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">selectionTournoi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pop</span><span class="p">):</span>
+	  <span class="n">tournoi</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleTournoi</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+	  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleTournoi</span><span class="p">):</span>
+	     <span class="n">randomId</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">pop</span><span class="o">.</span><span class="n">taillePopulation</span><span class="p">())</span>
+	     <span class="n">tournoi</span><span class="o">.</span><span class="n">sauvegarderCircuit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">pop</span><span class="o">.</span><span class="n">getCircuit</span><span class="p">(</span><span class="n">randomId</span><span class="p">))</span>
+	  <span class="n">fittest</span> <span class="o">=</span> <span class="n">tournoi</span><span class="o">.</span><span class="n">getFittest</span><span class="p">()</span>
+	  <span class="k">return</span> <span class="n">fittest</span></code></pre></div>
+
+<p>Cette partie du programme demande plus d’explications. Commençons par les attributs de notre classe.</p>
+
+<p>Tout d’abord l’attribut tauxMutation. Comme son nom l’indique, c’est la probabilité qu’une ville d’un circuit subisse une mutation. Dans notre cas, cela correspond à l’inversion de la position de deux villes dans le circuit. Le taux est assez faible car la probabilité d’obtenir une distance plus faible en inversant deux villes est peu élevée.</p>
+
+<h3>Type de sélection</h3>
+<p>L’attribut tailleTournoi correspond à la taille des poules de notre tournoi. Le tournoi est une des méthodes possibles pour sélectionner les individus que nous souhaitons faire se reproduire. Il en existe d’autres telles que la sélection par roulette ou bien la sélection par rang.</p>
+
+<h4>Sélection par roulette</h4>
+<p>Dans le cas de la sélection par roulette, la probabilité qu’un individu soit sélectionné est proportionnelle à sa fitness. C’est à dire que plus un circuit est bon, plus il a de chance d’être sélectionné. L’un des inconvénients de cette méthode de sélection est que si la distribution des fitness n’est pas très uniforme, alors, certains circuits risquent d’être très fréquemment sélectionnés (ceux avec une faible distance) au détriment d’autres circuits (ceux avec grande distance). Or il est important que même les “mauvais” circuits puissent se reproduire.</p>
+
+<h4>Sélection par rang</h4>
+<p>Le principe de la sélection par rang est d’ordonner les individus (ici les circuits) en fonction de leur fitness. La probabilité d’être sélectionné est cette fois proportionnelle au rang de l’individu, et non à sa fitness. Un des problèmes de cette sélection peut être la vitesse de convergence de l’algorithme dans le cas où notre population a très peu de bons individus et beaucoup de mauvais individus. En effet, la probabilité d’être sélectionné pour un bon individu et un mauvais individu ne sera pas très différente. Ainsi, il sera assez fréquent de faire se reproduire des mauvais individus, ce qui peut ralentir la vitesse de convergence de l’algorithme.</p>
+
+<h4>Sélection par tournoi</h4>
+<p>La sélection par tournoi (que nous utilisons) fait affronter plusieurs individus sélectionnés au hasard. Dans notre cas nous organisons des tournois de 5 circuits et nous gardons le circuit avec la distance la plus faible (la fitness la plus élevée). Ainsi, dans le cas où nous faisons s’affronter 5 mauvais individus, cela laisse tout de même une chance à un de ces (mauvais) individus de pouvoir se reproduire.</p>
+
+<h3>Elitisme</h3>
+<p>Dernier attribut : elitisme. Dans un algorithme génétique l’élitisme correspond au fait de vouloir conserver les meilleurs individus d’une génération à une autre, afin d’être sûr de ne pas les perdre. Cela a pour avantage d’accélérer la convergence de l’algorithme au détriment de la diversité des invidus. On peut utiliser diverses formes d’élitisme :</p>
+<ul>
+	<li>Copier les n meilleurs individus dans la nouvelle génération</li>
+	<li>Sélectionner les n meilleurs individus pour qu'ils se reproduisent</li>
+</ul>
+
+<p>Dans notre cas nous avons choisi la première option, avec un nombre n d’individus égal à 1.</p>
+
+<h2>Reproduction des invididus</h2>
+<p>Jusqu’à présent dans cet article j’ai parlé de reproduction d’individus sans définir ce que j’entendais par reproduction. En effet, qu’entend-on par reproduire deux circuits ?</p>
+
+<p>Dans le cas d’un algorithme génétique on parle souvent de crossover à la place de reproduction. Vous entendrez souvent parler de one/two points crossover. </p>
+
+<p>Expliquons cela plus en détails :
+Considérons un single point crossover. Les chromosomes des individus A et B sont définis ainsi :
+<br />
+chr A : 1 0 1 2 1 0 1 0 1 0<br />
+chr B : 1 1 0 1 2 1 0 0 2 1<br /></p>
+
+<p>On doit choisir un point de crossover, disons 4 dans notre cas. Cela signifie que de l’indice 1 à 4 notre individu aura les gènes de l’individu A et de l’indice 5 à 10 celui de l’individu B.</p>
+
+<p>L’individu issu de la reproduction de A et B aura donc le profil suivant : <br />
+1 0 1 2 2 1 0 0 2 1</p>
+
+<p>Dans le cas d’un two points crossover où l’on choisit les points 2 et 6 cela donnerait : <br />
+1 0 0 1 2 1 1 0 1 0<br /></p>
+
+<p>Dans notre cas nous choisissons un two points crossover mais contrairement aux exemples donnés précédemment nous avons une contrainte supplémentaire : la cohérence de notre solution. En effet, l’individu issu de la reproduction doit avoir un circuit contenant toutes les villes possibles. Pour pallier à ce problème nous procédons de la manière suivante :</p>
+<ul>
+	<li>On choisit deux indices;</li>
+	<li>On recopie les villes présentes entre ces deux indices dans notre futur individu;</li>
+	<li>On complète les emplacements vides de notre nouvel individu par les villes manquantes</li>
+</ul>
+
+<h2>Résolvons notre problème</h2>
+<p>Maintenant que nous avons vu l’algorithme à utiliser pour résoudre notre problème du voyageur de commerce, nous allons nous intéresser au code permettant de mettre en oeuvre notre solution.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+   
+   <span class="n">gc</span> <span class="o">=</span> <span class="n">GestionnaireCircuit</span><span class="p">()</span>   
+
+   <span class="c">#on cree nos villes</span>
+   <span class="n">ville1</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">3.002556</span><span class="p">,</span> <span class="mf">45.846117</span><span class="p">,</span> <span class="s">'Clermont-Ferrand'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville1</span><span class="p">)</span>
+   <span class="n">ville2</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="o">-</span><span class="mf">0.644905</span><span class="p">,</span> <span class="mf">44.896839</span><span class="p">,</span> <span class="s">'Bordeaux'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville2</span><span class="p">)</span>
+   <span class="n">ville3</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="o">-</span><span class="mf">1.380989</span><span class="p">,</span> <span class="mf">43.470961</span><span class="p">,</span> <span class="s">'Bayonne'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville3</span><span class="p">)</span>
+   <span class="n">ville4</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">1.376579</span><span class="p">,</span> <span class="mf">43.662010</span><span class="p">,</span> <span class="s">'Toulouse'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville4</span><span class="p">)</span>
+   <span class="n">ville5</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">5.337151</span><span class="p">,</span> <span class="mf">43.327276</span><span class="p">,</span> <span class="s">'Marseille'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville5</span><span class="p">)</span>
+   <span class="n">ville6</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">7.265252</span><span class="p">,</span> <span class="mf">43.745404</span><span class="p">,</span> <span class="s">'Nice'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville6</span><span class="p">)</span>
+   <span class="n">ville7</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="o">-</span><span class="mf">1.650154</span><span class="p">,</span> <span class="mf">47.385427</span><span class="p">,</span> <span class="s">'Nantes'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville7</span><span class="p">)</span>
+   <span class="n">ville8</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="o">-</span><span class="mf">1.430427</span><span class="p">,</span> <span class="mf">48.197310</span><span class="p">,</span> <span class="s">'Rennes'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville8</span><span class="p">)</span>
+   <span class="n">ville9</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">2.414787</span><span class="p">,</span> <span class="mf">48.953260</span><span class="p">,</span> <span class="s">'Paris'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville9</span><span class="p">)</span>
+   <span class="n">ville10</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">3.090447</span><span class="p">,</span> <span class="mf">50.612962</span><span class="p">,</span> <span class="s">'Lille'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville10</span><span class="p">)</span>
+   <span class="n">ville11</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">5.013054</span><span class="p">,</span> <span class="mf">47.370547</span><span class="p">,</span> <span class="s">'Dijon'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville11</span><span class="p">)</span>
+   <span class="n">ville12</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">4.793327</span><span class="p">,</span> <span class="mf">44.990153</span><span class="p">,</span> <span class="s">'Valence'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville12</span><span class="p">)</span>
+   <span class="n">ville13</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">2.447746</span><span class="p">,</span> <span class="mf">44.966838</span><span class="p">,</span> <span class="s">'Aurillac'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville13</span><span class="p">)</span>
+   <span class="n">ville14</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">1.750115</span><span class="p">,</span> <span class="mf">47.980822</span><span class="p">,</span> <span class="s">'Orleans'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville14</span><span class="p">)</span>
+   <span class="n">ville15</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">4.134148</span><span class="p">,</span> <span class="mf">49.323421</span><span class="p">,</span> <span class="s">'Reims'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville15</span><span class="p">)</span>
+   <span class="n">ville16</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">7.506950</span><span class="p">,</span> <span class="mf">48.580332</span><span class="p">,</span> <span class="s">'Strasbourg'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville16</span><span class="p">)</span>
+   <span class="n">ville17</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">1.233757</span><span class="p">,</span> <span class="mf">45.865246</span><span class="p">,</span> <span class="s">'Limoges'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville17</span><span class="p">)</span>
+   <span class="n">ville18</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">4.047255</span><span class="p">,</span><span class="mf">48.370925</span><span class="p">,</span> <span class="s">'Troyes'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville18</span><span class="p">)</span>
+   <span class="n">ville19</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="mf">0.103163</span><span class="p">,</span><span class="mf">49.532415</span><span class="p">,</span> <span class="s">'Le Havre'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville19</span><span class="p">)</span>
+   <span class="n">ville20</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="o">-</span><span class="mf">1.495348</span><span class="p">,</span> <span class="mf">49.667704</span><span class="p">,</span> <span class="s">'Cherbourg'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville20</span><span class="p">)</span>
+   <span class="n">ville21</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="o">-</span><span class="mf">4.494615</span><span class="p">,</span> <span class="mf">48.447500</span><span class="p">,</span> <span class="s">'Brest'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville21</span><span class="p">)</span>
+   <span class="n">ville22</span> <span class="o">=</span> <span class="n">Ville</span><span class="p">(</span><span class="o">-</span><span class="mf">0.457140</span><span class="p">,</span> <span class="mf">46.373545</span><span class="p">,</span> <span class="s">'Niort'</span><span class="p">)</span>
+   <span class="n">gc</span><span class="o">.</span><span class="n">ajouterVille</span><span class="p">(</span><span class="n">ville22</span><span class="p">)</span>
+
+
+   <span class="c">#on initialise la population avec 50 circuits</span>
+   <span class="n">pop</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="n">gc</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+   <span class="k">print</span> <span class="s">"Distance initiale : "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">getFittest</span><span class="p">()</span><span class="o">.</span><span class="n">getDistance</span><span class="p">())</span>
+   
+   <span class="c"># On fait evoluer notre population sur 100 generations</span>
+   <span class="n">ga</span> <span class="o">=</span> <span class="n">GA</span><span class="p">(</span><span class="n">gc</span><span class="p">)</span>
+   <span class="n">pop</span> <span class="o">=</span> <span class="n">ga</span><span class="o">.</span><span class="n">evoluerPopulation</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+      <span class="n">pop</span> <span class="o">=</span> <span class="n">ga</span><span class="o">.</span><span class="n">evoluerPopulation</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+   
+   <span class="k">print</span> <span class="s">"Distance finale : "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">getFittest</span><span class="p">()</span><span class="o">.</span><span class="n">getDistance</span><span class="p">())</span>
+   <span class="n">meilleurePopulation</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">getFittest</span><span class="p">()</span>
+
+   <span class="c">#on genere une carte représentant notre solution</span>
+   <span class="n">lons</span> <span class="o">=</span> <span class="p">[]</span>
+   <span class="n">lats</span> <span class="o">=</span> <span class="p">[]</span>
+   <span class="n">noms</span> <span class="o">=</span> <span class="p">[]</span>
+   <span class="k">for</span> <span class="n">ville</span> <span class="ow">in</span> <span class="n">meilleurePopulation</span><span class="o">.</span><span class="n">circuit</span><span class="p">:</span>
+      <span class="n">lons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ville</span><span class="o">.</span><span class="n">lon</span><span class="p">)</span>
+      <span class="n">lats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ville</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
+      <span class="n">noms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ville</span><span class="o">.</span><span class="n">nom</span><span class="p">)</span>
+
+   <span class="n">lons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lons</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+   <span class="n">lats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lats</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+   <span class="n">noms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">noms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+   <span class="nb">map</span> <span class="o">=</span> <span class="n">Basemap</span><span class="p">(</span><span class="n">llcrnrlon</span><span class="o">=-</span><span class="mf">5.5</span><span class="p">,</span><span class="n">llcrnrlat</span><span class="o">=</span><span class="mf">42.3</span><span class="p">,</span><span class="n">urcrnrlon</span><span class="o">=</span><span class="mf">9.3</span><span class="p">,</span><span class="n">urcrnrlat</span><span class="o">=</span><span class="mf">51.</span><span class="p">,</span>
+             <span class="n">resolution</span><span class="o">=</span><span class="s">'i'</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s">'tmerc'</span><span class="p">,</span> <span class="n">lat_0</span> <span class="o">=</span> <span class="mf">45.5</span><span class="p">,</span> <span class="n">lon_0</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.25</span><span class="p">)</span>
+
+   <span class="nb">map</span><span class="o">.</span><span class="n">drawmapboundary</span><span class="p">(</span><span class="n">fill_color</span><span class="o">=</span><span class="s">'aqua'</span><span class="p">)</span>
+   <span class="nb">map</span><span class="o">.</span><span class="n">fillcontinents</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s">'coral'</span><span class="p">,</span><span class="n">lake_color</span><span class="o">=</span><span class="s">'aqua'</span><span class="p">)</span>
+   <span class="nb">map</span><span class="o">.</span><span class="n">drawcoastlines</span><span class="p">()</span>
+   <span class="nb">map</span><span class="o">.</span><span class="n">drawcountries</span><span class="p">()</span>
+   <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span><span class="n">lats</span><span class="p">)</span>
+   <span class="nb">map</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s">'bo'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+   <span class="k">for</span> <span class="n">nom</span><span class="p">,</span><span class="n">xpt</span><span class="p">,</span><span class="n">ypt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">noms</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+       <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xpt</span><span class="o">+</span><span class="mi">5000</span><span class="p">,</span><span class="n">ypt</span><span class="o">+</span><span class="mi">25000</span><span class="p">,</span><span class="n">nom</span><span class="p">)</span>
+
+   <span class="nb">map</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">'D-'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'b'</span><span class="p">)</span> 
+   <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
+
+<p>Notre algorithme n’est pas déterministe, il ne nous garantit pas non plus d’obtenir la solution optimale. </p>
+
+<p>Sur les deux graphiques ci-dessous nous représentons la distance totale du meilleur circuit (km) en fonction du nombre de générations :
+<img src="/assets/media/evol_distance_tsp.png" />
+On peut voir que notre solution s’améliore au fur et à mesure des générations. En effet, nous avons commencé avec un circuit d’une distance totale d’environ 7200km et nous finissons avec un circuit d’environ 4700 km. </p>
+
+<p>Si nous relançons le programme, nous obtenons une meilleure solution, ce qui montre bien le non déterminisme de notre algorithme : 
+<img src="/assets/media/evol_distance_tsp_best.png" /></p>
+
+<p>Nous avons représenté une de nos solutions en utilisant la librairie Basemap :</p>
+
+<p><img src="/assets/media/carte_tsp.png" /></p>
+
+<p>Comme vous pouvez le voir sur la carte, nous avons fait l’hypothèse que nous nous déplacions en ligne droite entre les villes, ce qui explique pourquoi nous traversons la mer entre Cherbourg et le Havre.</p>
+
+<p>Nous pouvons également nous demander pourquoi nous nous contentons d’une solution bonne, mais qui n’est pas forcément optimale. La raison vient du fait que le problème du voyageur de commerce est un problème NP complet comme nous l’avons énoncé au début de cet article. Si vous vouliez aborder le problème de manière naïve en énumérant toutes les solutions, sachez que le nombre de chemins à tester explose de manière combinatoire ( 1/2*(n-1)!).</p>
+
+<p>A titre d’exemple, avec 3 villes nous avons seulement 1 chemin à tester. Avec 9 villes nous avons 20160 chemins, et avec 20 villes plus de 6*10^16 chemins.</p>
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#algorithme-ref">
+					algorithme <span>(3)</span>
+					,
+				</a></li>
+			 
+				<li><a href="/categories.html#python-ref">
+					python <span>(2)</span>
+					,
+				</a></li>
+			 
+				<li><a href="/categories.html#algorithmes génétiques-ref">
+					algorithmes génétiques <span>(1)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#Algorithme-ref">
+					Algorithme <span>(3)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#Python-ref">
+					Python <span>(2)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#Mathplotlib-ref">
+					Mathplotlib <span>(1)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Problème du voyageur de commerce&via=xopek59"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913" class="img-rounded author-image" />
+        <h4 class="section-title author-name">Antoine Vastel</h4>
+        <p class="author-bio">French J2EE software engineer, passionnate about software engineering and machine learning!</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/pr%C3%A9diction/javascript/2016/04/23/lissage-holt-winters.html" title="Lissage de Holt Winters (additif et multiplicatif) en Javascript">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/algorithme/s%C3%A9ries%20temporelles/2016/06/05/prediction-fourier.html" title="Transformée de Fourier appliquée à la prédiction de séries temporelles">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+    
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'antoinevastel';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2016 Antoine Vastel with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+</body>
+</html>
+
+
+
