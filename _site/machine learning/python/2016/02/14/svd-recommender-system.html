@@ -171,7 +171,7 @@
 	  <h1>SVD recommender system for movies</h1>
 <p>In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python.</p>
 
-<p>In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you’ll find on the internet don’t take advantage of the sparsity of the data. However, in our case we’ll pay attention to use appropriate data structures in order to increase the speed of our program.</p>
+<p>In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you’ll find on the internet don’t take advantage of the sparsity of the data. However, in our case we’ll pay attention to use appropriate data structures in order to increase the speed of our program. </p>
 
 <h2>Read the dataset</h2>
 
@@ -270,7 +270,7 @@
 <p>In our function we retrieve the best 250 estimated ratings. Why 250 ? We choose this number as our goal was to recommend 5 NEW movies for our test users. Therefore, by choosing 250 movies, we are almost sure that we will find at least 5 movies which have not been seen by our user.</p>
 
 <h2>Main of our program</h2>
-<p>Finally we obtain the following main :</p>
+<p>Finally we obtain the following main : </p>
 
 <div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 	<span class="n">K</span> <span class="o">=</span> <span class="mi">90</span>
@@ -289,7 +289,7 @@
 		  
 			 
 				<li><a href="/categories.html#machine learning-ref">
-					machine learning <span>(1)</span>
+					machine learning <span>(2)</span>
 					,
 				</a></li>
 			 
