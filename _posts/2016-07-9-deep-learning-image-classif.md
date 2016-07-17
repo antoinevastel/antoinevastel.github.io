@@ -231,7 +231,7 @@ print("accuracy : ",float(right)/float(right+wrong))
 
 Le maximum de précision atteint en local est ~0.77 avec une svm utilisant un kernel rbf (radial basis function). Lors de l'évaluation sur Kaggle pour la compétition Datascience Game, le modèle a obtenu une précision de 0.73. Cela est globalement du au fait que notre jeu de données contient peu d'images de la catégorie "Autre" et que c'est une catégorie que nous avons du mal à prédire avec notre modèle.
 
-<h3>Moral de l'histoire</h3>
+<h3>Morale de l'histoire</h3>
 Nous partions plutot négatif pour cette compétition car de nos jours on associe souvent classification d'images avec deep learning. Or, il est très long de faire du deep learning sans carte graphique et/ou un bon processeur. De plus, à l'origine nous n'avions pas de connaissances particulière en traitement de l'image.
 
 Il faut savoir que la génération des features avec le réseau de neuronnes a pris une 15ene d'heures sur un pc portable avec un processeur intel Celeron(ça existe encore en 2016 ...), un disque dur classique (pas de ssd), et seulement 4GO de ram. L'entrainement du classifieur supervisé par la suite est très rapide ~1min, et est donc négligeable fasse au temps d'extraction des features.
