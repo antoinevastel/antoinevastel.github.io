@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>Réseau de neuronnes pré-entrainé appliqué à la classification d'images</title>
 	
-	<meta name="description" content="Utilisation d'un réseau de neuronnes déjà entrainé pour résoudre un problème de classification d'images différente de celle pour lequel le réseau de neuronnes a été entrainé.">
+	<meta name="description" content="Utilisation d'un réseau de neuronnes  pré-entrainé pour résoudre un problème de classification d'images différent de celui pour lequel le réseau de neuronnes a été entrainé.">
 	
 	<meta name="author" content="Antoine Vastel">
 
@@ -104,7 +104,7 @@
 
 
 <div id="bio" class="text-center">
-	French J2EE software engineer, passionnate about software engineering and machine learning!
+	French PhD student and engineer, passionnate about software engineering and machine learning!
 </div>
 
 
@@ -168,46 +168,46 @@
 	   2016
 	 </span>
 	  <div class="article_body">
-	  <p>Cet article présente comment utiliser un réseau de neuronnes déjà entrainé pour résoudre un problème de classification d’images (tâche différente que celle pour laquelle le réseau a été préalablement entrainé). Dans notre cas, notre objectif est de classer des images satellites de toits en 4 catégories : orientation EST/OUEST, orientation NORD/SUD, toit plat, et catégorie “Autre”. Il est important de préciser que cette tâche de classification est différente de celle pour laquelle le réseau de neuronnes que nous allons utiliser a été entrainé.</p>
+	  <p>Cet article présente comment utiliser un réseau de neuronnes pré-entrainé pour résoudre un problème de classification d’images (tâche différente que celle pour laquelle le réseau a été préalablement entrainé). Dans notre cas, l’objectif est de classer des images satellites de toits en 4 catégories : orientation EST/OUEST, orientation NORD/SUD, toit plat, et catégorie “Autre”. Il est important de préciser une nouvelle fois que cette tâche de classification est différente de celle pour laquelle le réseau de neuronnes que nous allons utiliser a été entrainé.</p>
 
 <h2>Librairie MxNet</h2>
 <p>La librairie de réseau de neuronnes que nous utiliserons se nomme MxNET. Elle est disponible à la fois sous Linux et Windows, et possède (entre autre) un wrapper en Python et en R. Dans cet article le code a été exécuté sous Ubuntu avec le wrapper Python.</p>
 
 <h3>Installation de la librairie sous Ubuntu</h3>
-<p>Tout d’abord, exécutez les commandes suivantes : </p>
+<p>Tout d’abord, exécutez les commandes suivantes :</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
-<span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="o">-</span><span class="nx">y</span> <span class="nx">build</span><span class="o">-</span><span class="nx">essential</span> <span class="nx">git</span> <span class="nx">libatlas</span><span class="o">-</span><span class="nx">base</span><span class="o">-</span><span class="nx">dev</span> <span class="nx">libopencv</span><span class="o">-</span><span class="nx">dev</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
+<span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="o">-</span><span class="nx">y</span> <span class="nx">build</span><span class="o">-</span><span class="nx">essential</span> <span class="nx">git</span> <span class="nx">libatlas</span><span class="o">-</span><span class="nx">base</span><span class="o">-</span><span class="nx">dev</span> <span class="nx">libopencv</span><span class="o">-</span><span class="nx">dev</span></code></pre></figure>
 
-<p>Ensuite, clonez le dépot github de MxNet grâce à la commande ci-après :</p>
+<p>Ensuite, clonez le dépot Github de MxNet grâce à la commande ci-après :</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">git</span> <span class="nx">clone</span> <span class="o">--</span><span class="nx">recursive</span> <span class="nx">https</span><span class="err">:</span><span class="o">/</span><span class="sr">/</span><span class="err">github.com/dmlc/mxnet</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">git</span> <span class="nx">clone</span> <span class="o">--</span><span class="nx">recursive</span> <span class="nx">https</span><span class="err">:</span><span class="c1">//github.com/dmlc/mxnet</span></code></pre></figure>
 
-<p>Puis pour compiler la librairie : </p>
+<p>Puis pour compiler la librairie :</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">mxnet</span><span class="p">;</span> <span class="nx">make</span> <span class="o">-</span><span class="nx">j$</span><span class="p">(</span><span class="nx">nproc</span><span class="p">)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">mxnet</span><span class="p">;</span> <span class="nx">make</span> <span class="o">-</span><span class="nx">j$</span><span class="p">(</span><span class="nx">nproc</span><span class="p">)</span></code></pre></figure>
 
 <p>Si vous disposez d’un GPU assez récent et que vous avez déjà installé les librairies CUDA suffisantes, vous pouvez compiler la librairie avec la commande ci-dessous. Cela permettra à MxNet de tirer partie de votre GPU.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">mxnet</span><span class="p">;</span><span class="nx">make</span> <span class="o">-</span><span class="nx">j4</span> <span class="nx">USE_CUDA</span><span class="o">=</span><span class="mi">1</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">mxnet</span><span class="p">;</span><span class="nx">make</span> <span class="o">-</span><span class="nx">j4</span> <span class="nx">USE_CUDA</span><span class="o">=</span><span class="mi">1</span></code></pre></figure>
 
-<p>Enfin, pour installer le package Python : </p>
+<p>Enfin, pour installer le package Python :</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">python</span><span class="p">;</span> <span class="nx">sudo</span> <span class="nx">python</span> <span class="nx">setup</span><span class="p">.</span><span class="nx">py</span> <span class="nx">install</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">python</span><span class="p">;</span> <span class="nx">sudo</span> <span class="nx">python</span> <span class="nx">setup</span><span class="p">.</span><span class="nx">py</span> <span class="nx">install</span></code></pre></figure>
 
 <p>En cas de problème lors de la phase d’installation, n’hésitez pas à consulter directement la <a href="http://myungjun-youn-demo.readthedocs.io/en/latest/how_to/build.html">documentation de MxNet.</a></p>
 
 <h2>Extracteur de features</h2>
 <p>Le réseau de neuronnes que nous allons utiliser se nomme Inception. Il a été entrainé sur le jeu de données Image Net et a une précision top-1 de 70% et top-5 de 89.9%.</p>
 
-<p>Pour information, le jeu de données Image Net contient divers types d’images telles que des plantes, des animaux, des ustensiles etc… Sont but est de correctement prédire le type d’une image, ce qui est plutot différent (en apparence). Toutefois, ce réseau a appris à extraire des caractéristiques des images, afin de pouvoir les différencier les unes des autres. Il a appris, lors de sa phase d’apprentissage, à représenter les images sous une autre forme que le format brut dont on dispose.
-Cela est similaire à une approche plus traditionnelle qui consiste à utiliser les HOGs (Histogramme de gradient orienté) ou aux SIFT (Scale-Invariant feature transform) pour entrainer un classifieur supervisé.</p>
+<p>Pour information, le jeu de données Image Net contient divers types d’images telles que des plantes, des animaux, des ustensiles etc… Sont but est de correctement prédire le type d’une image, ce qui est différent de notre tâche de classification. Toutefois, ce réseau a appris à extraire des caractéristiques des images afin de pouvoir les différencier les unes des autres. Il a appris, lors de sa phase d’apprentissage, à représenter les images sous une autre forme que le format brut dont on dispose.
+Cela est similaire à une approche plus traditionnelle qui consiste à utiliser les HOGs (Histogramme de gradient orienté) ou aux SIFT (Scale-Invariant feature transform) pour extraire des features d’une image puis de se servir de celles-ci pour entrainer un classifieur supervisé.</p>
 
-<p>Pour chaque image nous allons donc extraire les caractéristiques générées par le réseau de neuronnes. Dans le cas du programme ci-après, nous avons les fichiers id_train.csv dans le répertoire courant (contient les ids et label des images de la phase d’entrainement), ainsi qu’un dossier roof_images contenant l’ensemble des images.</p>
+<p>Pour chaque image nous allons donc extraire les caractéristiques générées par le réseau de neuronnes. Dans le cas du programme ci-après, nous avons les fichiers id_train.csv dans le répertoire courant (contient les ids et labels des images de la phase d’entrainement), ainsi qu’un dossier roof_images contenant l’ensemble des images.</p>
 
 <p>Le code ci-dessous extrait les features des images qui nous serviront à entrainer notre classifeur supervisé. Celles-ci sont écrites dans le fichier features_train.csv.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mxnet</span> <span class="kn">as</span> <span class="nn">mx</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mxnet</span> <span class="kn">as</span> <span class="nn">mx</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">io</span><span class="p">,</span> <span class="n">transform</span>
@@ -279,12 +279,12 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
-<span class="n">read_images</span><span class="p">()</span></code></pre></div>
+<span class="n">read_images</span><span class="p">()</span></code></pre></figure>
 
 <p>Cette première phase nous a donc permis d’extraire un ensemble de caractéristique des images. Dans l’étape suivante nous utiliserons ces caractéristiques afin d’entrainer un classifieur supervisé. Nous explorerons plusieurs possibilités telles que kNN, random forest ainsi que la SVM.</p>
 
 <h2>Entrainement du classifieur supervisé</h2>
-<p>L’objectif désormais est d’entrainer un classifieur supervisé sur les caractéristiques que nous venons d’extraire dans l’étape précédente. Celui-ci aura pour rôle d’apprendre à classer correctement les images dans l’une des quatre catégories suivantes : </p>
+<p>L’objectif désormais est d’entrainer un classifieur supervisé sur les caractéristiques que nous venons d’extraire dans l’étape précédente. Celui-ci aura pour rôle d’apprendre à classer correctement les images dans l’une des quatre catégories suivantes :</p>
 <ul>
     <li>Toit orienté Est/Ouest</li>
     <li>Toit orienté Nord/Sud</li>
@@ -292,9 +292,9 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
     <li>Autre</li>
 </ul>
 
-<p>Notre programme permet de tester 3 solutions pour classer nos toits : kNN, random forest, SVM. Le programme ci-dessous est inspiré de celui que j’ai utilisé par la compétition Datascience Game. Grâce aux différents paramètres du début du programme on peut facilement changer le type de classifieur à utiliser (svm, kNN, random forest), le nombre de voisins dans le cas de l’algorithme kNN, ainsi le nombre d’images à utiliser pour entrainer notre classifieur.</p>
+<p>Notre programme permet de tester 3 algorithmes pour classer nos toits : kNN, random forest, SVM. Le programme ci-dessous est inspiré de celui que j’ai utilisé par la compétition Datascience Game. Grâce aux différents paramètres du début du programme on peut facilement changer le type de classifieur à utiliser (svm, kNN, random forest), le nombre de voisins dans le cas de l’algorithme kNN, ainsi que le nombre d’images à utiliser pour entrainer notre classifieur.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span> <span class="k">as</span> <span class="n">ndi</span>
 <span class="kn">import</span> <span class="nn">skimage.io</span> <span class="kn">as</span> <span class="nn">io</span>
@@ -379,16 +379,19 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
 <span class="n">right</span><span class="p">,</span> <span class="n">wrong</span> <span class="o">=</span> <span class="n">compute_accuracy</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">Y_test</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"right : "</span><span class="p">,</span><span class="n">right</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"wrong : "</span><span class="p">,</span><span class="n">wrong</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"accuracy : "</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">right</span><span class="o">+</span><span class="n">wrong</span><span class="p">))</span></code></pre></div>
+<span class="k">print</span><span class="p">(</span><span class="s">"accuracy : "</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">right</span><span class="o">+</span><span class="n">wrong</span><span class="p">))</span></code></pre></figure>
 
-<p>Le maximum de précision atteint en local est ~0.77 avec une svm utilisant un kernel rbf (radial basis function). Lors de l’évaluation sur Kaggle pour la compétition Datascience Game, le modèle a obtenu une précision de 0.73. Cela est globalement du au fait que notre jeu de données contient peu d’images de la catégorie “Autre” et que c’est une catégorie que nous avons du mal à prédire.</p>
+<p>Le maximum de précision atteint en local est ~0.77 avec une svm utilisant un kernel rbf (radial basis function). Lors de l’évaluation sur Kaggle pour la compétition Datascience Game, le modèle a obtenu une précision de 0.73. Cela est globalement du au fait que notre jeu de données contient peu d’images de la catégorie “Autre” et que c’est une catégorie que nous avons du mal à prédire avec notre modèle.</p>
 
-<h3>Moral de l'histoire</h3>
-<p>Nous partions plutot négatif pour cette compétition car de nos jours on associe souvent classification d’images avec deep learning. Or, il est très long de faire du deep learning sans carte graphique et/ou un bon processeur.</p>
+<h3>Morale de l'histoire</h3>
+<p>Nous partions plutot négatif pour cette compétition car de nos jours on associe souvent classification d’images avec deep learning. Or, il est très long de faire du deep learning sans carte graphique et/ou un bon processeur. De plus, à l’origine nous n’avions pas de connaissances particulière en traitement de l’image.</p>
 
 <p>Il faut savoir que la génération des features avec le réseau de neuronnes a pris une 15ene d’heures sur un pc portable avec un processeur intel Celeron(ça existe encore en 2016 …), un disque dur classique (pas de ssd), et seulement 4GO de ram. L’entrainement du classifieur supervisé par la suite est très rapide ~1min, et est donc négligeable fasse au temps d’extraction des features.</p>
 
 <p>Il est donc encore possible de nos jours de survivre dans les compétitions Kaggle ou de machine learning en général, même avec un pc légèrement (voir totalement) dépassé.</p>
+
+<h3>Remerciements</h3>
+<p>Je tiens à remercier (par ordre alphabétique) : Fabien Gontier, Perrine Martin et Jacques Peeters avec qui j’ai réalisé cette compétition. Je laisse à Jacques Peeters (s’il le souhaite) le soin d’expliquer le modèle le plus compétent que nous avons réalisé car il en est à l’origine.</p>
 
 	  </div>
 
@@ -398,13 +401,13 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
 		  
 		  
 			 
-				<li><a href="/categories.html#deep learning-ref">
-					deep learning <span>(1)</span>
+				<li><a href="/categories.html#Deep learning-ref">
+					Deep learning <span>(1)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#machine learning-ref">
-					machine learning <span>(2)</span>
+				<li><a href="/categories.html#Machine learning-ref">
+					Machine learning <span>(1)</span>
 					
 				</a></li>
 			
@@ -483,7 +486,7 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
       <section class="col-sm-6 author">
         <img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913" class="img-rounded author-image" />
         <h4 class="section-title author-name">Antoine Vastel</h4>
-        <p class="author-bio">French J2EE software engineer, passionnate about software engineering and machine learning!</p>
+        <p class="author-bio">French PhD student and engineer, passionnate about software engineering and machine learning!</p>
       </section>
     </div>
 

@@ -104,7 +104,7 @@
 
 
 <div id="bio" class="text-center">
-	French J2EE software engineer, passionnate about software engineering and machine learning!
+	French PhD student and engineer, passionnate about software engineering and machine learning!
 </div>
 
 
@@ -187,9 +187,9 @@
 <h2>Application au problème du voyageur de commerce</h2>
 <p>Le problème du voyageur de commerce consiste à passer par un ensemble de villes en minimisant la distance totale du trajet. C’est un problème dit NP-complet, ce qui signifie qu’il n’existe pas d’algorithme en temps polynomial permettant de trouver une solution exacte à ce problème,.</p>
 
-<p>Commençons par un peu de code. Nous allons créer une classe Ville. Les villes sont définies par leurs coordonnées GPS (longitude et latitude), et leur nom. </p>
+<p>Commençons par un peu de code. Nous allons créer une classe Ville. Les villes sont définies par leurs coordonnées GPS (longitude et latitude), et leur nom.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Ville</span><span class="p">:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Ville</span><span class="p">:</span>
    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">nom</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span>
@@ -200,11 +200,11 @@
       <span class="n">distanceX</span> <span class="o">=</span> <span class="p">(</span><span class="n">ville</span><span class="o">.</span><span class="n">lon</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">lon</span><span class="p">)</span><span class="o">*</span><span class="mi">40000</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lat</span><span class="o">+</span><span class="n">ville</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">360</span><span class="p">)</span><span class="o">/</span><span class="mi">360</span>
       <span class="n">distanceY</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lat</span><span class="o">-</span><span class="n">ville</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span><span class="o">*</span><span class="mi">40000</span><span class="o">/</span><span class="mi">360</span>
       <span class="n">distance</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">distanceX</span><span class="o">*</span><span class="n">distanceX</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">distanceY</span><span class="o">*</span><span class="n">distanceY</span><span class="p">)</span> <span class="p">)</span>
-      <span class="k">return</span> <span class="n">distance</span></code></pre></div>
+      <span class="k">return</span> <span class="n">distance</span></code></pre></figure>
 
 <p>Par la suite nous définissons une classe qui nous permettra de gérer les circuits. Un circuit est caractérisé par un ensemble de villes stocké dans la liste villesDestination. Il est important de mentionner que vu la nature de notre problème, l’ordre des villes a une importance ! Toutefois, un circuit étant une boucle, les circuits Lyon-Paris-Lille-Toulouse et Lille-Toulouse-Lyon-Paris sont équivalents.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GestionnaireCircuit</span><span class="p">:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GestionnaireCircuit</span><span class="p">:</span>
    <span class="n">villesDestinations</span> <span class="o">=</span> <span class="p">[]</span>
    
    <span class="k">def</span> <span class="nf">ajouterVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
@@ -273,7 +273,7 @@
 	  <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">contientVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
-	  <span class="k">return</span> <span class="n">ville</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span></code></pre></div>
+	  <span class="k">return</span> <span class="n">ville</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span></code></pre></figure>
 
 <p>Vous pouvez remarquer que notre circuit contient un attribut fitness et une méthode getFitness. C’est un attribut indiquant la qualité d’un circuit. Dans notre cas, un circuit aura une meilleure fitness lorsque la distance totale sera faible. En effet, l’objectif de notre algorithme est de trouver un circuit minimisant la distance totale de voyage. C’est la raison pour laquelle notre fonction de fitness retourne l’inverse de la distance totale. Ainsi, lorsque la distance diminue, alors la fitness augmente.</p>
 
@@ -281,7 +281,7 @@
 
 <p>Nous continuons notre programme par la création d’une classe Population. Dans le cas général, une population est un ensemble d’individus. Dans notre cas cela correspond à un ensemble de circuits.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Population</span><span class="p">:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Population</span><span class="p">:</span>
    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gestionnaireCircuit</span><span class="p">,</span> <span class="n">taillePopulation</span><span class="p">,</span> <span class="n">init</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">circuits</span> <span class="o">=</span> <span class="p">[]</span>
       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">taillePopulation</span><span class="p">):</span>
@@ -313,11 +313,11 @@
       <span class="k">return</span> <span class="n">fittest</span>
    
    <span class="k">def</span> <span class="nf">taillePopulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">)</span></code></pre></div>
+      <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">)</span></code></pre></figure>
 
 <p>La méthode getFittest nous retourne le circuit ayant la plus grande fitness, ce qui équivaut à la plus faible distance.</p>
 
-<p>Nous allons passer à la création de la classe GA (Genetic Algorithm). Celle-ci contient les principales étapes d’un algorithme génétique : </p>
+<p>Nous allons passer à la création de la classe GA (Genetic Algorithm). Celle-ci contient les principales étapes d’un algorithme génétique :</p>
 <ul>
 	<li>L'évolution de la population</li>
 	<li>Le crossover</li>
@@ -325,7 +325,7 @@
 	<li>La sélection des individus à reproduire</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GA</span><span class="p">:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GA</span><span class="p">:</span>
    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gestionnaireCircuit</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span> <span class="o">=</span> <span class="n">gestionnaireCircuit</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">tauxMutation</span> <span class="o">=</span> <span class="mf">0.015</span>
@@ -390,7 +390,7 @@
 	     <span class="n">randomId</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">pop</span><span class="o">.</span><span class="n">taillePopulation</span><span class="p">())</span>
 	     <span class="n">tournoi</span><span class="o">.</span><span class="n">sauvegarderCircuit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">pop</span><span class="o">.</span><span class="n">getCircuit</span><span class="p">(</span><span class="n">randomId</span><span class="p">))</span>
 	  <span class="n">fittest</span> <span class="o">=</span> <span class="n">tournoi</span><span class="o">.</span><span class="n">getFittest</span><span class="p">()</span>
-	  <span class="k">return</span> <span class="n">fittest</span></code></pre></div>
+	  <span class="k">return</span> <span class="n">fittest</span></code></pre></figure>
 
 <p>Cette partie du programme demande plus d’explications. Commençons par les attributs de notre classe.</p>
 
@@ -420,7 +420,7 @@
 <h2>Reproduction des invididus</h2>
 <p>Jusqu’à présent dans cet article j’ai parlé de reproduction d’individus sans définir ce que j’entendais par reproduction. En effet, qu’entend-on par reproduire deux circuits ?</p>
 
-<p>Dans le cas d’un algorithme génétique on parle souvent de crossover à la place de reproduction. Vous entendrez souvent parler de one/two points crossover. </p>
+<p>Dans le cas d’un algorithme génétique on parle souvent de crossover à la place de reproduction. Vous entendrez souvent parler de one/two points crossover.</p>
 
 <p>Expliquons cela plus en détails :
 Considérons un single point crossover. Les chromosomes des individus A et B sont définis ainsi :
@@ -446,7 +446,7 @@ chr B : 1 1 0 1 2 1 0 0 2 1<br /></p>
 <h2>Résolvons notre problème</h2>
 <p>Maintenant que nous avons vu l’algorithme à utiliser pour résoudre notre problème du voyageur de commerce, nous allons nous intéresser au code permettant de mettre en oeuvre notre solution.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
    
    <span class="n">gc</span> <span class="o">=</span> <span class="n">GestionnaireCircuit</span><span class="p">()</span>   
 
@@ -536,13 +536,13 @@ chr B : 1 1 0 1 2 1 0 0 2 1<br /></p>
        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xpt</span><span class="o">+</span><span class="mi">5000</span><span class="p">,</span><span class="n">ypt</span><span class="o">+</span><span class="mi">25000</span><span class="p">,</span><span class="n">nom</span><span class="p">)</span>
 
    <span class="nb">map</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">'D-'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'b'</span><span class="p">)</span> 
-   <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
+   <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
 
-<p>Notre algorithme n’est pas déterministe, il ne nous garantit pas non plus d’obtenir la solution optimale. </p>
+<p>Notre algorithme n’est pas déterministe, il ne nous garantit pas non plus d’obtenir la solution optimale.</p>
 
 <p>Sur les deux graphiques ci-dessous nous représentons la distance totale du meilleur circuit (km) en fonction du nombre de générations :
 <img src="/assets/media/evol_distance_tsp.png" />
-On peut voir que notre solution s’améliore au fur et à mesure des générations. En effet, nous avons commencé avec un circuit d’une distance totale d’environ 7200km et nous finissons avec un circuit d’environ 4700 km. </p>
+On peut voir que notre solution s’améliore au fur et à mesure des générations. En effet, nous avons commencé avec un circuit d’une distance totale d’environ 7200km et nous finissons avec un circuit d’environ 4700 km.</p>
 
 <p>Si nous relançons le programme, nous obtenons une meilleure solution, ce qui montre bien le non déterminisme de notre algorithme : 
 <img src="/assets/media/evol_distance_tsp_best.png" /></p>
@@ -565,18 +565,18 @@ On peut voir que notre solution s’améliore au fur et à mesure des générati
 		  
 		  
 			 
-				<li><a href="/categories.html#algorithme-ref">
-					algorithme <span>(3)</span>
+				<li><a href="/categories.html#Algorithme-ref">
+					Algorithme <span>(3)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#python-ref">
-					python <span>(2)</span>
+				<li><a href="/categories.html#Python-ref">
+					Python <span>(1)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#algorithmes génétiques-ref">
-					algorithmes génétiques <span>(1)</span>
+				<li><a href="/categories.html#Algorithmes génétiques-ref">
+					Algorithmes génétiques <span>(1)</span>
 					
 				</a></li>
 			
@@ -641,7 +641,7 @@ On peut voir que notre solution s’améliore au fur et à mesure des générati
       <section class="col-sm-6 author">
         <img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913" class="img-rounded author-image" />
         <h4 class="section-title author-name">Antoine Vastel</h4>
-        <p class="author-bio">French J2EE software engineer, passionnate about software engineering and machine learning!</p>
+        <p class="author-bio">French PhD student and engineer, passionnate about software engineering and machine learning!</p>
       </section>
     </div>
 

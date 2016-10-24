@@ -104,7 +104,7 @@
 
 
 <div id="bio" class="text-center">
-	French J2EE software engineer, passionnate about software engineering and machine learning!
+	French PhD student and engineer, passionnate about software engineering and machine learning!
 </div>
 
 
@@ -172,7 +172,7 @@
 
 <p>Pour prendre en compte l’ensemble de ces facteurs, nous allons devoir désormais utiliser 3 paramètres : alpha, gamma et delta.</p>
 
-<p>Cet article a pour objectif de présenter une implémentation possible du lissage de Holt Winters en Javascript. Il fait suite au <a href="/pr%C3%A9diction/javascript/2016/03/22/lissage-exponentiel-double.html">post sur le lissage exponentiel double</a>, et portera les mêmes points : </p>
+<p>Cet article a pour objectif de présenter une implémentation possible du lissage de Holt Winters en Javascript. Il fait suite au <a href="/pr%C3%A9diction/javascript/2016/03/22/lissage-exponentiel-double.html">post sur le lissage exponentiel double</a>, et portera les mêmes points :</p>
 <ul>
 	<li>Implémentation du lissage du Holt-Winters en Javascript;</li>
 	<li>Calcul de la valeur optimale d'alpha, gamma et delta;</li>
@@ -199,120 +199,122 @@
 	}
 </style>
 
-<pre><code>var data = [61.5, 63.2, 55.8, 71.4, 70, 71.4, 63.9, 78.9, 78.3, 78.6, 71.9, 87, 86.2, 87.5, 80.1, 92.5]; &lt;div class="container"&gt;
-&lt;div class="col-md-5"&gt;
-	&lt;p&gt;
-		&lt;table&gt;
-			&lt;tr&gt;
-				&lt;th&gt;Mois&lt;/th&gt;
-				&lt;th&gt;CA(k€)&lt;/th&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Janvier&lt;/td&gt;
-				&lt;td&gt;61.5&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Février&lt;/td&gt;
-				&lt;td&gt;63.2&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Mars&lt;/td&gt;
-				&lt;td&gt;55.8&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Avril&lt;/td&gt;
-				&lt;td&gt;71.4&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Mai&lt;/td&gt;
-				&lt;td&gt;70&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Juin&lt;/td&gt;
-				&lt;td&gt;71.4&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Juillet&lt;/td&gt;
-				&lt;td&gt;63.9&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Août&lt;/td&gt;
-				&lt;td&gt;78.9&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Septembre&lt;/td&gt;
-				&lt;td&gt;78.3&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Octobre&lt;/td&gt;
-				&lt;td&gt;78.6&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Novembre&lt;/td&gt;
-				&lt;td&gt;71.9&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Décembre&lt;/td&gt;
-				&lt;td&gt;87&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;Janvier&lt;/td&gt;
-				&lt;td&gt;86.2&lt;/td&gt;
-			&lt;/tr&gt;
-
-			&lt;tr&gt;
-				&lt;td&gt;Février&lt;/td&gt;
-				&lt;td&gt;87.5&lt;/td&gt;
-			&lt;/tr&gt;
-
-			&lt;tr&gt;
-				&lt;td&gt;Mars&lt;/td&gt;
-				&lt;td&gt;80.1&lt;/td&gt;
-			&lt;/tr&gt;
-
-			&lt;tr&gt;
-				&lt;td&gt;Avril&lt;/td&gt;
-				&lt;td&gt;92.5&lt;/td&gt;
-			&lt;/tr&gt;
-
-			&lt;tr&gt;
-				&lt;td&gt;Mai&lt;/td&gt;
-				&lt;td&gt;?&lt;/td&gt;
-			&lt;/tr&gt;
-
-			&lt;tr&gt;
-				&lt;td&gt;Juin&lt;/td&gt;
-				&lt;td&gt;?&lt;/td&gt;
-			&lt;/tr&gt;
-
-			&lt;tr&gt;
-				&lt;td&gt;Juillet&lt;/td&gt;
-				&lt;td&gt;?&lt;/td&gt;
-			&lt;/tr&gt;
-
-			&lt;tr&gt;
-				&lt;td&gt;Août&lt;/td&gt;
-				&lt;td&gt;?&lt;/td&gt;
-			&lt;/tr&gt;
-		&lt;/table&gt;
-	&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="col-md-1"&gt;&lt;/div&gt;
-
-&lt;div class="col-md-6"&gt;
-	&lt;p&gt;
-		Ici, nous sommes en présence de cycles durant 4 mois et dont la magnitude ne croît pas au cours du temps. Nous utiliserons donc le lissage de Holt-Winters additif (par opposition au multiplicatif). Notre objectif sera de déterminer les valeurs du CA pour le prochain cycle.
-	&lt;/p&gt;
-&lt;/div&gt;
+<div class="highlighter-rouge"><pre class="highlight"><code>var data = [61.5, 63.2, 55.8, 71.4, 70, 71.4, 63.9, 78.9, 78.3, 78.6, 71.9, 87, 86.2, 87.5, 80.1, 92.5];
 </code></pre>
-<p>&lt;/div&gt;</p>
+</div>
+<div class="container">
+	<div class="col-md-5">
+		<p>
+			<table>
+				<tr>
+					<th>Mois</th>
+					<th>CA(k€)</th>
+				</tr>
+				<tr>
+					<td>Janvier</td>
+					<td>61.5</td>
+				</tr>
+				<tr>
+					<td>Février</td>
+					<td>63.2</td>
+				</tr>
+				<tr>
+					<td>Mars</td>
+					<td>55.8</td>
+				</tr>
+				<tr>
+					<td>Avril</td>
+					<td>71.4</td>
+				</tr>
+				<tr>
+					<td>Mai</td>
+					<td>70</td>
+				</tr>
+				<tr>
+					<td>Juin</td>
+					<td>71.4</td>
+				</tr>
+				<tr>
+					<td>Juillet</td>
+					<td>63.9</td>
+				</tr>
+				<tr>
+					<td>Août</td>
+					<td>78.9</td>
+				</tr>
+				<tr>
+					<td>Septembre</td>
+					<td>78.3</td>
+				</tr>
+				<tr>
+					<td>Octobre</td>
+					<td>78.6</td>
+				</tr>
+				<tr>
+					<td>Novembre</td>
+					<td>71.9</td>
+				</tr>
+				<tr>
+					<td>Décembre</td>
+					<td>87</td>
+				</tr>
+				<tr>
+					<td>Janvier</td>
+					<td>86.2</td>
+				</tr>
+
+				<tr>
+					<td>Février</td>
+					<td>87.5</td>
+				</tr>
+
+				<tr>
+					<td>Mars</td>
+					<td>80.1</td>
+				</tr>
+
+				<tr>
+					<td>Avril</td>
+					<td>92.5</td>
+				</tr>
+
+				<tr>
+					<td>Mai</td>
+					<td>?</td>
+				</tr>
+
+				<tr>
+					<td>Juin</td>
+					<td>?</td>
+				</tr>
+
+				<tr>
+					<td>Juillet</td>
+					<td>?</td>
+				</tr>
+
+				<tr>
+					<td>Août</td>
+					<td>?</td>
+				</tr>
+			</table>
+		</p>
+	</div>
+	<div class="col-md-1"></div>
+
+	<div class="col-md-6">
+		<p>
+			Ici, nous sommes en présence de cycles durant 4 mois et dont la magnitude ne croît pas au cours du temps. Nous utiliserons donc le lissage de Holt-Winters additif (par opposition au multiplicatif). Notre objectif sera de déterminer les valeurs du CA pour le prochain cycle.
+		</p>
+	</div>
+</div>
 
 <h2>Lissage de Holt Winters</h2>
 <p>Le code est extrait et adapté de la <a href="https://github.com/antoinevastel/zodiac-ts">librairie zodiac-ts</a> que j’ai mise en ligne sur Github.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//Création de la classe HoltWintersSmoothing
-//On doit lui passer en paramètre les données, les 3 paramètres alpha, gamma et delta nous avons parlé précédemment, la longueur de la saison, ainsi qu'un booléen indiquant si on souhaite appliquer le lissage multiplicatif ou addifif
-</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//Création de la classe HoltWintersSmoothing</span>
+<span class="c1">//On doit lui passer en paramètre les données, les 3 paramètres alpha, gamma et delta nous avons parlé précédemment, la longueur de la saison, ainsi qu'un booléen indiquant si on souhaite appliquer le lissage multiplicatif ou addifif</span>
+
 <span class="nx">HoltWintersSmoothing</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">alpha</span><span class="p">,</span> <span class="nx">gamma</span><span class="p">,</span> <span class="nx">delta</span><span class="p">,</span> <span class="nx">seasonLength</span><span class="p">,</span> <span class="nx">mult</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="k">this</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
@@ -324,8 +326,8 @@
 	<span class="k">this</span><span class="p">.</span><span class="nx">forecast</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="c1">//Nous définissons la méthode prédict qui aura pour but d'appeller la méthode de prédiction multicative ou additive selon le paramètre passé dans le constructeur
-</span><span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">predict</span> <span class="o">=</span><span class="kd">function</span> <span class="p">()</span>
+<span class="c1">//Nous définissons la méthode prédict qui aura pour but d'appeller la méthode de prédiction multicative ou additive selon le paramètre passé dans le constructeur</span>
+<span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">predict</span> <span class="o">=</span><span class="kd">function</span> <span class="p">()</span>
 <span class="p">{</span>
 	<span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">mult</span><span class="p">)</span>
 	<span class="p">{</span>
@@ -337,8 +339,8 @@
 	<span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">//Méthode de prédiction pour le cas additif
-</span><span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">predictAdd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="c1">//Méthode de prédiction pour le cas additif</span>
+<span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">predictAdd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
 	<span class="nx">A</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">();</span>
 	<span class="nx">B</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">();</span>
@@ -384,8 +386,8 @@
 	<span class="k">return</span> <span class="nx">forecast</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="c1">//Méthode de prédiction pour le cas multiplicatif
-</span><span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">predictMult</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="c1">//Méthode de prédiction pour le cas multiplicatif</span>
+<span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">predictMult</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
 	<span class="nx">A</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">();</span>
 	<span class="nx">B</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">();</span>
@@ -429,14 +431,14 @@
 
 	<span class="k">this</span><span class="p">.</span><span class="nx">forecast</span> <span class="o">=</span> <span class="nx">forecast</span><span class="p">;</span>
 	<span class="k">return</span> <span class="nx">forecast</span><span class="p">;</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 <h2>Trouver les valeurs optimales d'alpha, gamma et delta</h2>
 <p>Pour trouver les meilleures valeurs des paramètres alpha, gamma et delta nous cherchons de nouveau à minimiser l’erreur quadratique. Celle-ci est égale à 1/(n-1)*(valeur[1]-prediction[1] + valeur[2]-prediction[2] + … + valeur[n]-prediction[n]).</p>
 
-<p>En Javascript cela donne : </p>
+<p>En Javascript cela donne :</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">computeMeanSquaredError</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">computeMeanSquaredError</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span> 
 	<span class="kd">var</span> <span class="nx">SSE</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
 	<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -450,11 +452,11 @@
 		
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nx">SSE</span><span class="p">;</span>
-<span class="p">};</span></code></pre></div>
+<span class="p">};</span></code></pre></figure>
 
 <p>Pour trouver les meilleures valeurs, on itère entre 0 et 1 pour chaque paramètre, avec un pas passé en paramètre à notre méthode. L’objectif est de garder les valeurs d’alpha, gamma et delta permettant de minimiser l’erreur quadratique.</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">optimizeParameters</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">iter</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">HoltWintersSmoothing</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">optimizeParameters</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">iter</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="kd">var</span> <span class="nx">incr</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nx">iter</span><span class="p">;</span>
 	<span class="kd">var</span> <span class="nx">bestAlpha</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
@@ -493,25 +495,25 @@
 	<span class="k">this</span><span class="p">.</span><span class="nx">gamma</span> <span class="o">=</span> <span class="nx">bestGamma</span><span class="p">;</span>
 	<span class="k">this</span><span class="p">.</span><span class="nx">delta</span> <span class="o">=</span> <span class="nx">bestDelta</span><span class="p">;</span>
 	<span class="k">return</span> <span class="p">{</span><span class="s2">"alpha"</span><span class="p">:</span><span class="k">this</span><span class="p">.</span><span class="nx">alpha</span><span class="p">,</span> <span class="s2">"gamma"</span><span class="p">:</span><span class="k">this</span><span class="p">.</span><span class="nx">gamma</span><span class="p">,</span> <span class="s2">"delta"</span><span class="p">:</span><span class="k">this</span><span class="p">.</span><span class="nx">delta</span><span class="p">};</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
-<p>Une fois les paramètres optimaux estimés, il suffit de générer les prédictions associées aux valeurs de ces paramètres : </p>
+<p>Une fois les paramètres optimaux estimés, il suffit de générer les prédictions associées aux valeurs de ces paramètres :</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//On peut se permettre de passer alpha, gamma et delta à null si on souhaite les optimiser par la suite
-</span><span class="kd">var</span> <span class="nx">hws</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HoltWintersSmoothing</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">alpha</span><span class="p">,</span> <span class="nx">gamma</span><span class="p">,</span> <span class="nx">delta</span><span class="p">,</span> <span class="nx">seasonLength</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">//On peut se permettre de passer alpha, gamma et delta à null si on souhaite les optimiser par la suite</span>
+<span class="kd">var</span> <span class="nx">hws</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">HoltWintersSmoothing</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">alpha</span><span class="p">,</span> <span class="nx">gamma</span><span class="p">,</span> <span class="nx">delta</span><span class="p">,</span> <span class="nx">seasonLength</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 <span class="nx">optimizedParameters</span> <span class="o">=</span> <span class="nx">hws</span><span class="p">.</span><span class="nx">optimizeParameters</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">hws</span><span class="p">.</span><span class="nx">predict</span><span class="p">();</span></code></pre></div>
+<span class="kd">var</span> <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">hws</span><span class="p">.</span><span class="nx">predict</span><span class="p">();</span></code></pre></figure>
 
 <h2>Représentation graphique avec HighchartJs</h2>
 <p>Nous allons utiliser la librairie HighchartJs afin de tracer nos deux séries (celle réalisée et celle prédite). Pour cela il suffit d’inclure Jquery, ainsi que le fichier Highcharts.js. Ensuite, nous insérons le code suivant, en modifiant les différents champs en fonction de nos besoins :</p>
 
-<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
     <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="nx">$</span><span class="p">(</span><span class="s1">'#container'</span><span class="p">).</span><span class="nx">highcharts</span><span class="p">({</span>
             <span class="na">title</span><span class="p">:</span> <span class="p">{</span>
                 <span class="na">text</span><span class="p">:</span> <span class="s1">'Chiffre d\'affaires mensuel'</span><span class="p">,</span>
-                <span class="na">x</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span> <span class="c1">//center
-</span>            <span class="p">},</span>
+                <span class="na">x</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span> <span class="c1">//center</span>
+            <span class="p">},</span>
             <span class="na">subtitle</span><span class="p">:</span> <span class="p">{</span>
                 <span class="na">text</span><span class="p">:</span> <span class="s1">'Source: fakeSource.com'</span><span class="p">,</span>
                 <span class="na">x</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span>
@@ -548,9 +550,9 @@
             <span class="p">}]</span>
         <span class="p">});</span>
     <span class="p">});</span>
-<span class="o">&lt;</span><span class="sr">/</span><span class="err">script&gt;</span>
-
-<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"container"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"min-width: 310px; height: 400px; margin: 0 auto"</span><span class="o">&gt;&lt;</span><span class="sr">/</span><span class="err">div&gt;</span></code></pre></div>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"container"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"min-width: 310px; height: 400px; margin: 0 auto"</span><span class="o">&gt;&lt;</span><span class="sr">/div&gt;</span></code></pre></figure>
 
 <p><br />
 Nous obtenons le résultat ci-dessous : 
@@ -638,13 +640,13 @@ Nous obtenons le résultat ci-dessous :
 		  
 		  
 			 
-				<li><a href="/categories.html#prédiction-ref">
-					prédiction <span>(3)</span>
+				<li><a href="/categories.html#Prédiction-ref">
+					Prédiction <span>(3)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#javascript-ref">
-					javascript <span>(3)</span>
+				<li><a href="/categories.html#Javascript-ref">
+					Javascript <span>(3)</span>
 					
 				</a></li>
 			
@@ -716,7 +718,7 @@ Nous obtenons le résultat ci-dessous :
       <section class="col-sm-6 author">
         <img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913" class="img-rounded author-image" />
         <h4 class="section-title author-name">Antoine Vastel</h4>
-        <p class="author-bio">French J2EE software engineer, passionnate about software engineering and machine learning!</p>
+        <p class="author-bio">French PhD student and engineer, passionnate about software engineering and machine learning!</p>
       </section>
     </div>
 

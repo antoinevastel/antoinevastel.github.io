@@ -104,7 +104,7 @@
 
 
 <div id="bio" class="text-center">
-	French J2EE software engineer, passionnate about software engineering and machine learning!
+	French PhD student and engineer, passionnate about software engineering and machine learning!
 </div>
 
 
@@ -171,11 +171,11 @@
 	  <h1>SVD recommender system for movies</h1>
 <p>In this article we will see how it is possible to use python in order to build a SVD based recommender system. Before going further, I want to precise that the goal of this article is not to explain how and why SVD works to make recommendations. This article only aims to show a possible and simple implementation of a SVD based recommender system using Python.</p>
 
-<p>In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you’ll find on the internet don’t take advantage of the sparsity of the data. However, in our case we’ll pay attention to use appropriate data structures in order to increase the speed of our program. </p>
+<p>In this example we consider an input file whose each line contains 3 columns (user id, movie id, rating). One important thing is that most of the time, datasets are really sparse when it comes about recommender systems. Most of the examples you’ll find on the internet don’t take advantage of the sparsity of the data. However, in our case we’ll pay attention to use appropriate data structures in order to increase the speed of our program.</p>
 
 <h2>Read the dataset</h2>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span>
 
 <span class="c">#constants defining the dimensions of our User Rating Matrix (URM)</span>
@@ -189,25 +189,25 @@
 		<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">urmReader</span><span class="p">:</span>
 			<span class="n">urm</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
-	<span class="k">return</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">urm</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></code></pre></div>
+	<span class="k">return</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">urm</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></code></pre></figure>
 
 <p>We read our dataset and store it in sparse matrix using csr format. To do so we use the scipy library. It enables us to store only the non zero elements.</p>
 
 <h2>Retrieve the test users</h2>
 <p>First we are going to create a function readUsersTest in order to get the ids of the users for which we want to make a prediction.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">readUsersTest</span><span class="p">():</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">readUsersTest</span><span class="p">():</span>
 	<span class="n">uTest</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./testSample.csv"</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">testFile</span><span class="p">:</span>
 		<span class="n">testReader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">testFile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">','</span><span class="p">)</span>
 		<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">testReader</span><span class="p">:</span>
 			<span class="n">uTest</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
-	<span class="k">return</span> <span class="n">uTest</span></code></pre></div>
+	<span class="k">return</span> <span class="n">uTest</span></code></pre></figure>
 
 <p>Then we want to find the movies already seen by these users in order not to recommend them again.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">getMoviesSeen</span><span class="p">():</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">getMoviesSeen</span><span class="p">():</span>
 	<span class="n">moviesSeen</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 	<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./trainSample.csv"</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">trainFile</span><span class="p">:</span>
 		<span class="n">urmReader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">trainFile</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">','</span><span class="p">)</span>
@@ -218,12 +218,12 @@
 				<span class="n">moviesSeen</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 				<span class="n">moviesSeen</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 
-	<span class="k">return</span> <span class="n">moviesSeen</span></code></pre></div>
+	<span class="k">return</span> <span class="n">moviesSeen</span></code></pre></figure>
 
 <h2>Compute the SVD of our user rating matrix</h2>
 <p>In order to compute the singular value decomposition of our user rating matrix we need to create a function with two parameters : the user rating matrix and the rank of our SVD. The SVD is computed using the <a href="https://pypi.python.org/pypi/sparsesvd/">sparsesvd package</a></p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">math</span> <span class="kn">as</span> <span class="nn">mt</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">math</span> <span class="kn">as</span> <span class="nn">mt</span>
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">from</span> <span class="nn">sparsesvd</span> <span class="kn">import</span> <span class="n">sparsesvd</span>
 
@@ -239,14 +239,14 @@
 	<span class="n">S</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 	<span class="n">Vt</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">Vt</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
-	<span class="k">return</span> <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span></code></pre></div>
+	<span class="k">return</span> <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span>	</code></pre></figure>
 
 <p>Since s is returned as a vector, we want to create a matrix S whose diagonal has for value the elements of vector s. Once again, in order to save memory space and to increase the speed of our program we do not forget to convert our new matrices to csr format.</p>
 
 <h2>Predict the movies for our test users</h2>
 <p>The final step is to predict recommendations for our test users. To do so we will use the matrices computed in the previous step.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">scipy.sparse.linalg</span> <span class="kn">import</span> <span class="o">*</span> <span class="c">#used for matrix multiplication</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">scipy.sparse.linalg</span> <span class="kn">import</span> <span class="o">*</span> <span class="c">#used for matrix multiplication</span>
 
 <span class="k">def</span> <span class="nf">computeEstimatedRatings</span><span class="p">(</span><span class="n">urm</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span><span class="p">,</span> <span class="n">uTest</span><span class="p">,</span> <span class="n">moviesSeen</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">test</span><span class="p">):</span>
 	<span class="n">rightTerm</span> <span class="o">=</span> <span class="n">S</span><span class="o">*</span><span class="n">Vt</span> 
@@ -265,20 +265,20 @@
 				<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">uTest</span><span class="p">[</span><span class="n">userTest</span><span class="p">])</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
 					<span class="k">break</span>
 
-	<span class="k">return</span> <span class="n">uTest</span></code></pre></div>
+	<span class="k">return</span> <span class="n">uTest</span></code></pre></figure>
 
 <p>In our function we retrieve the best 250 estimated ratings. Why 250 ? We choose this number as our goal was to recommend 5 NEW movies for our test users. Therefore, by choosing 250 movies, we are almost sure that we will find at least 5 movies which have not been seen by our user.</p>
 
 <h2>Main of our program</h2>
-<p>Finally we obtain the following main : </p>
+<p>Finally we obtain the following main :</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 	<span class="n">K</span> <span class="o">=</span> <span class="mi">90</span>
 	<span class="n">urm</span> <span class="o">=</span> <span class="n">readUrm</span><span class="p">()</span>
 	<span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">computeSVD</span><span class="p">(</span><span class="n">urm</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
 	<span class="n">uTest</span> <span class="o">=</span> <span class="n">readUsersTest</span><span class="p">()</span>
 	<span class="n">moviesSeen</span> <span class="o">=</span> <span class="n">getMoviesSeen</span><span class="p">()</span>
-	<span class="n">uTest</span> <span class="o">=</span> <span class="n">computeEstimatedRatings</span><span class="p">(</span><span class="n">urm</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span><span class="p">,</span> <span class="n">uTest</span><span class="p">,</span> <span class="n">moviesSeen</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span></code></pre></div>
+	<span class="n">uTest</span> <span class="o">=</span> <span class="n">computeEstimatedRatings</span><span class="p">(</span><span class="n">urm</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span><span class="p">,</span> <span class="n">uTest</span><span class="p">,</span> <span class="n">moviesSeen</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span></code></pre></figure>
 
 	  </div>
 
@@ -289,12 +289,12 @@
 		  
 			 
 				<li><a href="/categories.html#machine learning-ref">
-					machine learning <span>(2)</span>
+					machine learning <span>(1)</span>
 					,
 				</a></li>
 			 
 				<li><a href="/categories.html#python-ref">
-					python <span>(2)</span>
+					python <span>(1)</span>
 					
 				</a></li>
 			
@@ -359,7 +359,7 @@
       <section class="col-sm-6 author">
         <img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913" class="img-rounded author-image" />
         <h4 class="section-title author-name">Antoine Vastel</h4>
-        <p class="author-bio">French J2EE software engineer, passionnate about software engineering and machine learning!</p>
+        <p class="author-bio">French PhD student and engineer, passionnate about software engineering and machine learning!</p>
       </section>
     </div>
 
