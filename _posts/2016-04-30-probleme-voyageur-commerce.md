@@ -70,7 +70,7 @@ class Circuit:
          for i in range(0, self.gestionnaireCircuit.nombreVilles()):
             self.circuit.append(None)
 
-    def __len__(self):
+   def __len__(self):
       return len(self.circuit)
    
 	def __getitem__(self, index):
