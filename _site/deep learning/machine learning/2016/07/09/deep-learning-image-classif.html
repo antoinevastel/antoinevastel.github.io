@@ -174,26 +174,26 @@
 <p>La librairie de réseau de neuronnes que nous utiliserons se nomme MxNET. Elle est disponible à la fois sous Linux et Windows, et possède (entre autre) un wrapper en Python et en R. Dans cet article le code a été exécuté sous Ubuntu avec le wrapper Python.</p>
 
 <h3>Installation de la librairie sous Ubuntu</h3>
-<p>Tout d’abord, exécutez les commandes suivantes :</p>
+<p>Tout d’abord, exécutez les commandes suivantes : </p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
-<span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="o">-</span><span class="nx">y</span> <span class="nx">build</span><span class="o">-</span><span class="nx">essential</span> <span class="nx">git</span> <span class="nx">libatlas</span><span class="o">-</span><span class="nx">base</span><span class="o">-</span><span class="nx">dev</span> <span class="nx">libopencv</span><span class="o">-</span><span class="nx">dev</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">update</span>
+<span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="o">-</span><span class="nx">y</span> <span class="nx">build</span><span class="o">-</span><span class="nx">essential</span> <span class="nx">git</span> <span class="nx">libatlas</span><span class="o">-</span><span class="nx">base</span><span class="o">-</span><span class="nx">dev</span> <span class="nx">libopencv</span><span class="o">-</span><span class="nx">dev</span></code></pre></div>
 
 <p>Ensuite, clonez le dépot Github de MxNet grâce à la commande ci-après :</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">git</span> <span class="nx">clone</span> <span class="o">--</span><span class="nx">recursive</span> <span class="nx">https</span><span class="err">:</span><span class="c1">//github.com/dmlc/mxnet</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">git</span> <span class="nx">clone</span> <span class="o">--</span><span class="nx">recursive</span> <span class="nx">https</span><span class="err">:</span><span class="o">/</span><span class="sr">/</span><span class="err">github.com/dmlc/mxnet</span></code></pre></div>
 
-<p>Puis pour compiler la librairie :</p>
+<p>Puis pour compiler la librairie : </p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">mxnet</span><span class="p">;</span> <span class="nx">make</span> <span class="o">-</span><span class="nx">j$</span><span class="p">(</span><span class="nx">nproc</span><span class="p">)</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">mxnet</span><span class="p">;</span> <span class="nx">make</span> <span class="o">-</span><span class="nx">j$</span><span class="p">(</span><span class="nx">nproc</span><span class="p">)</span></code></pre></div>
 
 <p>Si vous disposez d’un GPU assez récent et que vous avez déjà installé les librairies CUDA suffisantes, vous pouvez compiler la librairie avec la commande ci-dessous. Cela permettra à MxNet de tirer partie de votre GPU.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">mxnet</span><span class="p">;</span><span class="nx">make</span> <span class="o">-</span><span class="nx">j4</span> <span class="nx">USE_CUDA</span><span class="o">=</span><span class="mi">1</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">mxnet</span><span class="p">;</span><span class="nx">make</span> <span class="o">-</span><span class="nx">j4</span> <span class="nx">USE_CUDA</span><span class="o">=</span><span class="mi">1</span></code></pre></div>
 
-<p>Enfin, pour installer le package Python :</p>
+<p>Enfin, pour installer le package Python : </p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">python</span><span class="p">;</span> <span class="nx">sudo</span> <span class="nx">python</span> <span class="nx">setup</span><span class="p">.</span><span class="nx">py</span> <span class="nx">install</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">cd</span> <span class="nx">python</span><span class="p">;</span> <span class="nx">sudo</span> <span class="nx">python</span> <span class="nx">setup</span><span class="p">.</span><span class="nx">py</span> <span class="nx">install</span></code></pre></div>
 
 <p>En cas de problème lors de la phase d’installation, n’hésitez pas à consulter directement la <a href="http://myungjun-youn-demo.readthedocs.io/en/latest/how_to/build.html">documentation de MxNet.</a></p>
 
@@ -207,7 +207,7 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
 
 <p>Le code ci-dessous extrait les features des images qui nous serviront à entrainer notre classifeur supervisé. Celles-ci sont écrites dans le fichier features_train.csv.</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mxnet</span> <span class="kn">as</span> <span class="nn">mx</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mxnet</span> <span class="kn">as</span> <span class="nn">mx</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">io</span><span class="p">,</span> <span class="n">transform</span>
@@ -279,12 +279,12 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
-<span class="n">read_images</span><span class="p">()</span></code></pre></figure>
+<span class="n">read_images</span><span class="p">()</span></code></pre></div>
 
 <p>Cette première phase nous a donc permis d’extraire un ensemble de caractéristique des images. Dans l’étape suivante nous utiliserons ces caractéristiques afin d’entrainer un classifieur supervisé. Nous explorerons plusieurs possibilités telles que kNN, random forest ainsi que la SVM.</p>
 
 <h2>Entrainement du classifieur supervisé</h2>
-<p>L’objectif désormais est d’entrainer un classifieur supervisé sur les caractéristiques que nous venons d’extraire dans l’étape précédente. Celui-ci aura pour rôle d’apprendre à classer correctement les images dans l’une des quatre catégories suivantes :</p>
+<p>L’objectif désormais est d’entrainer un classifieur supervisé sur les caractéristiques que nous venons d’extraire dans l’étape précédente. Celui-ci aura pour rôle d’apprendre à classer correctement les images dans l’une des quatre catégories suivantes : </p>
 <ul>
     <li>Toit orienté Est/Ouest</li>
     <li>Toit orienté Nord/Sud</li>
@@ -294,7 +294,7 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
 
 <p>Notre programme permet de tester 3 algorithmes pour classer nos toits : kNN, random forest, SVM. Le programme ci-dessous est inspiré de celui que j’ai utilisé par la compétition Datascience Game. Grâce aux différents paramètres du début du programme on peut facilement changer le type de classifieur à utiliser (svm, kNN, random forest), le nombre de voisins dans le cas de l’algorithme kNN, ainsi que le nombre d’images à utiliser pour entrainer notre classifieur.</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span> <span class="k">as</span> <span class="n">ndi</span>
 <span class="kn">import</span> <span class="nn">skimage.io</span> <span class="kn">as</span> <span class="nn">io</span>
@@ -379,7 +379,7 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
 <span class="n">right</span><span class="p">,</span> <span class="n">wrong</span> <span class="o">=</span> <span class="n">compute_accuracy</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">Y_test</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"right : "</span><span class="p">,</span><span class="n">right</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"wrong : "</span><span class="p">,</span><span class="n">wrong</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"accuracy : "</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">right</span><span class="o">+</span><span class="n">wrong</span><span class="p">))</span></code></pre></figure>
+<span class="k">print</span><span class="p">(</span><span class="s">"accuracy : "</span><span class="p">,</span><span class="nb">float</span><span class="p">(</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">right</span><span class="o">+</span><span class="n">wrong</span><span class="p">))</span></code></pre></div>
 
 <p>Le maximum de précision atteint en local est ~0.77 avec une svm utilisant un kernel rbf (radial basis function). Lors de l’évaluation sur Kaggle pour la compétition Datascience Game, le modèle a obtenu une précision de 0.73. Cela est globalement du au fait que notre jeu de données contient peu d’images de la catégorie “Autre” et que c’est une catégorie que nous avons du mal à prédire avec notre modèle.</p>
 
@@ -401,13 +401,13 @@ Cela est similaire à une approche plus traditionnelle qui consiste à utiliser 
 		  
 		  
 			 
-				<li><a href="/categories.html#Deep learning-ref">
-					Deep learning <span>(1)</span>
+				<li><a href="/categories.html#deep learning-ref">
+					deep learning <span>(1)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#Machine learning-ref">
-					Machine learning <span>(2)</span>
+				<li><a href="/categories.html#machine learning-ref">
+					machine learning <span>(3)</span>
 					
 				</a></li>
 			

@@ -170,7 +170,7 @@
 	  <div class="article_body">
 	  <p>Contrairement au lissage exponentiel simple qui ne s’applique qu’aux séries temporelles sans tendance, le lissage exponentiel double (LED) permet d’établir une prévision lorsque la série présente une tendance.</p>
 
-<p>Cet article a pour objectif de présenter une implémentation possible du lissage exponentiel double en Javascript. Il fait suite au <a href="/pr%C3%A9diction/javascript/2016/03/20/lissage-exponentiel-simple.html">post sur le lissage exponentiel simple</a>, et portera les mêmes points :</p>
+<p>Cet article a pour objectif de présenter une implémentation possible du lissage exponentiel double en Javascript. Il fait suite au <a href="/pr%C3%A9diction/javascript/2016/03/20/lissage-exponentiel-simple.html">post sur le lissage exponentiel simple</a>, et portera les mêmes points : </p>
 <ul>
 	<li>Implémentation du LED en Javascript;</li>
 	<li>Calcul de la valeur optimale d'alpha;</li>
@@ -283,12 +283,12 @@
 
 <p>Concernant l’initialisation, plusieurs solutions sont possibles (moyenne, valeur initiale etc.). Pour plus d’informations, n’hésitez pas à consulter l’excellent site <a href="http://www.jybaudot.fr/Previsions/led.html">www.jybaudot.fr</a></p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">led</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">alpha</span><span class="p">,</span> <span class="nx">horizon</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">led</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">alpha</span><span class="p">,</span> <span class="nx">horizon</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="kd">var</span> <span class="nx">lissage</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">();</span>
-	<span class="c1">//on initialise la premiere valeur du lissage avec la moyenne des deux premiers</span>
-	<span class="c1">//éléments de la série</span>
-	<span class="nx">lissage</span><span class="p">.</span><span class="nx">premier</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">();</span>
+	<span class="c1">//on initialise la premiere valeur du lissage avec la moyenne des deux premiers
+</span>	<span class="c1">//éléments de la série
+</span>	<span class="nx">lissage</span><span class="p">.</span><span class="nx">premier</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">();</span>
 	<span class="nx">lissage</span><span class="p">.</span><span class="nx">second</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">();</span>
 
 	<span class="nx">lissage</span><span class="p">.</span><span class="nx">premier</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
@@ -327,14 +327,14 @@
 	<span class="p">}</span>
 
 	<span class="k">return</span> <span class="nx">previsions</span><span class="p">;</span>
-<span class="p">}</span></code></pre></figure>
+<span class="p">}</span></code></pre></div>
 
 <h2>Trouver la valeur optimale d'alpha</h2>
 <p>Pour trouver la meilleure valeur du paramètre alpha, nous cherchons à minimiser l’erreur quadratique. Celle-ci est égale à 1/(n-1)*(valeur[1]-prediction[1] + valeur[2]-prediction[2] + … + valeur[n]-prediction[n]).</p>
 
-<p>En Javascript cela donne :</p>
+<p>En Javascript cela donne : </p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">computeMeanSquaredError</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">forecast</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">computeMeanSquaredError</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">forecast</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="kd">var</span> <span class="nx">error</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
 	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span>
@@ -342,11 +342,11 @@
 		<span class="nx">error</span> <span class="o">+=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">-</span> <span class="nx">forecast</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">);</span>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nx">error</span><span class="p">;</span>
-<span class="p">}</span></code></pre></figure>
+<span class="p">}</span></code></pre></div>
 
 <p>Pour trouver la meilleure valeur de alpha, on itère entre 0 et 1 avec un pas passé en paramètre à notre fonction. L’objectif est de garder la valeur d’alpha permettant de minimiser l’erreur quadratique.</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">findBestAlpha</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">nbIter</span><span class="p">)</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">findBestAlpha</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">nbIter</span><span class="p">)</span>
 <span class="p">{</span>
 	<span class="kd">var</span> <span class="nx">incr</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nx">nbIter</span><span class="p">;</span>
 	<span class="kd">var</span> <span class="nx">bestAlpha</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
@@ -365,23 +365,23 @@
 		<span class="nx">alpha</span> <span class="o">+=</span> <span class="nx">incr</span><span class="p">;</span>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="nx">bestAlpha</span><span class="p">;</span>
-<span class="p">}</span></code></pre></figure>
+<span class="p">}</span></code></pre></div>
 
-<p>Une fois la valeur optimale de alpha trouvée, il suffit de générer les prédictions :</p>
+<p>Une fois la valeur optimale de alpha trouvée, il suffit de générer les prédictions : </p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">bestAlpha</span> <span class="o">=</span> <span class="nx">findBestAlpha</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">led</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">bestAlpha</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">//Prévision à t+2</span></code></pre></figure>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">bestAlpha</span> <span class="o">=</span> <span class="nx">findBestAlpha</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">led</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">bestAlpha</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="sr">/</span><span class="err">/Prévision à t+2</span></code></pre></div>
 
 <h2>Représentation graphique avec HighchartJs</h2>
 <p>Nous allons utiliser la librairie HighchartJs afin de tracer nos deux séries (celle réalisée et celle prédite). Pour cela il suffit d’inclure Jquery, ainsi que le fichier Highcharts.js. Ensuite, nous insérons le code suivant, en modifiant les différents champs en fonction de nos besoins :</p>
 
-<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">"text/javascript"</span><span class="o">&gt;</span>
     <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
         <span class="nx">$</span><span class="p">(</span><span class="s1">'#container'</span><span class="p">).</span><span class="nx">highcharts</span><span class="p">({</span>
             <span class="na">title</span><span class="p">:</span> <span class="p">{</span>
                 <span class="na">text</span><span class="p">:</span> <span class="s1">'Chiffre d\'affaires mensuel'</span><span class="p">,</span>
-                <span class="na">x</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span> <span class="c1">//center</span>
-            <span class="p">},</span>
+                <span class="na">x</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span> <span class="c1">//center
+</span>            <span class="p">},</span>
             <span class="na">subtitle</span><span class="p">:</span> <span class="p">{</span>
                 <span class="na">text</span><span class="p">:</span> <span class="s1">'Source: fakeSource.com'</span><span class="p">,</span>
                 <span class="na">x</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span>
@@ -418,9 +418,9 @@
             <span class="p">}]</span>
         <span class="p">});</span>
     <span class="p">});</span>
-<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
-</span>
-<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"container"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"min-width: 310px; height: 400px; margin: 0 auto"</span><span class="o">&gt;&lt;</span><span class="sr">/div&gt;</span></code></pre></figure>
+<span class="o">&lt;</span><span class="sr">/</span><span class="err">script&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">"container"</span> <span class="nx">style</span><span class="o">=</span><span class="s2">"min-width: 310px; height: 400px; margin: 0 auto"</span><span class="o">&gt;&lt;</span><span class="sr">/</span><span class="err">div&gt;</span></code></pre></div>
 
 <p><br />
 Nous obtenons le résultat ci-dessous : 
@@ -487,13 +487,13 @@ Nous obtenons le résultat ci-dessous :
 		  
 		  
 			 
-				<li><a href="/categories.html#Prédiction-ref">
-					Prédiction <span>(3)</span>
+				<li><a href="/categories.html#prédiction-ref">
+					prédiction <span>(3)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#Javascript-ref">
-					Javascript <span>(3)</span>
+				<li><a href="/categories.html#javascript-ref">
+					javascript <span>(3)</span>
 					
 				</a></li>
 			

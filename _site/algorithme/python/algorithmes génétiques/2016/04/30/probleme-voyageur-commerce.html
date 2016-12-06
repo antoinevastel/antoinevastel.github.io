@@ -175,11 +175,11 @@
 
 <p>Un algorithme génétique est constitué de 5 grandes étapes que nous détaillerons par la suite lorsque nous résolverons notre problème du voyageur de commerce :</p>
 <ul>
-	<li>Création d'une population initiale</li>
-	<li>Evaluation de la "fitness" (qualité) des individus</li>
-	<li>Création de nouveaux individus</li>
-	<li>Ajout des nouveaux individus dans la population</li>
-	<li>Retour à la seconde étape</li>
+   <li>Création d'une population initiale</li>
+   <li>Evaluation de la "fitness" (qualité) des individus</li>
+   <li>Création de nouveaux individus</li>
+   <li>Ajout des nouveaux individus dans la population</li>
+   <li>Retour à la seconde étape</li>
 </ul>
 
 <p>Le but de l’algorithme génétique est de faire évoluer notre population initiale vers une population contenant de meilleurs individus.</p>
@@ -187,9 +187,9 @@
 <h2>Application au problème du voyageur de commerce</h2>
 <p>Le problème du voyageur de commerce consiste à passer par un ensemble de villes en minimisant la distance totale du trajet. C’est un problème dit NP-complet, ce qui signifie qu’il n’existe pas d’algorithme en temps polynomial permettant de trouver une solution exacte à ce problème,.</p>
 
-<p>Commençons par un peu de code. Nous allons créer une classe Ville. Les villes sont définies par leurs coordonnées GPS (longitude et latitude), et leur nom.</p>
+<p>Commençons par un peu de code. Nous allons créer une classe Ville. Les villes sont définies par leurs coordonnées GPS (longitude et latitude), et leur nom. </p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Ville</span><span class="p">:</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Ville</span><span class="p">:</span>
    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">nom</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span>
@@ -200,11 +200,11 @@
       <span class="n">distanceX</span> <span class="o">=</span> <span class="p">(</span><span class="n">ville</span><span class="o">.</span><span class="n">lon</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">lon</span><span class="p">)</span><span class="o">*</span><span class="mi">40000</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lat</span><span class="o">+</span><span class="n">ville</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">360</span><span class="p">)</span><span class="o">/</span><span class="mi">360</span>
       <span class="n">distanceY</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lat</span><span class="o">-</span><span class="n">ville</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span><span class="o">*</span><span class="mi">40000</span><span class="o">/</span><span class="mi">360</span>
       <span class="n">distance</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">distanceX</span><span class="o">*</span><span class="n">distanceX</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">distanceY</span><span class="o">*</span><span class="n">distanceY</span><span class="p">)</span> <span class="p">)</span>
-      <span class="k">return</span> <span class="n">distance</span></code></pre></figure>
+      <span class="k">return</span> <span class="n">distance</span></code></pre></div>
 
 <p>Par la suite nous définissons une classe qui nous permettra de gérer les circuits. Un circuit est caractérisé par un ensemble de villes stocké dans la liste villesDestination. Il est important de mentionner que vu la nature de notre problème, l’ordre des villes a une importance ! Toutefois, un circuit étant une boucle, les circuits Lyon-Paris-Lille-Toulouse et Lille-Toulouse-Lyon-Paris sont équivalents.</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GestionnaireCircuit</span><span class="p">:</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GestionnaireCircuit</span><span class="p">:</span>
    <span class="n">villesDestinations</span> <span class="o">=</span> <span class="p">[]</span>
    
    <span class="k">def</span> <span class="nf">ajouterVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
@@ -228,52 +228,52 @@
          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="o">.</span><span class="n">nombreVilles</span><span class="p">()):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+   <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">)</span>
    
-	<span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-	  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+   <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
-	<span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-	  <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+   <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
-	<span class="k">def</span> <span class="nf">genererIndividu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-	  <span class="k">for</span> <span class="n">indiceVille</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="o">.</span><span class="n">nombreVilles</span><span class="p">()):</span>
-	     <span class="bp">self</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="p">))</span>
-	  <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">)</span>
+   <span class="k">def</span> <span class="nf">genererIndividu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="k">for</span> <span class="n">indiceVille</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="o">.</span><span class="n">nombreVilles</span><span class="p">()):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="p">))</span>
+     <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">)</span>
 
-	<span class="k">def</span> <span class="nf">getVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuitPosition</span><span class="p">):</span>
-	  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">circuitPosition</span><span class="p">]</span>
+   <span class="k">def</span> <span class="nf">getVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuitPosition</span><span class="p">):</span>
+     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">circuitPosition</span><span class="p">]</span>
 
-	<span class="k">def</span> <span class="nf">setVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuitPosition</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
-	  <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">circuitPosition</span><span class="p">]</span> <span class="o">=</span> <span class="n">ville</span>
-	  <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="mf">0.0</span>
-	  <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="k">def</span> <span class="nf">setVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuitPosition</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">[</span><span class="n">circuitPosition</span><span class="p">]</span> <span class="o">=</span> <span class="n">ville</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="mf">0.0</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
 
-	<span class="k">def</span> <span class="nf">getFitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-	  <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-	     <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDistance</span><span class="p">())</span>
-	  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
+   <span class="k">def</span> <span class="nf">getFitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getDistance</span><span class="p">())</span>
+     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span>
 
-	<span class="k">def</span> <span class="nf">getDistance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-	  <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-	     <span class="n">circuitDistance</span> <span class="o">=</span> <span class="mi">0</span>
-	     <span class="k">for</span> <span class="n">indiceVille</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()):</span>
-	        <span class="n">villeOrigine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="p">)</span>
-	        <span class="n">villeArrivee</span> <span class="o">=</span> <span class="bp">None</span>
-	        <span class="k">if</span> <span class="n">indiceVille</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">():</span>
-	           <span class="n">villeArrivee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-	        <span class="k">else</span><span class="p">:</span>
-	           <span class="n">villeArrivee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-	        <span class="n">circuitDistance</span> <span class="o">+=</span> <span class="n">villeOrigine</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">villeArrivee</span><span class="p">)</span>
-	     <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">circuitDistance</span>
-	  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span>
+   <span class="k">def</span> <span class="nf">getDistance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">circuitDistance</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">indiceVille</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()):</span>
+           <span class="n">villeOrigine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="p">)</span>
+           <span class="n">villeArrivee</span> <span class="o">=</span> <span class="bp">None</span>
+           <span class="k">if</span> <span class="n">indiceVille</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">():</span>
+              <span class="n">villeArrivee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">indiceVille</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+           <span class="k">else</span><span class="p">:</span>
+              <span class="n">villeArrivee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+           <span class="n">circuitDistance</span> <span class="o">+=</span> <span class="n">villeOrigine</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">villeArrivee</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">circuitDistance</span>
+     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span>
 
-	<span class="k">def</span> <span class="nf">tailleCircuit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-	  <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">)</span>
+   <span class="k">def</span> <span class="nf">tailleCircuit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuit</span><span class="p">)</span>
 
-	<span class="k">def</span> <span class="nf">contientVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
-	  <span class="k">return</span> <span class="n">ville</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span></code></pre></figure>
+   <span class="k">def</span> <span class="nf">contientVille</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ville</span><span class="p">):</span>
+     <span class="k">return</span> <span class="n">ville</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit</span></code></pre></div>
 
 <p>Vous pouvez remarquer que notre circuit contient un attribut fitness et une méthode getFitness. C’est un attribut indiquant la qualité d’un circuit. Dans notre cas, un circuit aura une meilleure fitness lorsque la distance totale sera faible. En effet, l’objectif de notre algorithme est de trouver un circuit minimisant la distance totale de voyage. C’est la raison pour laquelle notre fonction de fitness retourne l’inverse de la distance totale. Ainsi, lorsque la distance diminue, alors la fitness augmente.</p>
 
@@ -281,7 +281,7 @@
 
 <p>Nous continuons notre programme par la création d’une classe Population. Dans le cas général, une population est un ensemble d’individus. Dans notre cas cela correspond à un ensemble de circuits.</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Population</span><span class="p">:</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Population</span><span class="p">:</span>
    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gestionnaireCircuit</span><span class="p">,</span> <span class="n">taillePopulation</span><span class="p">,</span> <span class="n">init</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">circuits</span> <span class="o">=</span> <span class="p">[]</span>
       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">taillePopulation</span><span class="p">):</span>
@@ -313,26 +313,26 @@
       <span class="k">return</span> <span class="n">fittest</span>
    
    <span class="k">def</span> <span class="nf">taillePopulation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">)</span></code></pre></figure>
+      <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circuits</span><span class="p">)</span></code></pre></div>
 
 <p>La méthode getFittest nous retourne le circuit ayant la plus grande fitness, ce qui équivaut à la plus faible distance.</p>
 
-<p>Nous allons passer à la création de la classe GA (Genetic Algorithm). Celle-ci contient les principales étapes d’un algorithme génétique :</p>
+<p>Nous allons passer à la création de la classe GA (Genetic Algorithm). Celle-ci contient les principales étapes d’un algorithme génétique : </p>
 <ul>
-	<li>L'évolution de la population</li>
-	<li>Le crossover</li>
-	<li>Les mutations </li>
-	<li>La sélection des individus à reproduire</li>
+   <li>L'évolution de la population</li>
+   <li>Le crossover</li>
+   <li>Les mutations </li>
+   <li>La sélection des individus à reproduire</li>
 </ul>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GA</span><span class="p">:</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">GA</span><span class="p">:</span>
    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gestionnaireCircuit</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span> <span class="o">=</span> <span class="n">gestionnaireCircuit</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">tauxMutation</span> <span class="o">=</span> <span class="mf">0.015</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">tailleTournoi</span> <span class="o">=</span> <span class="mi">5</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">elitisme</span> <span class="o">=</span> <span class="bp">True</span>
    
-   	<span class="k">def</span> <span class="nf">evoluerPopulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pop</span><span class="p">):</span>
+      <span class="k">def</span> <span class="nf">evoluerPopulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pop</span><span class="p">):</span>
       <span class="n">nouvellePopulation</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="p">,</span> <span class="n">pop</span><span class="o">.</span><span class="n">taillePopulation</span><span class="p">(),</span> <span class="bp">False</span><span class="p">)</span>
       <span class="n">elitismeOffset</span> <span class="o">=</span> <span class="mi">0</span>
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">elitisme</span><span class="p">:</span>
@@ -373,24 +373,24 @@
       
       <span class="k">return</span> <span class="n">enfant</span>
    
-	<span class="k">def</span> <span class="nf">muter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuit</span><span class="p">):</span>
-	  <span class="k">for</span> <span class="n">circuitPos1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">circuit</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()):</span>
-	     <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tauxMutation</span><span class="p">:</span>
-	        <span class="n">circuitPos2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">circuit</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
-	        
-	        <span class="n">ville1</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">circuitPos1</span><span class="p">)</span>
-	        <span class="n">ville2</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">circuitPos2</span><span class="p">)</span>
-	        
-	        <span class="n">circuit</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">circuitPos2</span><span class="p">,</span> <span class="n">ville1</span><span class="p">)</span>
-	        <span class="n">circuit</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">circuitPos1</span><span class="p">,</span> <span class="n">ville2</span><span class="p">)</span>
+   <span class="k">def</span> <span class="nf">muter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">circuit</span><span class="p">):</span>
+     <span class="k">for</span> <span class="n">circuitPos1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">circuit</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tauxMutation</span><span class="p">:</span>
+           <span class="n">circuitPos2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">circuit</span><span class="o">.</span><span class="n">tailleCircuit</span><span class="p">()</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">())</span>
+           
+           <span class="n">ville1</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">circuitPos1</span><span class="p">)</span>
+           <span class="n">ville2</span> <span class="o">=</span> <span class="n">circuit</span><span class="o">.</span><span class="n">getVille</span><span class="p">(</span><span class="n">circuitPos2</span><span class="p">)</span>
+           
+           <span class="n">circuit</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">circuitPos2</span><span class="p">,</span> <span class="n">ville1</span><span class="p">)</span>
+           <span class="n">circuit</span><span class="o">.</span><span class="n">setVille</span><span class="p">(</span><span class="n">circuitPos1</span><span class="p">,</span> <span class="n">ville2</span><span class="p">)</span>
 
-	<span class="k">def</span> <span class="nf">selectionTournoi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pop</span><span class="p">):</span>
-	  <span class="n">tournoi</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleTournoi</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-	  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleTournoi</span><span class="p">):</span>
-	     <span class="n">randomId</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">pop</span><span class="o">.</span><span class="n">taillePopulation</span><span class="p">())</span>
-	     <span class="n">tournoi</span><span class="o">.</span><span class="n">sauvegarderCircuit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">pop</span><span class="o">.</span><span class="n">getCircuit</span><span class="p">(</span><span class="n">randomId</span><span class="p">))</span>
-	  <span class="n">fittest</span> <span class="o">=</span> <span class="n">tournoi</span><span class="o">.</span><span class="n">getFittest</span><span class="p">()</span>
-	  <span class="k">return</span> <span class="n">fittest</span></code></pre></figure>
+   <span class="k">def</span> <span class="nf">selectionTournoi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pop</span><span class="p">):</span>
+     <span class="n">tournoi</span> <span class="o">=</span> <span class="n">Population</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gestionnaireCircuit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleTournoi</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tailleTournoi</span><span class="p">):</span>
+        <span class="n">randomId</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">pop</span><span class="o">.</span><span class="n">taillePopulation</span><span class="p">())</span>
+        <span class="n">tournoi</span><span class="o">.</span><span class="n">sauvegarderCircuit</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">pop</span><span class="o">.</span><span class="n">getCircuit</span><span class="p">(</span><span class="n">randomId</span><span class="p">))</span>
+     <span class="n">fittest</span> <span class="o">=</span> <span class="n">tournoi</span><span class="o">.</span><span class="n">getFittest</span><span class="p">()</span>
+     <span class="k">return</span> <span class="n">fittest</span></code></pre></div>
 
 <p>Cette partie du programme demande plus d’explications. Commençons par les attributs de notre classe.</p>
 
@@ -411,8 +411,8 @@
 <h3>Elitisme</h3>
 <p>Dernier attribut : elitisme. Dans un algorithme génétique l’élitisme correspond au fait de vouloir conserver les meilleurs individus d’une génération à une autre, afin d’être sûr de ne pas les perdre. Cela a pour avantage d’accélérer la convergence de l’algorithme au détriment de la diversité des invidus. On peut utiliser diverses formes d’élitisme :</p>
 <ul>
-	<li>Copier les n meilleurs individus dans la nouvelle génération</li>
-	<li>Sélectionner les n meilleurs individus pour qu'ils se reproduisent</li>
+   <li>Copier les n meilleurs individus dans la nouvelle génération</li>
+   <li>Sélectionner les n meilleurs individus pour qu'ils se reproduisent</li>
 </ul>
 
 <p>Dans notre cas nous avons choisi la première option, avec un nombre n d’individus égal à 1.</p>
@@ -420,7 +420,7 @@
 <h2>Reproduction des invididus</h2>
 <p>Jusqu’à présent dans cet article j’ai parlé de reproduction d’individus sans définir ce que j’entendais par reproduction. En effet, qu’entend-on par reproduire deux circuits ?</p>
 
-<p>Dans le cas d’un algorithme génétique on parle souvent de crossover à la place de reproduction. Vous entendrez souvent parler de one/two points crossover.</p>
+<p>Dans le cas d’un algorithme génétique on parle souvent de crossover à la place de reproduction. Vous entendrez souvent parler de one/two points crossover. </p>
 
 <p>Expliquons cela plus en détails :
 Considérons un single point crossover. Les chromosomes des individus A et B sont définis ainsi :
@@ -438,15 +438,15 @@ chr B : 1 1 0 1 2 1 0 0 2 1<br /></p>
 
 <p>Dans notre cas nous choisissons un two points crossover mais contrairement aux exemples donnés précédemment nous avons une contrainte supplémentaire : la cohérence de notre solution. En effet, l’individu issu de la reproduction doit avoir un circuit contenant toutes les villes possibles. Pour pallier à ce problème nous procédons de la manière suivante :</p>
 <ul>
-	<li>On choisit deux indices;</li>
-	<li>On recopie les villes présentes entre ces deux indices dans notre futur individu;</li>
-	<li>On complète les emplacements vides de notre nouvel individu par les villes manquantes</li>
+   <li>On choisit deux indices;</li>
+   <li>On recopie les villes présentes entre ces deux indices dans notre futur individu;</li>
+   <li>On complète les emplacements vides de notre nouvel individu par les villes manquantes</li>
 </ul>
 
 <h2>Résolvons notre problème</h2>
 <p>Maintenant que nous avons vu l’algorithme à utiliser pour résoudre notre problème du voyageur de commerce, nous allons nous intéresser au code permettant de mettre en oeuvre notre solution.</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
    
    <span class="n">gc</span> <span class="o">=</span> <span class="n">GestionnaireCircuit</span><span class="p">()</span>   
 
@@ -536,13 +536,13 @@ chr B : 1 1 0 1 2 1 0 0 2 1<br /></p>
        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xpt</span><span class="o">+</span><span class="mi">5000</span><span class="p">,</span><span class="n">ypt</span><span class="o">+</span><span class="mi">25000</span><span class="p">,</span><span class="n">nom</span><span class="p">)</span>
 
    <span class="nb">map</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">'D-'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'b'</span><span class="p">)</span> 
-   <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></figure>
+   <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
 
-<p>Notre algorithme n’est pas déterministe, il ne nous garantit pas non plus d’obtenir la solution optimale.</p>
+<p>Notre algorithme n’est pas déterministe, il ne nous garantit pas non plus d’obtenir la solution optimale. </p>
 
 <p>Sur les deux graphiques ci-dessous nous représentons la distance totale du meilleur circuit (km) en fonction du nombre de générations :
 <img src="/assets/media/evol_distance_tsp.png" />
-On peut voir que notre solution s’améliore au fur et à mesure des générations. En effet, nous avons commencé avec un circuit d’une distance totale d’environ 7200km et nous finissons avec un circuit d’environ 4700 km.</p>
+On peut voir que notre solution s’améliore au fur et à mesure des générations. En effet, nous avons commencé avec un circuit d’une distance totale d’environ 7200km et nous finissons avec un circuit d’environ 4700 km. </p>
 
 <p>Si nous relançons le programme, nous obtenons une meilleure solution, ce qui montre bien le non déterminisme de notre algorithme : 
 <img src="/assets/media/evol_distance_tsp_best.png" /></p>
@@ -565,18 +565,18 @@ On peut voir que notre solution s’améliore au fur et à mesure des générati
 		  
 		  
 			 
-				<li><a href="/categories.html#Algorithme-ref">
-					Algorithme <span>(3)</span>
+				<li><a href="/categories.html#algorithme-ref">
+					algorithme <span>(3)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#Python-ref">
-					Python <span>(1)</span>
+				<li><a href="/categories.html#python-ref">
+					python <span>(2)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#Algorithmes génétiques-ref">
-					Algorithmes génétiques <span>(1)</span>
+				<li><a href="/categories.html#algorithmes génétiques-ref">
+					algorithmes génétiques <span>(1)</span>
 					
 				</a></li>
 			

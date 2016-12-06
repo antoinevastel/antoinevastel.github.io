@@ -174,7 +174,7 @@
 <p>Un tableau dynamique est une structure de données dont la taille s’adapte automatiquement à la quantité de données qu’il doit stocker. A l’instar d’un tableau classique, on accède directement aux élements grâce à leurs indices.</p>
 
 <h2>Attributs</h2>
-<p>Notre classe de tableau dynamique est constituée de deux attributs :</p>
+<p>Notre classe de tableau dynamique est constituée de deux attributs : </p>
 <ul>
 	<li>Donnees : un tableau de type T</li>
 	<li>NbElements : un entier représentant le nombre d'élements présents dans notre tableau. Attention, le nombre d'élements ne doit pas être confondu avec la taille de notre tableau Donnees.</li>
@@ -184,15 +184,15 @@
 
 <p>Dans notre cas nous voulons que notre classe puisse stocker n’importe quel type de variables. Pour cela, nous allons utiliser la notion de <a href="http://imss-www.upmf-grenoble.fr/prevert/Prog/Java/CoursJava/genericite.htm">généricité</a>.</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;{</span>
 	<span class="kd">private</span> <span class="n">T</span><span class="o">[]</span> <span class="n">donnees</span><span class="o">;</span>
 	<span class="kd">private</span> <span class="kt">int</span> <span class="n">nbElements</span><span class="o">;</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
 <h2>Les constructeurs</h2>
 <p>Notre classe possède deux constructeurs : le premier prend en paramètre la capacite initiale de notre tableau, le second est un constructeur par défaut.</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ArrayList</span><span class="p">(</span><span class="kt">int</span> <span class="n">capaciteInitiale</span><span class="o">){</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">ArrayList</span><span class="p">(</span><span class="kt">int</span> <span class="n">capaciteInitiale</span><span class="o">){</span>
 	<span class="c1">//On verifie que la capacite initiale transmise est positive ou nulle </span>
 	<span class="k">if</span><span class="o">(</span><span class="n">capaciteInitiale</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">){</span>
 	<span class="c1">//Si ca n'est pas le cas on genere une exception</span>
@@ -209,14 +209,14 @@
 <span class="c1">//Notre constructeur par defaut appelle le constructeur precedent avec capaciteInitiale = 5</span>
 <span class="kd">public</span> <span class="nf">ArrayList</span><span class="p">(</span><span class="o">){</span>
 	<span class="k">this</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
 <h2>Ajouter/Supprimer des élements</h2>
 <p>Par la suite nous allons définir plusieurs méthodes dont le rôle est d’ajouter/supprimer des éléments à notre liste.</p>
 
 <p>La méthode ajouterElement ajoute un élement en fin de tableau :</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">ajouterElement</span><span class="p">(</span><span class="n">T</span> <span class="n">elt</span><span class="o">){</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">ajouterElement</span><span class="p">(</span><span class="n">T</span> <span class="n">elt</span><span class="o">){</span>
 	<span class="c1">//Si le tableau contenant les donnees est plein, alors on l'agrandit</span>
 	<span class="k">if</span><span class="o">(</span><span class="n">donnees</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="n">nbElements</span><span class="o">){</span>
 		<span class="kt">int</span> <span class="n">nouveauNbElements</span> <span class="o">=</span> <span class="n">nbElements</span><span class="o">*</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
@@ -228,11 +228,11 @@
 	<span class="c1">//On ajoute le nouvel element au tableau</span>
 	<span class="n">donnees</span><span class="o">[</span><span class="n">nbElements</span><span class="o">]</span> <span class="o">=</span> <span class="n">elt</span><span class="o">;</span>
 	<span class="n">nbElements</span><span class="o">++;</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
 <p>On définit également la méthode definirElement. Celle-ci prend en paramètre un indice et un élément à insérer. Elle retourne l’ancien élément présent à l’indice passé en paramètre.</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">T</span> <span class="nf">definirElement</span><span class="p">(</span><span class="kt">int</span> <span class="n">indice</span><span class="o">,</span> <span class="n">T</span> <span class="n">elt</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IndexOutOfBoundsException</span><span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">T</span> <span class="nf">definirElement</span><span class="p">(</span><span class="kt">int</span> <span class="n">indice</span><span class="o">,</span> <span class="n">T</span> <span class="n">elt</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IndexOutOfBoundsException</span><span class="o">{</span>
 	<span class="k">if</span><span class="o">(</span><span class="n">indice</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">indice</span> <span class="o">&gt;</span> <span class="n">nbElements</span><span class="o">){</span>
 		<span class="k">throw</span> <span class="k">new</span> <span class="n">IndexOutOfBoundsException</span><span class="o">();</span>
 	<span class="o">}</span>
@@ -241,11 +241,11 @@
 	<span class="n">donnees</span><span class="o">[</span><span class="n">indice</span><span class="o">]</span> <span class="o">=</span> <span class="n">elt</span><span class="o">;</span>
 	
 	<span class="k">return</span> <span class="n">ancienElt</span><span class="o">;</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
 <p>La méthode enleverElement prend en paramètre un élément, et si cet élément est présent dans la liste, elle retire la première occurence de celui-ci. Elle retourne true si l’élément à été supprimé et false sinon.</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">enleverElement</span><span class="p">(</span><span class="n">T</span> <span class="n">elt</span><span class="o">){</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">enleverElement</span><span class="p">(</span><span class="n">T</span> <span class="n">elt</span><span class="o">){</span>
 	<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nbElements</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
 		<span class="k">if</span><span class="o">(</span><span class="n">donnees</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">equals</span><span class="o">(</span><span class="n">elt</span><span class="o">)){</span>
 			<span class="c1">//On décale vers la gauche tous les éléments situés après l'élément supprimé</span>
@@ -256,22 +256,22 @@
 	<span class="o">}</span>
 	
 	<span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
 <h2>Accéder aux éléments</h2>
 <p>Pour accéder aux différents éléments de notre liste nous définissions la méthode obtenirElement qui prend en paramètre un indice et retourne l’élement présent à cet indice.</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">T</span> <span class="nf">obtenirElement</span><span class="p">(</span><span class="kt">int</span> <span class="n">indice</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IndexOutOfBoundsException</span><span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">T</span> <span class="nf">obtenirElement</span><span class="p">(</span><span class="kt">int</span> <span class="n">indice</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IndexOutOfBoundsException</span><span class="o">{</span>
 	<span class="k">if</span><span class="o">(</span><span class="n">indice</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">indice</span> <span class="o">&gt;</span> <span class="n">nbElements</span><span class="o">){</span>
 		<span class="k">throw</span> <span class="k">new</span> <span class="n">IndexOutOfBoundsException</span><span class="o">();</span>
 	<span class="o">}</span>		
 	<span class="k">return</span> <span class="n">donnees</span><span class="o">[</span><span class="n">indice</span><span class="o">];</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
 <h2>Autres méthodes</h2>
 <p>Nous définissons la méthode contient. Elle retourne true si notre liste contient l’élément passé en paramètre et false sinon.</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">contient</span><span class="p">(</span><span class="n">T</span> <span class="n">elt</span><span class="o">){</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">contient</span><span class="p">(</span><span class="n">T</span> <span class="n">elt</span><span class="o">){</span>
 	<span class="kt">boolean</span> <span class="n">contient</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 	<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
 	
@@ -282,11 +282,11 @@
 		<span class="n">i</span><span class="o">++;</span>
 	<span class="o">}</span>
 	<span class="k">return</span> <span class="n">contient</span><span class="o">;</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
-<p>Nous définissons également la méthode viderListe qui comme son nom l’indique permet de vider la liste :</p>
+<p>Nous définissons également la méthode viderListe qui comme son nom l’indique permet de vider la liste : </p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">viderListe</span><span class="p">(</span><span class="o">){</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">viderListe</span><span class="p">(</span><span class="o">){</span>
 	<span class="c1">//Nous assignons la valeur null a l'ensemble des elements de la liste</span>
 	<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nbElements</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
 		<span class="n">donnees</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
@@ -294,11 +294,11 @@
 	
 	<span class="c1">//On retablit le nb d'elements de la liste a 0</span>
 	<span class="n">nbElements</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
-<p>Enfin, nous redéfinissons la méthode toString afin de pouvoir afficher notre liste :</p>
+<p>Enfin, nous redéfinissons la méthode toString afin de pouvoir afficher notre liste : </p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="p">(</span><span class="o">){</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="p">(</span><span class="o">){</span>
 	<span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
 	<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nbElements</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
 		<span class="n">s</span> <span class="o">+=</span> <span class="n">donnees</span><span class="o">[</span><span class="n">i</span><span class="o">]+</span><span class="s">", "</span><span class="o">;</span>
@@ -308,12 +308,12 @@
 	<span class="o">}</span>
 	
 	<span class="k">return</span> <span class="n">s</span><span class="o">;</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
 <h2>Test de notre classe</h2>
 <p>Vous trouverez ci-dessous un main permettant de tester les quelques methodes que nous avons définies dans notre classe ArrayList :</p>
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 	<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">al</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
 	
 	<span class="n">al</span><span class="o">.</span><span class="na">ajouterElement</span><span class="o">(</span><span class="mi">12</span><span class="o">);</span>
@@ -332,7 +332,7 @@
 	<span class="kt">int</span> <span class="n">ancienElt</span> <span class="o">=</span> <span class="n">al</span><span class="o">.</span><span class="na">definirElement</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">nouveauElt</span><span class="o">);</span>
 	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Ancien element : "</span><span class="o">+</span><span class="n">ancienElt</span><span class="o">);</span>
 	<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Nouveau element : "</span><span class="o">+</span><span class="n">al</span><span class="o">.</span><span class="na">obtenirElement</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
-<span class="o">}</span></code></pre></figure>
+<span class="o">}</span></code></pre></div>
 
 <p>Pour plus d’informations sur la classe ArrayList en Java n’hésitez pas à consulter <a href="https://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">la documentation officielle</a>.</p>
 
