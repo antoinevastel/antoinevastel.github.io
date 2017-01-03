@@ -105,14 +105,8 @@ class Tour:
             for i in range(0, self.tour_manager.number_of_cities()):
                 self.tour.append(None)
 
-    def __len__(self):
-        return len(self.tour)
-
     def __getitem__(self, index):
         return self.tour[index]
-
-    def __setitem__(self, key, value):
-        self.tour[key] = value
 
     def generate_individual(self):
         for indice_city in range(0, self.tour_manager.number_of_cities()):
