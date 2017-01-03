@@ -14,11 +14,11 @@ Les algorithmes génétiques s'inspirent de la théorie de l'évolution des esp�
 
 Un algorithme génétique est constitué de 5 grandes étapes que nous détaillerons par la suite lorsque nous résolverons notre problème du voyageur de commerce :
 <ul>
-	<li>Création d'une population initiale</li>
-	<li>Evaluation de la "fitness" (qualité) des individus</li>
-	<li>Création de nouveaux individus</li>
-	<li>Ajout des nouveaux individus dans la population</li>
-	<li>Retour à la seconde étape</li>
+   <li>Création d'une population initiale</li>
+   <li>Evaluation de la "fitness" (qualité) des individus</li>
+   <li>Création de nouveaux individus</li>
+   <li>Ajout des nouveaux individus dans la population</li>
+   <li>Retour à la seconde étape</li>
 </ul>
 
 Le but de l'algorithme génétique est de faire évoluer notre population initiale vers une population contenant de meilleurs individus.
@@ -70,52 +70,52 @@ class Circuit:
          for i in range(0, self.gestionnaireCircuit.nombreVilles()):
             self.circuit.append(None)
 
-    def __len__(self):
+   def __len__(self):
       return len(self.circuit)
    
-	def __getitem__(self, index):
-	  return self.circuit[index]
+   def __getitem__(self, index):
+     return self.circuit[index]
 
-	def __setitem__(self, key, value):
-	  self.circuit[key] = value
+   def __setitem__(self, key, value):
+     self.circuit[key] = value
 
-	def genererIndividu(self):
-	  for indiceVille in range(0, self.gestionnaireCircuit.nombreVilles()):
-	     self.setVille(indiceVille, self.gestionnaireCircuit.getVille(indiceVille))
-	  random.shuffle(self.circuit)
+   def genererIndividu(self):
+     for indiceVille in range(0, self.gestionnaireCircuit.nombreVilles()):
+        self.setVille(indiceVille, self.gestionnaireCircuit.getVille(indiceVille))
+     random.shuffle(self.circuit)
 
-	def getVille(self, circuitPosition):
-	  return self.circuit[circuitPosition]
+   def getVille(self, circuitPosition):
+     return self.circuit[circuitPosition]
 
-	def setVille(self, circuitPosition, ville):
-	  self.circuit[circuitPosition] = ville
-	  self.fitness = 0.0
-	  self.distance = 0
+   def setVille(self, circuitPosition, ville):
+     self.circuit[circuitPosition] = ville
+     self.fitness = 0.0
+     self.distance = 0
 
-	def getFitness(self):
-	  if self.fitness == 0:
-	     self.fitness = 1/float(self.getDistance())
-	  return self.fitness
+   def getFitness(self):
+     if self.fitness == 0:
+        self.fitness = 1/float(self.getDistance())
+     return self.fitness
 
-	def getDistance(self):
-	  if self.distance == 0:
-	     circuitDistance = 0
-	     for indiceVille in range(0, self.tailleCircuit()):
-	        villeOrigine = self.getVille(indiceVille)
-	        villeArrivee = None
-	        if indiceVille+1 < self.tailleCircuit():
-	           villeArrivee = self.getVille(indiceVille+1)
-	        else:
-	           villeArrivee = self.getVille(0)
-	        circuitDistance += villeOrigine.distance(villeArrivee)
-	     self.distance = circuitDistance
-	  return self.distance
+   def getDistance(self):
+     if self.distance == 0:
+        circuitDistance = 0
+        for indiceVille in range(0, self.tailleCircuit()):
+           villeOrigine = self.getVille(indiceVille)
+           villeArrivee = None
+           if indiceVille+1 < self.tailleCircuit():
+              villeArrivee = self.getVille(indiceVille+1)
+           else:
+              villeArrivee = self.getVille(0)
+           circuitDistance += villeOrigine.distance(villeArrivee)
+        self.distance = circuitDistance
+     return self.distance
 
-	def tailleCircuit(self):
-	  return len(self.circuit)
+   def tailleCircuit(self):
+     return len(self.circuit)
 
-	def contientVille(self, ville):
-	  return ville in self.circuit
+   def contientVille(self, ville):
+     return ville in self.circuit
 
 {% endhighlight %}
 
@@ -167,10 +167,10 @@ La méthode getFittest nous retourne le circuit ayant la plus grande fitness, ce
 
 Nous allons passer à la création de la classe GA (Genetic Algorithm). Celle-ci contient les principales étapes d'un algorithme génétique : 
 <ul>
-	<li>L'évolution de la population</li>
-	<li>Le crossover</li>
-	<li>Les mutations </li>
-	<li>La sélection des individus à reproduire</li>
+   <li>L'évolution de la population</li>
+   <li>Le crossover</li>
+   <li>Les mutations </li>
+   <li>La sélection des individus à reproduire</li>
 </ul>
 {% highlight python %}
 class GA:
@@ -180,7 +180,7 @@ class GA:
       self.tailleTournoi = 5
       self.elitisme = True
    
-   	def evoluerPopulation(self, pop):
+      def evoluerPopulation(self, pop):
       nouvellePopulation = Population(self.gestionnaireCircuit, pop.taillePopulation(), False)
       elitismeOffset = 0
       if self.elitisme:
@@ -221,24 +221,24 @@ class GA:
       
       return enfant
    
-	def muter(self, circuit):
-	  for circuitPos1 in range(0, circuit.tailleCircuit()):
-	     if random.random() < self.tauxMutation:
-	        circuitPos2 = int(circuit.tailleCircuit() * random.random())
-	        
-	        ville1 = circuit.getVille(circuitPos1)
-	        ville2 = circuit.getVille(circuitPos2)
-	        
-	        circuit.setVille(circuitPos2, ville1)
-	        circuit.setVille(circuitPos1, ville2)
+   def muter(self, circuit):
+     for circuitPos1 in range(0, circuit.tailleCircuit()):
+        if random.random() < self.tauxMutation:
+           circuitPos2 = int(circuit.tailleCircuit() * random.random())
+           
+           ville1 = circuit.getVille(circuitPos1)
+           ville2 = circuit.getVille(circuitPos2)
+           
+           circuit.setVille(circuitPos2, ville1)
+           circuit.setVille(circuitPos1, ville2)
 
-	def selectionTournoi(self, pop):
-	  tournoi = Population(self.gestionnaireCircuit, self.tailleTournoi, False)
-	  for i in range(0, self.tailleTournoi):
-	     randomId = int(random.random() * pop.taillePopulation())
-	     tournoi.sauvegarderCircuit(i, pop.getCircuit(randomId))
-	  fittest = tournoi.getFittest()
-	  return fittest
+   def selectionTournoi(self, pop):
+     tournoi = Population(self.gestionnaireCircuit, self.tailleTournoi, False)
+     for i in range(0, self.tailleTournoi):
+        randomId = int(random.random() * pop.taillePopulation())
+        tournoi.sauvegarderCircuit(i, pop.getCircuit(randomId))
+     fittest = tournoi.getFittest()
+     return fittest
 
 {% endhighlight %}
 
@@ -261,8 +261,8 @@ La sélection par tournoi (que nous utilisons) fait affronter plusieurs individu
 <h3>Elitisme</h3>
 Dernier attribut : elitisme. Dans un algorithme génétique l'élitisme correspond au fait de vouloir conserver les meilleurs individus d'une génération à une autre, afin d'être sûr de ne pas les perdre. Cela a pour avantage d'accélérer la convergence de l'algorithme au détriment de la diversité des invidus. On peut utiliser diverses formes d'élitisme :
 <ul>
-	<li>Copier les n meilleurs individus dans la nouvelle génération</li>
-	<li>Sélectionner les n meilleurs individus pour qu'ils se reproduisent</li>
+   <li>Copier les n meilleurs individus dans la nouvelle génération</li>
+   <li>Sélectionner les n meilleurs individus pour qu'ils se reproduisent</li>
 </ul>
 
 Dans notre cas nous avons choisi la première option, avec un nombre n d'individus égal à 1.
@@ -288,9 +288,9 @@ Dans le cas d'un two points crossover où l'on choisit les points 2 et 6 cela do
 
 Dans notre cas nous choisissons un two points crossover mais contrairement aux exemples donnés précédemment nous avons une contrainte supplémentaire : la cohérence de notre solution. En effet, l'individu issu de la reproduction doit avoir un circuit contenant toutes les villes possibles. Pour pallier à ce problème nous procédons de la manière suivante :
 <ul>
-	<li>On choisit deux indices;</li>
-	<li>On recopie les villes présentes entre ces deux indices dans notre futur individu;</li>
-	<li>On complète les emplacements vides de notre nouvel individu par les villes manquantes</li>
+   <li>On choisit deux indices;</li>
+   <li>On recopie les villes présentes entre ces deux indices dans notre futur individu;</li>
+   <li>On complète les emplacements vides de notre nouvel individu par les villes manquantes</li>
 </ul>
 
 <h2>Résolvons notre problème</h2>

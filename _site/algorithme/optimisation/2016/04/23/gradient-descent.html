@@ -186,7 +186,7 @@
 
 <p>Nous pouvons désormais appliquer notre algorithme. Tout d’abord nous allons commencer par générer des couples de données (x,y) linéairement corrélés :</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="c">#premiere etape : generer des donnees x, y  correlees lineairement</span>
 <span class="k">def</span> <span class="nf">genererDonnees</span><span class="p">():</span>
@@ -199,11 +199,11 @@
 	        <span class="p">[</span><span class="n">stds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">stds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">corr</span><span class="p">,</span> <span class="n">stds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">]]</span> 
 
 	<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">covs</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-	<span class="k">return</span> <span class="n">points</span></code></pre></figure>
+	<span class="k">return</span> <span class="n">points</span></code></pre></div>
 
-<p>Nous devons choisir une valeur initiale pour nos coefficients a et b. Ici, nous choisirons 0. Lors de chaque itération nous mettrons à jour la valeur de a et b de manière à faire décroître l’erreur quadratique. La direction pour faire varier a et b est déterminée grâce aux dérivées partielles que nous avons déterminées précédemment :</p>
+<p>Nous devons choisir une valeur initiale pour nos coefficients a et b. Ici, nous choisirons 0. Lors de chaque itération nous mettrons à jour la valeur de a et b de manière à faire décroître l’erreur quadratique. La direction pour faire varier a et b est déterminée grâce aux dérivées partielles que nous avons déterminées précédemment : </p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">iterationGradient</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tauxApprentissage</span><span class="p">):</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">iterationGradient</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tauxApprentissage</span><span class="p">):</span>
 	<span class="n">gradientA</span> <span class="o">=</span> <span class="mi">0</span>
 	<span class="n">gradientB</span> <span class="o">=</span> <span class="mi">0</span>
 	<span class="n">N</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
@@ -215,15 +215,15 @@
 	<span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="p">(</span><span class="n">tauxApprentissage</span> <span class="o">*</span> <span class="n">gradientB</span><span class="p">)</span>
 	<span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="p">(</span><span class="n">tauxApprentissage</span> <span class="o">*</span> <span class="n">gradientA</span><span class="p">)</span>
 
-	<span class="k">return</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span></code></pre></figure>
+	<span class="k">return</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span></code></pre></div>
 
 <p>La variable tauxApprentissage indique si lors de chaque itération on décide de faire varier beaucoup ou peu les valeurs de a et b. Comme nous pouvons le voir sur le graphique ci-dessous qui représente l’erreur quadratique moyenne en fonction du nombre d’itérations effectuées, l’erreur décroit rapidement pour se stabiliser aux alentours de 25 au bout d’une dizaine d’itérations : 
 <br />
 <img src="/assets/media/error_nbiter_gradient.png" /></p>
 
-<p>Voici le reste du code qui permet l’initialisation des variables ainsi que l’appel de la fonction iterationGradient :</p>
+<p>Voici le reste du code qui permet l’initialisation des variables ainsi que l’appel de la fonction iterationGradient : </p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">gradientDescent</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">aInitial</span><span class="p">,</span> <span class="n">bInitial</span><span class="p">,</span> <span class="n">tauxApprentissage</span><span class="p">,</span> <span class="n">nbIterations</span><span class="p">):</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">gradientDescent</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">aInitial</span><span class="p">,</span> <span class="n">bInitial</span><span class="p">,</span> <span class="n">tauxApprentissage</span><span class="p">,</span> <span class="n">nbIterations</span><span class="p">):</span>
 	<span class="n">a</span> <span class="o">=</span> <span class="n">aInitial</span>
 	<span class="n">b</span> <span class="o">=</span> <span class="n">bInitial</span>
 	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbIterations</span><span class="p">):</span>
@@ -242,7 +242,7 @@
 
 <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">estimationsParametres</span><span class="p">()</span>
 <span class="c">#a = 0.776207203202</span>
-<span class="c">#b = 0.02282254121</span></code></pre></figure>
+<span class="c">#b = 0.02282254121</span></code></pre></div>
 
 <p>Graphiquement nous obtenons la droite suivante qui passe relativement près de l’ensemble des points :
 <img src="/assets/media/scatter_gradient2.png" /></p>
@@ -258,13 +258,13 @@
 		  
 		  
 			 
-				<li><a href="/categories.html#Algorithme-ref">
-					Algorithme <span>(3)</span>
+				<li><a href="/categories.html#algorithme-ref">
+					algorithme <span>(3)</span>
 					,
 				</a></li>
 			 
-				<li><a href="/categories.html#Optimisation-ref">
-					Optimisation <span>(1)</span>
+				<li><a href="/categories.html#optimisation-ref">
+					optimisation <span>(1)</span>
 					
 				</a></li>
 			

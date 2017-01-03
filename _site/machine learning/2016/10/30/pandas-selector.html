@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cheat sheet Pandas selectors</title>
+	
+	<meta name="description" content="Small cheat sheet containing examples of different Python Pandas selectors.">
+	
+	<meta name="author" content="Antoine Vastel">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/antoinevastel">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://twitter.com/xopek59">
+				<i class="fa fa-twitter"></i>
+			</a>
+			
+			
+			<a type="button" class="navbar-toggle nav-link" href="mailto:antoine.vastel@gmail.com">
+				<i class="fa fa-envelope"></i>
+			</a>
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913?s=35" class="img-circle" />
+				
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913?s=150" class="img-circle" />
+	</a>
+	<h3 class="title">
+        <a href="/"></a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	French PhD student and engineer, passionnate about software engineering and machine learning!
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/antoinevastel">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://twitter.com/xopek59">
+				<i class="fa fa-twitter fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="mailto:antoine.vastel@gmail.com">
+				<i class="fa fa-envelope fa-lg"></i>
+			</a>
+		</li>
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://linkedin.com/in/antoinevastel">
+				<i class="fa fa-linkedin fa-lg"></i>
+			</a>
+		</li>
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/feed.xml">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Cheat sheet Pandas selectors </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   October 
+	   30th,
+	   
+	   2016
+	 </span>
+	  <div class="article_body">
+	  <p>This article is a small cheat sheet of Pandas selectors. To illustrate our examples we will use the following <a href="/assets/data/albuquerque.csv">dataset</a> containing information about price of housing in Albuquerque. For further information you can check <a href="http://www.pmean.com/00files/housing.htm">this page</a>.</p>
+
+<p>I will try to regularly update this page with new examples.</p>
+
+<h1>Examples of selectors</h1>
+<p>We have a dataframe <em>df</em> containing the following columns : Price, SquareFeet, AgeYearsNumberFeatures, Northeast, CustomBuild, CornerLot.</p>
+
+<p>You can select a column by using its name :</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span><span class="p">[</span><span class="s">"Price"</span><span class="p">]</span></code></pre></figure>
+
+<p>You can select a subset of columns by passing a list of the names :</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span><span class="p">[[</span><span class="s">"Price"</span><span class="p">,</span> <span class="s">"CornerLot"</span><span class="p">]]</span></code></pre></figure>
+
+<p>The first column of our dataframe is the price (target variable). All the other columns are the predictor variables, which we can use to predict the price. If we want to select all of the predictor variables we can use the following code :</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pred_variables</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">ix</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+<span class="c">#or with iloc</span>
+<span class="n">pred_variables</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:]</span></code></pre></figure>
+
+<p>You can get the names of the columns and then select the predictor variables in another way :</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">cols</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">pred_variables</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span></code></pre></figure>
+
+<p>We can select the first 50 rows (from 0 to 49):</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span><span class="p">[:</span><span class="mi">50</span><span class="p">]</span></code></pre></figure>
+
+<p>We can select rows whose price is &gt; $135000 :</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Price</span> <span class="o">&gt;</span> <span class="mi">135000</span><span class="p">]</span></code></pre></figure>
+
+<p>We can also filter using two variables :</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="o">.</span><span class="n">Price</span> <span class="o">&gt;</span> <span class="mi">135000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">CornerLot</span> <span class="o">==</span> <span class="s">"No"</span><span class="p">)]</span></code></pre></figure>
+
+<p>You can try to mix the different previous techniques :</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="o">.</span><span class="n">Price</span> <span class="o">&gt;</span> <span class="mi">135000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">CornerLot</span> <span class="o">==</span> <span class="s">"No"</span><span class="p">)]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span></code></pre></figure>
+
+<p>In all of our examples we don’t get a copy of the sub dataframe but a reference to it. This means that if we make a change to our “new” dataframe, it will also impact the original dataframe.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">"Price"</span><span class="p">]</span>
+<span class="c">#we change the value in our second dataframe</span>
+<span class="n">df2</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="c">#since it is a reference to df, df["Price"] is now equal to 600</span>
+<span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">"Price"</span><span class="p">])</span>
+
+<span class="c">#To do a copy of a dataframe we can use the copy method</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">"Price"</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c">#we change the value to 900</span>
+<span class="n">df2</span><span class="p">[:]</span> <span class="o">=</span> <span class="mi">900</span>
+<span class="c">#since df2 is a copy and NOT a reference, it doesn't impact the original value if df</span>
+<span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">"Price"</span><span class="p">])</span></code></pre></figure>
+
+<p>More examples coming soon…</p>
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#Machine learning-ref">
+					Machine learning <span>(3)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#Python-ref">
+					Python <span>(5)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#Scikit learn-ref">
+					Scikit learn <span>(3)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#pandas-ref">
+					pandas <span>(2)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Cheat sheet Pandas selectors&via=xopek59"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="http://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913" class="img-rounded author-image" />
+        <h4 class="section-title author-name">Antoine Vastel</h4>
+        <p class="author-bio">French PhD student and engineer, passionnate about software engineering and machine learning!</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/deep%20learning/machine%20learning/2016/07/09/deep-learning-image-classif.html" title="Réseau de neuronnes pré-entrainé appliqué à la classification d'images">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/network%20performance/2016/11/09/automatic-chrome-network-timeline.html" title="Automatic Chrome network timeline">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2017 Antoine Vastel with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+</body>
+</html>
+
+
+
