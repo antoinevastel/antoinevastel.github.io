@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Simulated annealing
-categories: [Machine learning]
-tags: [Python, Scikit learn, pandas]
-description: Presentation of simulated annealing technique applied to traveling salesman problem.
+categories: [Optimization]
+tags: [Python, Optimization]
+description: Presentation of the simulated annealing technique applied to traveling salesman problem.
 ---
 
 Simulated annealing is an optimisation metaheuristic whose goal is to find the global minimum/maximum of a function in a large search space.
