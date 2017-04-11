@@ -347,7 +347,7 @@ function runAttack(){
 		});
 	}
 
-	launchOptim(3).then(function(optimizedParameters){
+	launchOptim(30).then(function(optimizedParameters){
 		return testLinks(optimizedParameters);
 	}).then(function(res){
 		testAreaElt.style.position = "relative";
