@@ -57,7 +57,7 @@ Even though it has been fixed, it enables to understand how simple CSS propertie
 ## Stealing history, the old way
 
 The first major bug was revealed around 2006.
-It made use of the fact that depending on whether or not you have visited an url, then the link pointing to this url can be displayed differently by using CSS properties.
+It made use of the fact that depending on whether or not you have visited a url, then the link pointing to this url can be displayed differently by using CSS properties.
 The image below illustrates our point: the visited link is purple whereas the link that hasn't been visited is blue.
 
 <img src="/assets/media/links_visited.png"/>
@@ -106,7 +106,7 @@ If we see a non significant difference, then we consider that the link has been 
 
 In this process, we need to fix the value of several parameters such as the number of links, their length, the blur in pixels (text-shadow property).
 Optimizations are possible to find parameter values that makes the process faster.
-We can adjust these parameters because we always have an url the user has visited: the current webpage he is seeing.
+We can adjust these parameters because we always have a url the user has visited: the current webpage he is seeing.
 Thus, we can use it as the ground truth during our optimization process.
 
 It is important to keep in mind that in contrary to the previous technique presented at the begining of the article, errors can occur since it relies on time needed for a function to be executed.
