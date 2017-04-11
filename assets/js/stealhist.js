@@ -109,7 +109,7 @@ function computeMedian(series) {
 function examineTimeSeries(test_series, base_series) {
 	var test_median = computeMedian(test_series);
 	var base_median = computeMedian(base_series);
-	return test_median > base_median * 1.80;
+	return test_median > base_median * 1.10;
 }
 
 function checkIsLinkVisited(link, nbIter, base_series) {
