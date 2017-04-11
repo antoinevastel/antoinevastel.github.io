@@ -3,7 +3,7 @@ layout: post
 title: History stealing using timing attack
 categories: [Security, Privacy]
 tags: [Javascript, Security, Privacy]
-description: Presentation of a side channel attack that leverages time to deduct if a user has visited a link or not. 
+description: Presentation of a side channel attack that leverages time to deduce if a user has visited a link or not. 
 ---
 
 <style type="text/css">
@@ -25,7 +25,7 @@ description: Presentation of a side channel attack that leverages time to deduct
 	color:red;
 }
 
-a:visited {
+#test-area a:visited, #links a:visited {
   	color: red;
 }
 #links > li::before {
