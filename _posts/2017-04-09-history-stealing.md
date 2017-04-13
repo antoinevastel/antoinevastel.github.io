@@ -56,7 +56,7 @@ Even though it has been fixed, it enables to understand how simple CSS propertie
 
 ## Stealing history, the old way
 
-The first major bug was revealed around 2006.
+The first major bug was revealed around 2002.
 It made use of the fact that depending on whether or not you have visited a url, then the link pointing to this url can be displayed differently by using CSS properties.
 The image below illustrates our point: the visited link is purple whereas the link that hasn't been visited is blue.
 
