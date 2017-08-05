@@ -32,7 +32,7 @@ On a Linux computer with Chrome version 59 it has the following value: "Mozilla/
 
 Thus, we can check for the presence of Chrome headless: 
 {% highlight javascript %}
-if (/Chrome/.test(window.navigator.userAgent)) {
+if (/HeadlessChrome/.test(window.navigator.userAgent)) {
     console.log("Chrome headless detected");
 }
 {% endhighlight %}
