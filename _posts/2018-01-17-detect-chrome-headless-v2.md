@@ -45,11 +45,12 @@ It is possible to obtain the screen resolution by accessing to *screen.width* an
 Similarly *screen.availWidth* and *screen.availHeight* returns respectively the amount of horizontal or vertical space available to the window,
 i.e. the width minus elements such as the Windows taskbar.
 
-In headless mode, we found no differences between *screen.width* and *screen.availWidth*, and *screen.height* and *screen.availHeight*.
+In headless mode on Linux, we found no differences between *screen.width* and *screen.availWidth*, and *screen.height* and *screen.availHeight*.
 Even when the *window-size* parameter was passed to Chrome headless, both attributes were identical.
 Even though this rules may not always work, it gives a hint about the presence of Chrome headless.
 
 {% highlight javascript %}
+// On Linux
 if(screen.width === screen.availWidth && screen.height === screen.availHeight) {
     console.log("It may be Chrome headless");
 }
