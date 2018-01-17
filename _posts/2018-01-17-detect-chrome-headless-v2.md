@@ -1,24 +1,20 @@
 ---
 layout: post
-title: New techniques to detect Chrome headless
+title: Detecting Chrome headless, new techniques
 categories: [Bot detection]
 tags: [Browser Fingerprinting]
-description: This post present techniques that enables to distinguish a vanilla Chrome browser from a Chrome browser running in headless mode. It updates information presented in the post of August.
+description: This post presents techniques that enables to distinguish a vanilla Chrome browser from a Chrome browser running in headless mode. It updates information presented in the post of August.
 ---
 
 In August I wrote a <a href="{% post_url 2017-08-05-detect-chrome-headless %}"> post</a> on techniques to detect Chrome headless.
 Since then I received messages saying that some of them were not working anymore.
-After doing some tests on my computer, it happens that the techniques that used WebGL, feature detection as well 
+After doing few tests on my computer, it happens that the last three techniques that used WebGL, feature detection as well 
 as the size of the image used by Chrome when an image fails to load can't be used anymore to detect Chrome headless.
 
 Thus, in this post I'll present techniques (new and from the previous post) that can be used to detect Chrome headless.
 
-# New techniques for detection
-
-In this part I'll present both techniques that still work as well as new techniques for detecting Chrome headless.
-
-## User agent
-We start with a naive technique already present in the previous post: the user agent.
+## User agent (Old)
+We start with a naive technique already presented in the previous post: the user agent.
 It is the attribute commonly used to detect the OS as well as the browser of the user.
 On a Linux computer with Chrome version 63 it has the following value: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/63.0.3071.115 Safari/537.36"
 
@@ -43,14 +39,15 @@ if(navigator.webdriver) {
 }
 {% endhighlight %}
 
-## Screen resolution (New)
+## Screen resolution (New)
+
 It is possible to obtain the screen resolution by accessing to *screen.width* and *screen.height*.
 Similarly *screen.availWidth* and *screen.availHeight* returns respectively the amount of horizontal or vertical space available to the window,
 i.e. the width minus elements such as the Windows taskbar.
 
 In headless mode, we found no differences between *screen.width* and *screen.availWidth*, and *screen.height* and *screen.availHeight*.
 Even when the *window-size* parameter was passed to Chrome headless, both attributes were identical.
-Even though this rules may not always apply, it may give a hint about the presence of Chrome headless.
+Even though this rules may not always work, it gives a hint about the presence of Chrome headless.
 
 {% highlight javascript %}
 if(screen.width === screen.availWidth && screen.height === screen.availHeight) {
@@ -70,87 +67,43 @@ if(isChrome && !window.chrome) {
 }
 {% endhighlight %}
 
-## Permissions (New)
+## Permissions (New)
 
 It's currently not possible to handle permissions in headless mode.
-Thus, according to comments in the source code, 'In headless mode we just pretent the user "closes" any permission prompt,
-without accepting or denying.'
-Thus, it is possible to check for different for different permissions and see if their status is *prompt*.
-If it is the case, then it is possible to measure the time to accept or refuse the permission when it is prompted.
-We show an example with only the geolocation API.
+Thus, it leads to an inconsistent state where *Notification.permission* and *navigator.permissions.query* report
+contradictory values.
 
 {% highlight javascript %}
-// isChrome is true if the browser is Chrome, Chromium but not Opera
-// Opera manages permissions differently (disabled location by default) http://help.opera.com/FreeBSD/11.10/en/geolocation.html
-if (isChrome) {
-    var start = performance.now();
-    navigator.permissions.query({name:'geolocation'}).then(function(permissionStatus) {
-      console.log('geolocation permission state is ', permissionStatus.state);
-      if (permissionStatus.state === 'prompt') {
-        var TIME_THRESHOLD = 150; //µs
-        var start = performance.now();  
-        navigator.permissions.query({name:'geolocation'}).then(function(permissionStatus) {
-            console.log(permissionStatus)
-          if (performance.now() - start < TIME_THRESHOLD) {
-            console.log("Chrome headless detected");
-          } else {
-            console.log('This is not Chrome headless')
-          }
-        });
-      } else {
+navigator.permissions.query({name:'notifications'}).then(function(permissionStatus) {
+    if(Notification.permission === 'denied' && permissionStatus.state === 'prompt') {
+        console.log('This is Chrome headless')	
+    } else {
         console.log('This is not Chrome headless')
-      }
-      console.log(performance.now() - start);
-    });
-}
+    }
+});
 {% endhighlight %}
-
-<script>
-var start = performance.now();
-    navigator.permissions.query({name:'geolocation'}).then(function(permissionStatus) {
-      console.log('geolocation permission state is ', permissionStatus.state);
-      if (permissionStatus.state === 'prompt') {
-        var TIME_THRESHOLD = 150; //µs
-        var start = performance.now();  
-        navigator.permissions.query({name:'geolocation'}).then(function(permissionStatus) {
-            console.log(permissionStatus)
-          if (performance.now() - start < TIME_THRESHOLD) {
-            console.log("Chrome headless detected");
-          } else {
-            console.log('This is not Chrome headless')
-          }
-        });
-      } else {
-        console.log('This is not Chrome headless')
-      }
-      console.log(performance.now() - start);
-    });
-
-</script>
-
-The drawback of this method is that it will prompt the geolocation permission to normal users.
 
 Finally, I present two other methods that were already present in the previous post.
 
-## Plugins
+## Plugins (Old)
 *navigator.plugins* returns an array of plugins present in the browser.
 Typically, on Chrome we find default plugins, such as Chrome PDF viewer or Google Native Client.
 On the opposite, in headless mode, the array returned contains no plugin.
 
 {% highlight javascript %}
-if(navigator.plugins.length == 0) {
+if(navigator.plugins.length === 0) {
     console.log("It may be Chrome headless");
 }
 {% endhighlight %}
 
-## Languages
+## Languages (Old)
 In Chrome two Javascript attributes enable to obtain languages used by the user: *navigator.language* and *navigator.languages*.
 The first one is the language of the browser UI, while the second one is an array of string
 representing the user's preferred languages.
 However, in headless mode, navigator.languages returns an empty string.
 
 {% highlight javascript %}
-if(navigator.languages == "") {
+if(navigator.languages === "") {
     console.log("Chrome headless detected");
 }
 {% endhighlight %}
