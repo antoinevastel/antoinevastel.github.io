@@ -1,15 +1,20 @@
-@import url(http://fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700,200);
 
 body{
-	color: #2c3e50;
+	color: #2c2c2c;
 }
 
 .sidebar {
 	position: fixed;
 	top: 0px;
 	padding-top: 10%;
-	background-color: #2c3e50;
+	background-color: #7DAF9C;
 	color: #fff;
+}
+
+.article_body a {
+	color: #7DAF9C;
+	font-weight: 600;
 }
 
 .sidebar-header {
@@ -37,8 +42,9 @@ a.nav-link i{
 a.nav-link:hover { color: #777 }
 
 #bio {
-	font-family: "Courier New", Courier, monospace;
-	font-size: 11px;
+	font-family: "Montserrat", Courier, monospace;
+	font-size: 13px;
+	font-weight: 600;
 	margin: 0 auto;
 	margin-bottom: 10px;
 }
@@ -66,7 +72,8 @@ article .share .twitter:hover {
 	color: #CC2127;
 }
 #contact-list li:hover .fa-rss {
-	color: #e74c3c;
+	color: #DB93B0;
+	
 }
 article .share .facebook:hover {
 	color: #43609C;
@@ -81,9 +88,10 @@ article .share .gplus:hover {
 	padding-bottom: 10px;
 }
 
-.page-header {
-	color: #e74c3c;
-	text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+.page-header h1{
+	color: #f2756a;
+	padding: 0 5% 0;
+	font-size: 40px;
 }
 
 article{
@@ -105,19 +113,20 @@ article {
 	padding: 0 5% 0;
 }
 
-article.home div a, article.home pre a { color: #2c3e50; }
-article.home div a:hover, article.home pre a:hover { color: #2c3e50; text-decoration: none; }
+article.home div a, article.home pre a { color: #7DAF9C; }
+article.home div a:hover, article.home pre a:hover { color: #7DAF9C; text-decoration: none; }
 article img { max-width: 100%; }
 
-h1,h2,h3,h4,h5,h6 { font-family: 'Ubuntu', sans-serif; }
+h1,h2,h3,h4,h5,h6 { font-family: 'Montserrat', sans-serif; }
 article.home h1,
 article.home h2,
 article.home h3,
 article.home h4,
 article.home h5,
 article.home h6 {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Montserrat', sans-serif;
 	color: #f2756a;
+	font-weight: 400;
 }
 
 article.home h1 a,
@@ -130,7 +139,7 @@ article.home h1 a:hover,
 article.home h2 a:hover,
 article.home h3 a:hover,
 article.home h4 a:hover {
-	color: #e74c3c;
+	color: #DB93B0;
 }
 
 .author .author-image {
@@ -140,7 +149,7 @@ article.home h4 a:hover {
 
 footer {
 	padding-top: 15px;
-	font-family: 'Ubuntu';
+	font-family: 'Montserrat';
 }
 
 /* nav-vertical-tabs component */
