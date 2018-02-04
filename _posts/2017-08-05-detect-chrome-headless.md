@@ -3,8 +3,9 @@ layout: post
 title: Detecting Chrome Headless
 categories: [Bot detection]
 tags: [Browser Fingerprinting]
-description: This post present techniques that enables to distinguish a vanilla Chrome browser from a Chrome browser running in headless mode.
+description: This post presents techniques that enables to distinguish a vanilla Chrome browser from a Chrome browser running in headless mode.
 ---
+**Edit:** Since some of the techniques presented in this post don't work anymore I created a <a href="{% post_url 2018-01-17-detect-chrome-headless-v2 %}"> new post</a> that presents new techniques to detect Chrome Headless. 
 
 # What's a headless browser?
 A headless browser is a browser that can be used without a graphical interface.
