@@ -6,6 +6,7 @@ tags: [Browser Fingerprinting]
 description: This post presents techniques that enables to distinguish a vanilla Chrome browser from a Chrome browser running in headless mode.
 ---
 **Edit:** Since some of the techniques presented in this post don't work anymore I created a <a href="{% post_url 2018-01-17-detect-chrome-headless-v2 %}"> new post</a> that presents new techniques to detect Chrome Headless. 
+
 **PhD opportunity:** if you are interested in doing a PhD on browser fingerprinting and/or privacy, feel free to contact me by email.
 
 # What's a headless browser?
