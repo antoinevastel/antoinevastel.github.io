@@ -5,6 +5,7 @@ categories: [Bot detection]
 tags: [Browser Fingerprinting]
 description: This post presents techniques that enables to distinguish a vanilla Chrome browser from a Chrome browser running in headless mode. It updates information presented in the post of August.
 ---
+
 **Edit:** After the post got some attention on Hacker news, Paul Irish created 
 a <a href="https://github.com/paulirish/headless-cat-n-mouse">Github repository</a> that models a game between a website that wants to detect the presence 
 of Chrome headless, and a Chrome headless instance that tries to look like a non headless Chrome.
@@ -94,3 +95,5 @@ if(navigator.languages === "") {
     console.log("Chrome headless detected");
 }
 {% endhighlight %}
+
+**PhD opportunity:** if you are interested in doing a PhD on browser fingerprinting and/or privacy, feel free to contact me by email.
