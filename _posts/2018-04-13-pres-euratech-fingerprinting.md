@@ -17,6 +17,6 @@ Enfin, j'ai abordé l'utilisation du fingerprinting pour détecter les utilisate
 Vous pouvez retrouver les slides de la présentation sur le lien suivant:
 <a href="/pres_euratech/index.html">présentation</a>
 
-Si le sujet des empreintes de navigateurs vous intéresse, un autre post, accessible via <a href="{% post_url 2016-03-20-lissage-exponentiel-simple %}">ce lien</a>, présente de manière vulgarisée comment les empreintes de navigateurs
+Si le sujet des empreintes de navigateurs vous intéresse, un autre post, accessible via <a href="{% post_url 2018-01-03-fp-stalker-fr %}">ce lien</a>, présente de manière vulgarisée comment les empreintes de navigateurs
 peuvent être utilisées pour le suivi d'utilisateurs sur internet.
 

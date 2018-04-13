@@ -1,6 +1,6 @@
 ---
 layout: post
-title: FP-Stalker, empreintes de navigateur pour le suivi d'utilisateurs sur internet.
+title: FP-Stalker, empreintes de navigateurs pour le suivi d'utilisateurs sur internet.
 categories: [tracking]
 tags: [tracking, machine learning]
 description: Vulgarisation de l'article FP-Stalker publié à la conférence S&P 18. Le post présente dans quelle mesure les empreintes de navigateur peuvent être utilisées à des fins de tracking.
@@ -18,7 +18,7 @@ Pour ceux intéressés par les détails des algorithmes et de la méthodologie, 
 
 L'objectif principal de l'article est étudier dans quelle mesure il est possible de suivre un utilisateur sur internet en utilisant uniquement son empreinte de navigateur.
 Avant de répondre à cette question, nous présentons tout d'abord ce qu'est une empreinte de navigateur.
-Ensuite, nous expliquons comment il est possible de conçevoir des algorithmes de suivi basés sur les empreintes de navigateur.
+Ensuite, nous expliquons comment il est possible de conçevoir des algorithmes de suivi basés sur les empreintes de navigateurs.
 Enfin, nous montrons qu'en utilisant ces algorithmes, il est possible de suivre 25% des utilisateurs pendant plus de 100 jours.
 
 # Qu'est-ce qu'une empreinte de navigateur ?
@@ -136,7 +136,7 @@ Le tableau ci-dessous présente un exemple d'empreinte :
 <br>
 
 L'analogie avec les empreintes digitales vient du fait que cette combinaison d'attributs est bien souvent unique.
-Ainsi, l'unicité des empreintes de navigateur peut être utilisée pour essayer de suivre l'activité d'un utilisateur sur internet.
+Ainsi, l'unicité des empreintes de navigateurs peut être utilisée pour essayer de suivre l'activité d'un utilisateur sur internet.
 
 # Suivi/Tracking sur internet
 
@@ -148,9 +148,9 @@ Le principe est de stocker un identifiant dans un cookie.
 Ainsi, lorsqu'un utilisateur revient sur un site, il suffit de regarder l'identifiant stocké dans son cookie pour savoir de qui il s'agit.
 Toutefois, il existe diverses techniques permettant de supprimer les cookies telles que le mode de navigation privée, d'où l'invention de techniques de suivi complémentaires. 
 
-La technique de suivi que nous étudions dans cet article est appelée browser fingerprinting, et est basée sur les empreintes de navigateur pour identifier des utilisateurs.
+La technique de suivi que nous étudions dans cet article est appelée browser fingerprinting, et est basée sur les empreintes de navigateurs pour identifier des utilisateurs.
 
-Le but de cet article est d'étudier l'efficacité des empreintes de navigateur en tant que technique de suivi sur le long terme.
+Le but de cet article est d'étudier l'efficacité des empreintes de navigateurs en tant que technique de suivi sur le long terme.
 Pour répondre à cette question nous avons créé le projet Amiunique constitué d'un [site](https://amiunique.org/) ainsi que de deux extensions pour Chrome et Firefox.
 Grâce à Amiunique nous avons collecté des empreintes de navigateurs pendant plus de 2 ans afin de pouvoir les étudier.
 
@@ -167,11 +167,11 @@ Au total, le jeu de données nettoyé contient 96598 empreintes de 1905 utilisat
 # Évolution des empreintes
 
 Avant de mesurer combien de temps il est possible de suivre un utilisateur en se basant uniquement sur son empreinte, nous étudions la manière dont les empreintes de navigateur évoluent.
-Jusqu'à présent, la plupart des articles se concentrent sur le fait que les empreintes de navigateur sont relativement uniques, ce qui peut être utilisé contre les utilisateurs afin de les identifier.
+Jusqu'à présent, la plupart des articles se concentrent sur le fait que les empreintes de navigateurs sont relativement uniques, ce qui peut être utilisé contre les utilisateurs afin de les identifier.
 Toutefois, il est important de garder à l'esprit qu'en plus d'être uniques, les empreintes doivent également rester relativement stable dans le temps.
 En effet, si celles-ci changent trop régulièrement, et de manière imprévisible, alors il est difficile de s'en servir comme identifiant de suivi.
 
-Dans cette partie nous montrons que les empreintes de navigateur changent régulièrement, mais que cette vitesse de changement dépend des utilisateurs et des attributs.
+Dans cette partie nous montrons que les empreintes de navigateurs changent régulièrement, mais que cette vitesse de changement dépend des utilisateurs et des attributs.
 Par exemple, lorsque que le navigateur se met à jour et change de version, cela se reflète dans l'attribut **user agent** qui contient la version du navigateur.
 
 Le tableau ci-dessous présente pour chaque attribut la distribution du temps par utilisateur avant qu'un changement se produise.
@@ -348,9 +348,9 @@ Au contraire, pour plus de 20% des utilisateurs il est nécessaire d'attendre 10
 <img src="/assets/media/proportion_fp_change_time_fr.png">
 <br>
 
-Si les empreintes de navigateur étaient totalement uniques et stables dans le temps, alors il suffirait de regarder si deux empreintes sont identiques pour savoir si elles appartiennent à un même utilisateur.
+Si les empreintes de navigateurs étaient totalement uniques et stables dans le temps, alors il suffirait de regarder si deux empreintes sont identiques pour savoir si elles appartiennent à un même utilisateur.
 Toutefois, nous venons de montrer que :
-1. Les empreintes de navigateur changent régulièrement, 
+1. Les empreintes de navigateurs changent régulièrement,
 2. Les attributs composant une empreinte évoluent à des vitesses différentes.
 
 Ainsi, il est nécessaire de prendre en compte ces deux points si l'on souhaite concevoir des algorithmes de suivi efficaces.
@@ -411,7 +411,7 @@ Pour formaliser la manière d'établir des règles, nous avons donc créé un no
 Le machine learning est un ensemble d'outils mathématiques permettant d'apprendre automatiquement des règles ou des décisions à partir de données du passé.
 Toutefois, étant un outil mathématique, le machine learning ne fonctionne que sur des nombres.
 
-La première étape pour conçevoir notre nouvel algorithme consiste donc à convertir nos empreintes de navigateur en un ensemble de nombres (vecteur).
+La première étape pour conçevoir notre nouvel algorithme consiste donc à convertir nos empreintes de navigateurs en un ensemble de nombres (vecteur).
 Dans notre cas, cela consiste à comparer les attributs de deux empreintes 2 à 2, et de calculer leur similarité lorsque cela à un sens.
 Dans le cas de certains attributs comme le **canvas**, ou les attributes n'ayant que deux valeurs (**cookies**, **local storage**), nous n'utilisons pas de similarité mais plutot une valeur valant 1 si les deux attributs sont identiques, et 0 si ils sont différents.
 
