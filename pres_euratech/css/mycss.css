@@ -1,0 +1,37 @@
+.reveal .slides {
+    text-align: left;
+}
+
+/*.left-align{
+    text-align: left;
+}*/
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.reveal .slides ul {
+    margin-left: 2em;
+}
+
+.reveal .slides .center {
+    text-align: center;
+}
+
+.reveal .slides h2 {
+    color: rgb(230, 138, 0);
+}
+
+.reveal span.highlight {
+    color: rgb(230, 138, 0); 
+}
+
+.reveal span.fonts-enum-ex {
+    font-size:72px;
+    font-family:"sdfsdfsdf";
+}
+
+#font-to-test {
+    /*font-family: "FreeMono";*/
+    font-family: "Arial Black";
+}

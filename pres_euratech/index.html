@@ -1,0 +1,698 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="./css/reveal.css">
+    <link rel="stylesheet" href="./css/theme/solarized.css">
+    <link rel="stylesheet" href="./css/themecst.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="./lib/css/zenburn.css">
+
+
+    <style>
+        #vectorisation-fp {
+            font-size: 0.75em;
+        }
+
+        .reveal section img {
+            border: none;
+        }
+    </style>
+</head>
+<!---->
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h2>Empreintes de navigateurs: Vie privée et sécurité</h2>
+                <p class="center">Antoine Vastel - Université de Lille/INRIA</p>
+              <p class="legend"><a href="https://antoinevastel.com">antoinevastel.com</a> <a href="https://amiunique.org">, amiunique.org</a></p>
+            </section>
+
+            <section>
+                <h2>Qui suis-je ?</h2>
+                <ul>
+                    <li>Doctorant en 2eme année</li>
+                    <li>Équipe Spirals Inria / Université de Lille</li>
+                    <li>Empreintes de navigateurs (browser fingerprint)</li>
+                </ul>
+            </section>
+
+
+            <section>
+                <section>
+                    <h2>Qu'est-ce que le browser fingerprinting ?</h2>
+                </section>
+
+
+                <section>
+                    <h3>Le browser fingerprinting</h3>
+                    <p>
+                        Technique de suivi d'utilisateurs sans fichier/cookie<br> Présenté par Eckerlsey en 2010
+                    </p>
+                    <p>
+                        Se base sur la diversité des:
+                        <ol>
+                            <li>OS</li>
+                            <li>Navigateurs</li>
+                            <li>Appareils</li>
+                        </ol>
+                    </p>
+                    <aside class="notes">
+                        Utilise des attributs accessibles depuis les APIs JS.<br> Non significatif si pris individuellement.<br> Globalement uniques quand on considère leur combinaison.
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>Exemple d'une empreinte de navigateur</h2>
+                    <table>
+                        <tr>
+                            <th>Attribut</th>
+                            <th>Valeur</th>
+                        </tr>
+                        <tr>
+                            <td>User agent</td>
+                            <td><span class="highlight">Mozilla/5.0 (X11; <b>Linux</b> x86_64) AppleWebKit/537.36 (KHTML, like Gecko) <b>Chrome</b>/<b>59</b>.0.3071.86 Safari/537.36</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Langues</td>
+                            <td><span class="highlight">fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4</span></td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <table>
+                        <tr>
+                            <td>Accept</td>
+                            <td><span class="highlight">text/html,application/xhtml+xml,application/xml; q=0.9,image/webp,image/apng,*/*;q=0.8</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Encodage</td>
+                            <td><span class="highlight">gzip, deflate, br</span></td>
+                        </tr>
+                        <tr>
+                            <td>Plugins</td>
+                            <td><span class="highlight"><b>Plugin 0</b>: Chrome PDF Viewer; ; mhjfbmdgcfjbbpaeojofohoefgiehjai.<br><b>Plugin 1</b>: Chrome PDF Viewer; Portable Document Format; internal-pdf-viewer.<br> <b>Plugin 2</b>: Native Client; ; internal-nacl-plugin.</span>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <section>
+                    <table>
+                        <tr>
+                            <td>Fuseau horaire</td>
+                            <td><span class="highlight">-120</span></td>
+                        </tr>
+                        <tr>
+                            <td>Résolution d'écran</td>
+                            <td><span class="highlight">1280x720</span></td>
+                        </tr>
+                        <tr>
+                            <td>Polices d'écriture</td>
+                            <td><span class="highlight">Liste des polices d'écriture</span></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: middle">Canvas</td>
+                            <td><img style="vertical-align: bottom" src="./images/canvas_exp_fpstalker.png"></td>
+                        </tr>
+                    </table>
+
+                    <aside class="notes">
+                        Dire que combinaison unique dans notre cas.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Etat de l'art : vie privée</h3>
+
+                    <b>Unicité:</b>
+                    <ul>
+                        <li><span class="highlight">83.6%</span> d'empreintes uniques (<em>Eckersley 2010)</em></li>
+                        <li><span class="highlight">81%</span> sur mobile (<em>Laperdrix 2016</em>)</li>
+                    </ul>
+
+                    <b>Utilisation du fingerprinting:</b>
+                    <ul>
+                        <li><span class="highlight">5%</span> top 1k Alexa (<em>Englehardt 2016</em>)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Etat de l'art : Sécurité</h3>
+                    <p>
+                        <b>Amélioration de la sécurité:</b>
+                        <ul>
+                            <li>Utilisé comme <span class="highlight"> second facteur</span> d'authentification (<em>Alaca
+                        2016</em>)
+                            </li>
+                            <li>Évite les <span class="highlight">vols de sessions</span> (<em>Unger 2013</em>)</li>
+                            <li>Détection de <span class="highlight">classes d'appareils</span> (<em>Bursztein 2016</em>)</li>
+                        </ul>
+                    </p>
+                </section>
+
+                <section>
+                  <h3>Problématiques</h3>
+
+                  <ol>
+                    <li>Peut-on suivre les utilisateurs avec leurs empreintes de navigateurs ?</li>
+                    <li>Les contre-mesures sont-elles efficaces ?</li>
+                    <li>Peut-on détecter les bots grâce à leurs empreintes ?</li>
+                  </ol>
+                </section>
+
+            </section>
+
+            <section>
+                <section>
+                    <h2>Mes recherches</h2>
+
+                    <p class="center">
+                        <ol>
+                            <li><span class="highlight">FP-Stalker :</span> Vie privée</li>
+                            <li><span class="highlight">FP-Scanner : </span>Vie privée</li>
+                            <li><span class="highlight">FP-Bot : </span>Sécurité</li>
+                        </ol>
+                    </p>
+                </section>
+
+            </section>
+
+            <section>
+                <section>
+                    <h3>FP-Stalker</h3>
+                    <p>
+                        <ol>
+                            <li>À quel point les empreintes de navigateurs restent stables dans le temps ?</li>
+                            <li>Combien de temps peut-on suivre un navigateur grâce à son empreinte ?</li>
+                        </ol>
+                    </p>
+
+                </section>
+
+                <section>
+                  <h3>Amiunique.org</h3>
+
+                  <ul>
+                    <li>Site de collecte d'empreintes de navigateurs</li>
+                    <li>500k+ empreintes</li>
+                    <li>Extensions pour navigateurs</li>
+                  </ul>
+                </section>
+
+                <section>
+                    <h3>Stabilité des empreintes de navigateurs (1/2)</h3>
+
+                    <p>
+                        <table id="evol-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Médiane</th>
+                                    <th>90%</th>
+                                    <th>95%</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>Résolution d'écran</b></td>
+                                    <td>Jamais</td>
+                                    <td>3.1</td>
+                                    <td><span class="highlight">1.8</span></td>
+                                </tr>
+                                <tr>
+                                    <td><b>User agent</b></td>
+                                    <td><span class="highlight">39.7</span></td>
+                                    <td>13.0</td>
+                                    <td>8.4</td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Liste des polices</b></td>
+                                    <td>Jamais</td>
+                                    <td>11.8</td>
+                                    <td>5.4</td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Canvas</b></td>
+                                    <td><span class="highlight">290.0</span></td>
+                                    <td>35.3</td>
+                                    <td>17.2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="legend">Durées (jours) pendant lesquelles les attributs restent constants pour la médiane, le 90eme et le 95eme centile.</p>
+                    </p>
+
+                    <aside class="notes">
+                        Evolutions automatiques (ua, plugins).<br> Evolutions dépendantes du contexte (Resolution, timezone).<br> Evolution générée par un utilisateur (cookies, dnt, local storage)
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Stabilité des empreintes de navigateurs (2/2)</h3>
+                    <p class="center">
+                        <img class="center" src="./images/proportion_fp_change_time_fr.png">
+                        <p class="legend">Fonction de distribution du temps écoulé avant qu'une empreinte évolue pour toutes les empreintes (bleu), et moyenné par utilisateur (orange)</p>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Suivi d'utilisateurs : vue d'ensemble</h3>
+
+                    <p class="center">
+                        <img width="600px" src="./images/general_recap_fp_fr.svg">
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Algorithme à base de règles</h3>
+
+                    <p>
+                        <ul>
+                            <li>Même <span class="highlight">OS</span></li>
+                            <li>Même <span class="highlight">navigateur</span></li>
+                            <li>Version du navigateur <span class="highlight">croissante</span></li>
+                            <li>...</li>
+                            <li>Similarité user agent, plugins &gt; 75%</li>
+                        </ul>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Algorithme hybride : Règles + Machine Learning</h3>
+                    <p>
+                        <ol>
+                            <li>Règles objectives pour filtrer</li>
+                            <li>Machine learning pour affiner</li>
+                        </ol>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Vectorisation</h3>
+                    <table id="vectorisation-fp">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Empreinte inconnue</th>
+                                <th>Empreinte connue</th>
+                                <th>Vecteur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>User agent</b></td>
+                                <td>"Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0"</td>
+                                <td>"Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"</td>
+                                <td><span class="highlight">0.97</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Encodage</b></td>
+                                <td>"gzip, deflate, br"</td>
+                                <td>"gzip, deflate"</td>
+                                <td><span class="highlight">0.87</span></td>
+                            </tr>
+                            <tr>
+                                <td><b>Langues</b></td>
+                                <td>"en-US,en;q=0.5"</td>
+                                <td>"fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4"</td>
+                                <td><span class="highlight">0.53</span></td>
+                            </tr>
+                            <tr>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle"><b>Canvas</b></td>
+                                <td style="vertical-align: bottom"><img src="./images/canvas_exp_fpstalker.png"></td>
+                                <td style="vertical-align: bottom"><img src="./images/canvas_exp_fpstalker_2.png"></td>
+                                <td><span class="highlight">0</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section>
+                    <h3>Modèle de prédiction</h3>
+                    <p class="center">
+                        <!--<img src="./images/new_nice_tree.png">-->
+                        <img width="1000px" src="./images/decision_tree.svg">
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Temps maximum moyen de suivi par empreintes de navigateurs</h3>
+
+                    <p>
+                        <ul>
+                            <li>Dataset: <span class="highlight">95k</span> empreintes, <span class="highlight">1905</span> navigateurs
+                            </li>
+
+                        </ul>
+                    </p>
+
+                    <p class="center">
+                        <img width="600px" src="./images/raw_max_days_frequency_fr.png">
+                    </p>
+
+                    <!--<ul>-->
+                    <!--<li><span class="highlight">~ 75</span> jours en moyenne (hybride)</li>-->
+                    <!--<li><span class="highlight">~ 65</span> jours en moyenne (règles)</li>-->
+                    <!--</ul>-->
+                </section>
+
+                <section>
+                    <h3>Détails résultats algorithme hybride</h3>
+
+                    <p>
+                        <ul>
+                            <li>Fréquence de collecte fixée à <span class="highlight">7</span> jours</li>
+                            <li><span class="highlight">26%</span> des utilisateurs suivis plus de <span class="highlight">100</span> jours (noir)
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p class="center">
+                        <img width="600px" src="./images/cdf_tracking_time_inverse_fr.png">
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Évaluation temps d'exécution</h3>
+
+                    <p>
+                        <ul>
+                            <li>Scalabilité: <span class="highlight">8</span> processus -&gt; <span class="highlight">80%</span> gain de temps
+                            </li>
+                            <li>Règles <span class="highlight">5</span> fois plus rapides</li>
+                        </ul>
+                    </p>
+
+                    <p class="center">
+                        <img src="./images/benchmark_bp_all.jpg">
+                    </p>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h3>FP-Scanner</h3>
+                    <p>
+                        <ol>
+                            <li>Les contre-mesures pour le fingerprinting sont-elles détectables ?</li>
+                            <li>Sont-elles contre-productives ?</li>
+                        </ol>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Différents types de contre-mesures</h3>
+
+                    <p>
+                        <ul>
+                            <li>Bloqueurs/poisonneurs de Canvas</li>
+                            <li>Spoofers</li>
+                            <li>Navigateurs modifiés</li>
+                        </ul>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Exemple : Random Agent Spoofer</h3>
+
+                    <p class="center">
+                        <img src="./images/ras.png">
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Empreintes incohérentes</h3>
+
+                    <p>
+                        <b>Incohérence :</b>
+                        <blockquote>Qui manque d'unité, de cohésion, dont les parties ne sont pas en accord.</blockquote>
+                    </p>
+
+                    <p>
+                        <ul>
+                            <li>User Agent dit <span class="highlight">Linux</span></li>
+                            <li>Plateforme dit <span class="highlight">Windows</span></li>
+                            <li>Plugins avec extension <span class="highlight">.dll</span></li>
+                        </ul>
+                    </p>
+
+
+                </section>
+
+                <section>
+                    <h3>Détection des contre-mesures</h3>
+
+                    <p>
+                        <ul>
+                            <li>Plateforme, carte graphique, plugins <span class="highlight">(OS)</span></li>
+                            <li>Erreurs exécution JS <span class="highlight">(navigateur)</span></li>
+                            <li>Capteurs : accéléromètre, tactile <span class="highlight">(appareil)</span></li>
+                            <li>Pixels manipulés <span class="highlight">(Canvas)</span></li>
+                            <li>Fonctions/getters réécrits <span class="highlight">(Autre)</span></li>
+                        </ul>
+                    </p>
+                </section>
+
+
+
+
+                <section>
+                    <h3>Résultats</h3>
+                    <p>
+                        <ul>
+                            <li>Précision <span class="highlight">&gt; 0.99</span> (FP-Scanner)</li>
+                            <li>Précision <span class="highlight">= 0.45</span> (FingerprintJS2/Augur)</li>
+                            <li>Capable de retrouver valeur originale</li>
+                        </ul>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Discussion vie privée</h3>
+                    <p>
+                        <b>Détection n'est pas suffisante : </b>
+                        <ul>
+                            <li>Identification de la contre-mesure</li>
+                            <li>Influence du nombre utilisateurs</li>
+                            <li>Possibilité de retrouver les valeurs originales</li>
+                            <li>Volume de fuite d'information</li>
+                        </ul>
+                    </p>
+
+                </section>
+
+                <section>
+                    <h3>Fuite d'information : exemple contre-mesure pour les canvas</h3>
+
+                    <p>
+                        <ul>
+                            <li>Censé protéger contre le canvas fingerprinting</li>
+                            <li>Modifie la valeur des canvas</li>
+                        </ul>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Comment ça marche ?</h3>
+
+                    <p>
+                        <ul>
+                            <li>Génère <span class="highlight">4</span> nombres au hasard <span class="highlight">(bruit)</span></li>
+                            <li>Composantes <span class="highlight">r, g, b, a</span> d'une image</li>
+                            <li>Applique le bruit sur le canvas</li>
+                        </ul>
+                    </p>
+
+                    <p class="center">
+                        <img src="images/canvas_no_cd.png">
+                        <img src="images/canvas_cd.png">
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Fuite d'information</h3>
+
+                    <p>
+                        <ol>
+                            <li><span class="highlight">Détection</span> de la contre-mesure</li>
+                            <li><span class="highlight">Extraction</span> du bruit (MutationObserver)</li>
+                            <li><span class="highlight">Récupération</span> canvas original (cloner toDataURL avant exécution extension)</li>
+                        </ol>
+                    </p>
+
+                    <p>
+                        <b>Attention :</b>
+                        <ul>
+                            <li>Utilisateurs plus faciles à cibler <span class="highlight">(1)</span></li>
+                            <li>Utilisation du bruit comme identifiant <span class="highlight">(2)</span></li>
+                            <li>Contre-mesure inefficace <span class="highlight">(3)</span></li>
+                        </ul>
+                    </p>
+                </section>
+
+
+            </section>
+
+            <section>
+                <section>
+                    <h3>FP-Bot</h3>
+                    <p>
+                        <ul>
+                            <li><b>Objectif : </b>Améliorer la détection de bots grâce au fingerprinting</li>
+                        </ul>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Pourquoi détecter les bots ?</h3>
+                    <p>
+                        <ul>
+                            <li>Utilisateurs non humains</li>
+                            <li>Génèrent de la charge sur les serveurs</li>
+                            <li>Faussent les statistiques</li>
+                            <li>Volent du contenu</li>
+                        </ul>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Détection de bots : approches actuelles</h3>
+                    <p>
+                        <ul>
+                            <li>Analyse des logs serveurs</li>
+                            <li>Événements clavier/souris</li>
+                            <li>Honeypots (liens cachés)</li>
+                            <li>CAPTCHAs</li>
+                        </ul>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Empreintes des bots</h3>
+                    <p>
+                        <ul>
+                            <li>Attributs rajoutés par les frameworks de crawling <span class="highlight">(window.webriver, window.phantom)</span></li>
+                            <li>Détection d'incohérences :
+                                <ul>
+                                    <li>Ne pas mentir et être détecté</li>
+                                    <li>Mentir et risquer d'être détecté</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Exemple Chrome Headless</h3>
+                    <p>
+                        <b>User agent :</b><br> Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) <span class="highlight">HeadlessChrome</span>/60.0.3112.50 Safari/537.36
+                        <br><br>
+                        <b>Incohérences/Différences :</b><br> Objet <span class="highlight">window.chrome</span><br> Gestion des permissions incohérentes<br> Absence de plugins habituellement présents dans Chrome
+                    </p>
+                </section>
+
+                <section>
+                    <h3>Enjeux, limites</h3>
+                    <p>
+                        <ul>
+                            <li>Exécution côté client (dans le navigateur)</li>
+                            <li>Reverse engineering</li>
+                            <li>Fabriquer/modifier requêtes</li>
+                            <li>Obfuscation, randomization</li>
+                        </ul>
+                    </p>
+                </section>
+            </section>
+
+            <section>
+                <h2>Conclusion : Vie privée</h2>
+
+                <p>
+                    <ul>
+                        <li>Possibilité de suivre l'évolution d'empreintes</li>
+                        <li>Prise en compte par des grands acteurs du web (Firefox, Brave)</li>
+                        <li>Diminution de l'unicité des empreintes</li>
+                        <li>Attention à la conception de contre-mesures</li>
+                    </ul>
+                </p>
+            </section>
+
+            <section>
+                <h2>Conclusion : Sécurité</h2>
+
+                <p>
+                    <ul>
+                        <li>Second facteur pendant l'authentification</li>
+                        <li>Détection de bots</li>
+                        <li>Exécuté côté client</li>
+                    </ul>
+                </p>
+            </section>
+
+            <section>
+                <h2>Des questions ?</h2>
+
+                <p>
+                    <ul>
+                        <li><b>FP-Stalker :</b> Suivi des utilisateurs</li>
+                        <li><b>FP-Scanner :</b> Efficacité des contre-mesures</li>
+                        <li><b>FP-Bot : </b> Détection de bots</li>
+                    </ul>
+                </p>
+            </section>
+        </div>
+    </div>
+
+    <script src="./lib/js/head.min.js"></script>
+    <script src="./js/reveal.js"></script>
+
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            slideNumber: true,
+            // showNotes: true,
+            dependencies: [{
+                    src: './plugin/markdown/marked.js'
+                },
+                {
+                    src: './plugin/markdown/markdown.js'
+                },
+                {
+                    src: './plugin/notes/notes.js',
+                    async: true
+                },
+                {
+                    src: './plugin/highlight/highlight.js',
+                    async: true,
+                    callback: function() {
+                        hljs.initHighlightingOnLoad();
+                    }
+                }
+            ]
+        });
+    </script>
+</body>
+
+</html>

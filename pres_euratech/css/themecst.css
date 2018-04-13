@@ -1,0 +1,51 @@
+.reveal .slides {
+    text-align: left;
+}
+
+/*.left-align{
+    text-align: left;
+}*/
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.reveal .slides ul {
+    margin-left: 2em;
+}
+
+.reveal .slides .center {
+    text-align: center;
+}
+
+.reveal span.highlight {
+    color: rgb(105, 19, 2); 
+}
+
+.reveal span.fonts-enum-ex {
+    font-size:72px;
+    font-family:"sdfsdfsdf";
+}
+
+#font-to-test {
+    /*font-family: "FreeMono";*/
+    font-family: "Arial Black";
+}
+
+.reveal ul {
+    list-style: none;
+}
+
+.reveal .legend {
+    font-style: italic;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.reveal section img {
+    box-shadow: none;
+}
+
+.reveal .slide-background {
+    background-color: white;
+}

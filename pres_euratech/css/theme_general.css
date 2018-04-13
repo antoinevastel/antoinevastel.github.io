@@ -1,0 +1,69 @@
+.reveal .slides {
+    text-align: left;
+}
+
+/*.left-align{
+    text-align: left;
+}*/
+
+.reveal .slides .center {
+    text-align: center;
+}
+
+.reveal h1 {
+    font-size: 2.6em;
+}
+
+.reveal h2{
+    font-size: 1.8em;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.reveal .slides ul {
+    margin-left: 2em;
+}
+
+.reveal span.highlight {
+    color: rgb(105, 19, 2); 
+}
+
+.reveal ul {
+    list-style: none;
+}
+
+.reveal ul li {
+    font-size:1em;
+}
+
+.reveal ul li ul li {
+    font-size:0.8em;
+}
+
+.reveal section img {
+    border-width: 0px;
+}
+
+.reveal .logos {
+    /* position: fixed; */
+    /* bottom: 0px; */
+    text-align:center;
+    margin-top: 40px;
+    float:right;
+}
+
+.reveal .contact {
+    float:left;
+    font-size: 0.9em;
+}
+
+.reveal .infos {
+    margin-top: 100px;
+}
+
+#free {
+    font-size: 1.8em;
+    color: red;
+}
