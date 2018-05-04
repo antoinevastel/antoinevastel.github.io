@@ -218,7 +218,7 @@ A **+** indicates that the value of the metric depends on the context.
 @media screen and (max-width: 767px) {.tg {width: auto !important;}.tg col {width: auto !important;}.tg-wrap {overflow-x: auto;-webkit-overflow-scrolling: touch;}}</style>
 <div class="tg-wrap"><table class="tg">
   <tr>
-    <th class="tg-hgcj" colspan="3">Obuscation</th>
+    <th class="tg-hgcj" colspan="3">Obfuscation</th>
     <th class="tg-amwm" colspan="3">Quality</th>
   </tr>
   <tr>
