@@ -9,6 +9,8 @@ disqus: antoinevastel
 google_analytics: UA-43580478-4
 future: true
 
+include: [".well-known"]
+
 defaults:
   -
     scope:
