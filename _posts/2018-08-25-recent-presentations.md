@@ -3,7 +3,7 @@ layout: post
 title: Presentations on browser fingerprinting
 categories: [tracking]
 tags: [tracking, browser fingerprinting]
-description: Papers and slides of presentations I recently gave at IEEE S&P 18 and Usenix Security 18 about browser fingerprinting
+description: Papers and slides of presentations I recently gave at IEEE S&P 18 and Usenix Security 18 about browser fingerprinting.
 published: true
 ---
 
