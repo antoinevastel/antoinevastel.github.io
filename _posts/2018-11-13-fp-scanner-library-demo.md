@@ -3,7 +3,7 @@ layout: post
 title: FP-Scanner, a bot detection library based on browser fingerprinting
 categories: [Bot detection]
 tags: [Browser Fingerprinting]
-description: xxxxx
+description: Demo of FP-Scanner, a bot detection library based on browser fingerprinting
 ---
 
 I recently published a bot detection library based on browser fingerprinting: <a href="https://github.com/antoinevastel/fpscanner">FP-Scanner.</a>
