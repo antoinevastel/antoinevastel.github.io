@@ -23,4 +23,25 @@ theme :
 
 <script src="/javascripts/fpCollect.min.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        const fingerprint = await fpCollect.generateFingerprint();
+        const xhr = new XMLHttpRequest();
+
+        // xhr.onreadystatechange = function() {
+        //     if (xhr.readyState === 4 && xhr.status === 200){
+        //
+        //     }
+        // };
+
+        xhr.open('POST', '/bots/collectblogfp');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        // This uuid is not for tracking. A new one is generated at each request. It is to link HTTP headers
+        // and a fingerprint
+        // The fingerprints are collected for research purposes
+        fingerprint.url = window.location.href;
+        xhr.send(JSON.stringify(fingerprint));
+    });
+</script>
+
 {% endif %}
