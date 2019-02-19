@@ -24,7 +24,7 @@ author:
   email: antoine.vastel@gmail.com
   github: antoinevastel
   twitter: xopek59
-  pinterest: 
+  pinterest:
   linkedin: antoinevastel
   bio: French PhD student, working on browser fingerprinting!
   email_md5: 42c0cef4d509eedea70a02b9a4276913
@@ -33,10 +33,18 @@ rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
 
+scholar:
+  locale: en
+  style: _bibliography/IEEEtran.cls
+  bibliography_template: {{reference}}
+
+
+
 # set it as url of an image
 # sidebar_background_image: ...url
 
 BASE_PATH:
 
-gems:
+plugins:
   - jekyll-paginate
+  - 'jekyll/scholar'

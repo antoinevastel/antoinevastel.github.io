@@ -1,4 +1,0 @@
-This is a Brave Payments publisher verification file.
-
-Domain: antoinevastel.github.io
-Token: 20e13120305091b074e6474d19a03abf43d22e5999a44a5c3eb9f1052536a1f4
