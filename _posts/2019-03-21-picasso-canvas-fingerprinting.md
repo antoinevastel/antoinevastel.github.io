@@ -52,6 +52,13 @@ I also added an ellipse primitive.
                     <div class="col-sm-2">
                         <input type="number" class="form-control" id="numshapes" value="5" min="1">
                     </div>
+
+                    <label for="seed" class="col-sm-2 col-form-label">Seed</label>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" id="seed" value="42" min="1">
+                    </div>
+
+
                 </div>
                 <div class="form-group row">
                     <label for="widtharea" class="col-sm-2 col-form-label">Canvas width</label>
