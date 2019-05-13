@@ -354,7 +354,7 @@ document.getElementById('canvasbtn')
         if (canvasValue.indexOf('base64') > -1) {
             const img = document.createElement('img');
             img.src = canvasValue;
-            document.getElementById('canvasgenerated').innerHTML = `<p>Canvas with ${numShapes} primitives, generated in ${((end - start)/1000).toFixed(6)} seconds</p><p>Hash: ${x64hash128(canvasValue, initialSeed   )}</p>`;
+            document.getElementById('canvasgenerated').innerHTML = `<p>Canvas with ${numShapes} primitives, generated in ${((end - start)/1000).toFixed(6)} seconds</p><p>Hash: ${x64hash128(canvasValue, initialSeed)}</p>`;
             document.getElementById('canvasgenerated').appendChild(img);
         } else {
             document.getElementById('canvasgenerated').innerHTML = '<h2 class="alert alert-danger">An error occured: verify if you have a canvas blocker or if canvas is supported in your browser.</h2>';
