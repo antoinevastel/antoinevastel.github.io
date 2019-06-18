@@ -34,9 +34,9 @@ ga('provide', 'adblockTracker', function(tracker, opts) {
 try {
        xhr.open(method, url, false);
        xhr.send();
-       ga('set', 'dimension' + opts.dimensionIndex, xhr.status == 0);
+       ga('set', 'dimension' + opts.dimensionIndex, xhr.responseText != "var canRunAds=true;");
      } catch {
-       ga('set', 'dimension' + opts.dimensionIndex, xhr.status == 0);
+       ga('set', 'dimension' + opts.dimensionIndex, xhr.responseText != "var canRunAds=true;");
      }
 });
 
