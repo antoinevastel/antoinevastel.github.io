@@ -9,6 +9,7 @@ description: This post presents techniques that enables to distinguish a vanilla
 **Edit:** I created a library that enables to detect bots and crawlers using fingerprinting.
 It is still in development but you can start using it.
 The code is available on <a href="https://github.com/antoinevastel/fpscanner">Github</a>.
+I am currently testing a new detection technique, <a href="https://arh.antoinevastel.com/bots/areyouheadless">feel free to challenge it</a> and give me some feedback.
 
 
 In August I wrote a <a href="{% post_url 2017-08-05-detect-chrome-headless %}"> post</a> on techniques to detect Chrome headless.

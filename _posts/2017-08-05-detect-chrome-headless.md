@@ -8,6 +8,8 @@ description: This post presents techniques that enables to distinguish a vanilla
 **Edit:** I created a library that enables to detect bots and crawlers using fingerprinting.
 It is still in development but you can start using it.
 The code is available on <a href="https://github.com/antoinevastel/fpscanner">Github</a>.
+I am currently testing a new detection technique, <a href="https://arh.antoinevastel.com/bots/areyouheadless">feel free to challenge it</a> and give me some feedback.
+
 
 # What's a headless browser?
 A headless browser is a browser that can be used without a graphical interface.
