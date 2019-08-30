@@ -275,5 +275,5 @@ document.attachEvent("onkeypress", f)),
 ```
 
 Nevertheless, it must be quite difficult to use behavior as a feature to distinguish humans and bots in this kind of
-context because even humans seems to behave like bots and keep on clicking to refresh pages until new sneakers finally appear.
+context because even humans seem to behave like bots and keep on clicking to refresh pages until new sneakers finally appear.
 
