@@ -605,3 +605,5 @@ let e = {};
 
 Even though it seems completely unreadable, this kind of obfuscation can be easily reverse engineered.
 To learn more about this topic you can watch <a href="https://www.youtube.com/channel/UCJbZGfomrHtwpdjrARoMVaA/videos">Jarrod Overson's Youtube channel.</a>
+
+EDIT: In the next <a href="{% post_url 2019-09-09-improving-obfuscator %}">blog post</a>, I add new code transformations to our obfuscator.
