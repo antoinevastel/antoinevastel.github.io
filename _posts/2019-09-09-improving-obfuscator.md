@@ -7,7 +7,8 @@ description: In this blog post, we add new code transformations to the JavaScrip
 ---
 
 In a previous <a href="{% post_url 2019-09-04-home-made-obfuscator %}">blog post</a>, we created
-a simple JavaScript obfuscator.
+a simple JavaScript obfuscator and applied it to a fingerprinting script that could be
+used for bot detection or to enhance authentication.
 In this blog post, we extend it to add new code transformations that aim to make the code even less
 readable.
 
