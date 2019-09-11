@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Benchmark our JavaScript obfuscator
+title: Benchmarking our JavaScript obfuscator
 categories: [JavaScript]
 tags: [Javascript, obfuscation, deobfuscation, benchmark]
 description: In this blog post, we conduct a benchmark to measure the overhead added by the obfuscator we developed in the two previous blog posts.
