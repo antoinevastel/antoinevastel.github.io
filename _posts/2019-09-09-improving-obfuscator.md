@@ -509,4 +509,4 @@ return e
 
 As we can observe, our new transformations significantly increase the size of the obfuscated code.
 More generally, since obfuscation modifies the code, it can impact its performance.
-Thus, in a next blog post, we will study the overhead of our obfuscation transformations.
+Thus, in the <a href="{% post_url 2019-09-10-benchmarking-obfuscator %}">next blog post</a>, we study the overhead of our obfuscation transformations.
