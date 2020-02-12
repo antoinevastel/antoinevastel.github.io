@@ -3,7 +3,7 @@ layout: post
 title: "Bot detection 101: How to detect web bots?"
 categories: [JavaScript]
 tags: [Javascript, crawler]
-description: This blog post presents the main bot detection techniques and explain how behavioral approaches, fingerprinting (TCP/TLS and browser fingerprinting), as well as CAPTCHA can be used to detect bots.
+description: This blog post presents the main bot detection techniques and explain how behavioral approaches, fingerprinting, as well as CAPTCHA can be used to detect bots.
 ---
 
 This blog post is the second of a series on the basics of bot detection.
@@ -72,24 +72,6 @@ On the contrary, when fingerprinting is used for security, fingerprint attribute
 In a security context, it's safe to assume that attackers are likely to lie on their fingerprints.
 That's why security fingerprinting scripts tend to collect multiple attributes to correlate if their values are consistent with each other, or if some of them have been spoofed, i.e. purposefully modified.
 I talk more about the topic of fingerprint consistency in this <a href="https://antoinevastel.com/tracking/2018/07/01/eval-canvasdef.html">blog post</a> and this <a href="https://hal.inria.fr/hal-01820197">paper.</a>
-
-Fingerprints can be collected at different layers:
-- Network (TCP and TLS fingerprinting)
-- Application (browser fingerprinting)
-
-### Passive TCP fingerprinting
-TCP fingerprinting consists in collecting features extracted from the IPv4 and IPV6 headers, as well as TCP headers to identify the nature of the software sending the requests, as well as the platform it is running on.
-It can be used to detect the presence of proxies or to detect when a browser is running in a virtual machine.
-Indeed, in the case a browser is running behind a proxy or in a virtual
-machine, there might be inconsistencies between the TCP fingerprint and the OS/browser claimed in the user agent.
-
-### TLS fingerprinting
-TLS fingerprinting leverages the set of TLS cipher suites supported
-by a client to uncover its nature.
-While TCP and TLS fingerprinting can help to understand the environment in which the browser is running (the OS and its
-version, as well as whether it is a VM), it is less effective to accurately determine the nature of the browser.
-Indeed, the TCP stack does not necessarily vary between different versions of the same browser.
-Moreover, whether it is headless Chrome/Firefox, there are no differences in the TCP stack between the headless version and their non-headless counterpart.
 
 ### Browser fingerprinting
 Browser fingerprinting leverages JavaScript as well as the HTTP headers sent by the browser.
@@ -182,7 +164,7 @@ Behavioral and fingerprinting detection operate at different layers and rely on 
 Browser fingerprinting is fast at taking a decision contrary to behavioral based approaches.
 After a fingerprint is collected, we can already classify a user as human or a bot.
 Collecting more fingerprint does not provide more information and does not help to make the classification more accurate, contrary to behavioral-based approaches that tend to get better the more data they can leverage.
-In the case the decision is based on HTTP headers or TCP/TLS fingerprints, one can even block a bot
+In the case the decision is based on HTTP fingerprints, one can even block a bot
 before it loads a page.
 CAPTCHAs are also effective to detect bots.
 However, they negatively impact user experience and can't be used in all situations: who would solve a CAPTCHA to watch an ad in order to avoid ad fraud?
