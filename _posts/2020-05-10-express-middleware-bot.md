@@ -286,6 +286,8 @@ They can simply forge login attempts with POST requests.
 In the following example, we show how you can make a POST request that contains 2 parameters:
 1. A username equal to "john"
 2. A password equal to "bestpassword"
+
+
 ```shell
 curl -d "username=john&param2=bestpassword" \
 -X POST http://localhost:3000/login \
