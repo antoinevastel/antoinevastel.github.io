@@ -10,7 +10,7 @@ This blog post demonstrates how you can create a simple ExpressJS middleware to 
 The purpose of this blog post is not to go into the details of bot detection, but rather to illustrate how you can integrate a simple bot detection mechanism in your ExpressJS application using middleware.
 If you came here for more advanced details about detection, you can read previous articles I've published on this blog (<a href="{% post_url 2020-02-09-detecting-web-bots %}">how to detect web bots</a>, <a href="{% post_url 2018-01-17-detect-chrome-headless-v2 %}">detecting headless chrome</a>).
 
-## What are middlewares
+## What are middleware
 
 If you are familiar with Express, you have probably already defined routes to handle requests.
 To define a route, you use the following syntax:
