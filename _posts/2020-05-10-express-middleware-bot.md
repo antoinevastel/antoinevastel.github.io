@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Creating a simple ExpressJS middleware to detect bots"
-categories: [Bots]
+categories: [Bot]
 tags: [Javascript, ExpressJS]
 description: In this blog post, we show how to create a simple ExpressJS middleware to detect bots.
 ---
