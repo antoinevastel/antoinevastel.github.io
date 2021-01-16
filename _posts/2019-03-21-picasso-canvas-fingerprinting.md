@@ -3,7 +3,7 @@ layout: post
 title: Demonstration of Picasso canvas fingerprinting
 categories: [Browser Fingerprinting]
 tags: [Browser Fingerprinting]
-description: Demonstration of a canvas fingerprint used to detect devices spoofing their real OS or browser. It is inspired by the <a href="https://ai.google/research/pubs/pub45581">Picasso paper</a> written by Elie Bursztein.
+description: Demonstration of a canvas fingerprint used to detect devices spoofing their real OS or browser. It is inspired by the Picasso paper written by Elie Bursztein.
 ---
 
 <style>
