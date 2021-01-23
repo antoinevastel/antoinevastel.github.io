@@ -17,7 +17,7 @@ I write this blog post mostly for myself, since every few months, I tend to enco
 Then I start Googling stuff like "Puppeteer monitor response stuck MacOS", "setRequestInterception doesn't load".
 Then, after a few minutes, I start to remember that I need to call ```request.continue()```, even if I'm only interested in HTTP responses.
 
-## Monitor HTTP requests
+## Monitoring HTTP requests
 Before we see how to monitor HTTP responses with Puppeteer, let's first see how we can monitor HTTP requests.
 Basically, to do this, you only need to allow request interception, and to define a listener on ```'request'```.
 ```javascript
@@ -52,7 +52,7 @@ Request:  GET https://www.gravatar.com/avatar/42c0cef4d509eedea70a02b9a4276913?s
 ...
 ```
 
-## Monitoring responses
+## Monitoring HTTP responses
 
 If you're only interested in monitoring HTTP responses and not HTTP requests, you may be tempted to adapt the previous program as follows:
 ```javascript
