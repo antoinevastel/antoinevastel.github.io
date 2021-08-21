@@ -8,7 +8,7 @@ description: Short presentation of an API I made to get a list of malicious IPs.
 
 I decided to provide a free API to get a list of recent malicious IPs.
 Feel free to use it in any of your projects.
-IPs are collected through several sources/techniques.
+IPs are collected using several techniques.
 I'll try to add more of them in the future.
 
 **False positives:** I try to keep a low false-positive rate by using heuristics for which I have great certainty the IP is malicious.
