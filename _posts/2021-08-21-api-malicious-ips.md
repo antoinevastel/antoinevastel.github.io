@@ -27,15 +27,15 @@ An API call returns JSON content representing an array of objects linked to mali
 It returns at most 5000 IPs.
 If there are more malicious IPs, it returns the latest malicious IPs detected.
 Each object of the JSON array has the following properties:
-- **ip**: malicious IP address
-- **time**: timestamp in ms when the IP was flagged as malicious
-- **autonomousSystemOrganization**: name of the IP autonomous system (enriched using Maxmind)
-- **autonomousSystemNumber**: autonomous system number linked to the IP (enriched using Maxmind)
-- **country**: country of the IP address (enriched using Maxmind)
+- `ip`: malicious IP address
+- `time`: timestamp in ms when the IP was flagged as malicious
+- `autonomousSystemOrganization`: name of the IP autonomous system (enriched using Maxmind)
+- `autonomousSystemNumber`: autonomous system number linked to the IP (enriched using Maxmind)
+- `country`: country of the IP address (enriched using Maxmind)
 
 
 There may be duplicates if the same IP was flagged multiple times.
-Note that data are updated every 5 min, so no need to make too many API calls.
+Note that data are updated every 10 min, so no need to make too many API calls.
 
 **DISCLAIMER**:
 The IPs returned by this API are NOT obtained from any pages of my website. 
