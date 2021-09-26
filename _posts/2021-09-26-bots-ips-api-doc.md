@@ -63,3 +63,10 @@ In all cases (even when the IP is not present in our database), we always return
 - `autonomousSystemNumber`: autonomous system number linked to the IP (enriched using Maxmind)
 - `country`: country of the IP address (enriched using Maxmind)
 - `events`: an array that contains a list of dates where the IP was flagged as malicious. In case the IP is not present in our database, it is an empty array
+
+## Statistics IP addresses API
+
+You can find <a href="https://antoinevastel.com/bots/api-info">statistics</a> about the type of IPs present in the API database:
+- Reason the IP is flag: (residential) proxy, vulnerability scanning, Tor exit nodes;
+- Top autonomous systems;
+- Top countries.
