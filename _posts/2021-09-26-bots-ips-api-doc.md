@@ -23,7 +23,7 @@ For the moment, the API has 2 routes:
 1. Get 5k recent bots IPs: GET <a href="https://antoinevastel.com/bots/ips">https://antoinevastel.com/bots/ips</a>;
 2. Check an IP address: GET <a href="https://antoinevastel.com/bots/ip/157.100.36.194">https://antoinevastel.com/bots/ip/ip-you-want-to-check</a> (replace ip-you-want-to-check with the IP address you want to check).
 
-### /bots/ips
+### GET /bots/ips
 
 An API call returns JSON content representing an array of objects linked to malicious IPs.
 It returns at most 5000 IPs.
@@ -38,7 +38,7 @@ Each object of the JSON array has the following properties:
 
 There may be duplicates if the same IP was flagged multiple times.
 
-### /bots/ip/ip-you-want-to-check
+### GET /bots/ip/ip-you-want-to-check
 
 For a given IP, an API call returns JSON content representing information about the IP requested.
 
@@ -63,6 +63,58 @@ In all cases (even when the IP is not present in our database), we always return
 - `autonomousSystemNumber`: autonomous system number linked to the IP (enriched using Maxmind)
 - `country`: country of the IP address (enriched using Maxmind)
 - `events`: an array that contains a list of dates where the IP was flagged as malicious. In case the IP is not present in our database, it is an empty array
+
+### POST /bots/ips/
+
+Endpoint to obtain information about multiple IP addresses at once.
+Output is similar to `GET /bots/ip/ip-you-want-to-check` but instead of returning information about a single IP address, it returns an array corresponding to all the IP addresses passed in the POST request payload.
+
+Body of the POST request must be valid JSON with an `ips` property corresponding to the array of IP addresses to test, for example:
+```python
+{
+    "ips": ["185.82.126.222", "202.74.73.51", "202.74.73.53"]
+}
+```
+
+For a given list of IPs, an API call returns JSON content representing information about the IPs requested.
+For example, for the 3 IPs above, we obtain:
+```python
+[
+    {
+        "matched": false,
+        "ip": "202.74.73.51",
+        "events": [],
+        "autonomousSystemOrganization": "PT Global Port Binekatara",
+        "autonomousSystemNumber": 24522,
+        "country": "ID"
+    },
+    {
+        "matched": false,
+        "ip": "202.74.73.53",
+        "events": [],
+        "autonomousSystemOrganization": "PT Global Port Binekatara",
+        "autonomousSystemNumber": 24522,
+        "country": "ID"
+    },
+    {
+        "matched": true,
+        "ip": "185.82.126.222",
+        "autonomousSystemOrganization": "Sia Nano IT",
+        "autonomousSystemNumber": 52173,
+        "country": "LV",
+        "events": [
+            "2021-10-02T00:00:20.008Z",
+            "2021-10-02T12:00:13.432Z",
+            ...
+            "2021-10-16T00:00:13.588Z",
+            "2021-10-16T12:00:11.173Z"
+        ]
+    }
+]
+```
+**Warning 1:** To manage load on my server, for the moment it's not possible to provide more than 100 IPs per POST request.
+**Warning 2:** This API can be costly in terme of computation, please rate limit yourself responsibly if you need to parallelize/make many requests.
+Feel free to contact me if you have special requests regarding the use of the API.
 
 ## Statistics IP addresses API
 
