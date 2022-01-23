@@ -19,8 +19,8 @@ For conciseness, I publish IPs to block as /24 IP ranges (256 IPs).
 For the moment, the lists don't contain individual IPs to block.
 Nevertheless, you can build your own list using data from the bot IPs API.
 
-## 4 bot IP addresses blocklists:
-I've built 4 blocking lists derived from the same data:
+## 4 (+1) bot IP addresses blocklists:
+I've built 5 blocking lists derived from the same data:
 - <a href="https://antoinevastel.com/data/avastel-block-ultra-safe.txt">Avastel block ultra safe</a>: contains /24 data center IP ranges that I consider ultra safe to block in production.
 - <a href="https://antoinevastel.com/data/avastel-block-safe.txt">Avastel block safe</a>: contains /24 data center IP ranges that I consider safe to block in production.
 - <a href="https://antoinevastel.com/data/avastel-block-moderate.txt">Avastel block moderate</a>: contains /24 data center IP ranges that I consider moderately safe to block in production.
