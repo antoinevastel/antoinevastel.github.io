@@ -25,11 +25,14 @@ I've built 4 blocking lists derived from the same data:
 - <a href="https://antoinevastel.com/data/avastel-block-safe.txt">Avastel block safe</a>: contains /24 data center IP ranges that I consider safe to block in production.
 - <a href="https://antoinevastel.com/data/avastel-block-moderate.txt">Avastel block moderate</a>: contains /24 data center IP ranges that I consider moderately safe to block in production.
 - <a href="https://antoinevastel.com/data/avastel-block-aggressive.txt">Avastel block aggressive</a>: contains /24 data center IP ranges that I consider a bit risky to block in production.
+- **New**: <a href="https://antoinevastel.com/data/avastel-ips-7d.txt">Avastel all infected IPs last 7 days </a>: contains all IP addresses that have been used by bots/proxies in the last 7 days.
 
 
 ## How are these lists built?
 
-The lists are built daily using the last month of data collected by the malicious bot IPs API.
+The description applies to all list except **"Avastel all infected IPs last 7 days"** since this list is constituted of all bots/proxies IPs of the last 7 days.
+
+The other lists are built daily using the last month of data collected by the malicious bot IPs API.
 For the moment, the strategy is simple:
 1. Group all IPv4 addresses by their first 3 bytes.
 2. Count the number of IPv4 addresses in each group, i.e. number of IPs per /24 range.
