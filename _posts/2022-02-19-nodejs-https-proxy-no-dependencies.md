@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "NodeJS: how to route requests HTTPS requests through an HTTP proxy without any external dependencies"
+title: "NodeJS: how to route HTTPS requests through an HTTP proxy without any external dependencies"
 categories: [NodeJS]
 tags: [NodeJS, Proxies]
 description: Short NodeJS example that showcases how you can make HTTPS requests routed through HTTP proxies without using any external dependencies.
