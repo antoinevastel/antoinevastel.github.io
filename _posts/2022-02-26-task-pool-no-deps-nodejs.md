@@ -14,7 +14,7 @@ If you want a production-ready NodeJS package to do this, you can use <a href="h
 ## Precision regarding the problem to solve
 
 Note that what we do in this article is more optimal than simply calling `Promise.all` in a loop.
-Indeed, many solutions posted on StackOverflow suggest to do something that looks like the following code snippet:
+Indeed, many solutions posted on StackOverflow suggest doing something that looks like the following code snippet:
 
 ```javascript
 const tasks = [t1, t2, ..., tN];
@@ -36,19 +36,19 @@ for (let i = 0; i < tasks.length; i += MAX_CONCURRENCY) {
 }
 ```
 
-In the example above, we run by tasks batch of `MAX_CONCURRENCY` tasks.
+In the example above, we run tasks by batch of `MAX_CONCURRENCY` tasks.
 However, if we run 5 tasks in parallel and one of the tasks finishes before the others, then, we now only have 4 tasks running in parallel, even though there are still tasks waiting to be run in the `tasks` queue.
 
 Indeed, `Promise.all` waits for all promises to succeed before it resolves.
-It means we don't start any new tasks before all the 5 tasks have completed (`for` loop iteration is stopped until all tasks promises resolve).
+It means we don't start any new tasks before all the 5 tasks have been completed (`for` loop iteration is stopped until all tasks promises resolve).
 Thus, at a given time our only guarantee is that we have <= 5 tasks running.
 
 What we want is a solution where we maximize throughput, all while controlling the concurrency.
 At a given time, we want to have `MAX_CONCURRENCY` tasks running in parallel, AND NOT `<= MAX_CONCURRENCY` tasks.
 
-The solution we present in the next section is slightly complex since tt handles more than just concurrency management.
-The idea is to have a generic solution that enables us to run any kind of tasks and handle success/error.
-This could be useful for example to write scrapers where the notion of success/error may differ depending on the site targetted.
+The solution we present in the next section is slightly complex since it handles more than just concurrency management.
+The idea is to have a generic solution that enables us to run any kind of task and handle success/error.
+This could be useful for example to write scrapers where the notion of success/error may differ depending on the site targeted.
 For example, some websites may return `403` in case of blocking, while others may return a response `200` with a different text.
 Thus, having a generic solution enables us to maximize reusability across different projects.
 
@@ -126,7 +126,7 @@ class Pool {
 ```
 
 To use our `Pool` class, we need to define a set of task objects that have the following properties:
-- `name`: a string used as an identifier of the task/for description purpose.
+- `name`: a string used as an identifier of the task/for description purposes.
 - `run`: an asynchronous function to execute the task.
 - `isSuccessful`: an asynchronous function that takes as input the result of the task (returned by the `run` function) and that must return a boolean indicating whether or not the task should be considered as successful or not.
 - `onSuccess`: an asynchronous function that takes as input the result of the task (returned by the `run` function) and is executed in case the task has been successful (as defined by `isSuccessful`).
@@ -183,9 +183,9 @@ To use our `Pool` class, we need to define a set of task objects that have the f
 
 ```
 
-The GIF below shows the execution of code above (100 tasks with `MAX_CONCURRENCY = 5`).
-We see that not all tasks are executed at once.
-At a given tasks, 5 tasks are executed, and whenever a task finishes, another task is automatically run without having to wait for the 4 others:
+The GIF below shows the execution of the code above (100 tasks with `MAX_CONCURRENCY = 5`).
+We see that tasks are not all executed at once.
+At a given time, 5 tasks are being executed, and whenever a task finishes, another task is automatically run without having to wait for the 4 others to complete:
 <br/>
 <br/>
 <img src="/assets/media/task-pool-exec.gif">
