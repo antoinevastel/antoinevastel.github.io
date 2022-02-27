@@ -150,6 +150,31 @@ class HttpsWithProxyClient {
 
 We leverage the `HttpsWithProxyClient` class we just created to measure the performance improvement compare to the naive implementation of `getURL` defined in <a href="{% post_url 2022-02-19-nodejs-https-proxy-no-dependencies %}">the previous blog post</a>:
 
+```javascript
+(async () => {
+    const conf = {
+        "proxy_username": 'xxxxx',
+        "proxy_password": 'xxxxxx',
+        "proxy_host": 'xxxxx.com',
+        "proxy_port": 8000
+    }
+
+    // Side effect is even if you have a rotating proxy, the IP will be stable
+    const httpsClient = new HttpsWithProxyClient(conf);
+    const urls = new Array(50).fill('https://api.ipify.org/?format=json');
+
+    for (const [i, url] of urls.entries()) {
+        console.log(`${i + 1}/${urls.length}`);
+        try {
+            const res = await httpsClient.getURL(url);
+            console.log(res.body);
+        } catch (e) {
+            console.log(e)
+        }
+    }
+})();
+```
+
 ```shell
 time node optimized.js 
 1/50
