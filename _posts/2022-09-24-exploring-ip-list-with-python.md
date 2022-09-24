@@ -9,7 +9,7 @@ description: How to automatically explore a bot/proxy IP blocklist and extract s
 ## TL;DR
 In this blog post, we use Git-Python and Matplotlib to explore the <a href="https://github.com/antoinevastel/avastel-bot-ips-lists/blob/master/avastel-ips-7d.txt">Avastel all infected IPs 7d blocklist</a>.
 The main findings are the following:
-- ~70K distinct IP addresses in the list at a given time; 
+- There are ~70K distinct IP addresses in the list at a given time; 
 - 800,000 malicious IP addresses have been flagged in 8 months;
 - 10.3% of the IPs have been included in the list for > 1 month;
 - The top 3 autonomous systems whose IP addresses are the most frequently flagged as proxies or used by bots are 1) Korea Telecom, 2) AS Coloam and 3) Chinanet;
