@@ -21,7 +21,8 @@ The purpose of this blog post is two-fold:
 1. Provide insights on the <a href="https://github.com/antoinevastel/avastel-bot-ips-lists/blob/master/avastel-ips-7d.txt">Avastel all infected IPs 7d blocklist</a>. For example, we want to visualize the number of malicious IPs over time, study how long IPs tend to stay in the list, as well as identify the top autonomous systems included in the list;
 2. Show you how you can automate this kind of analysis in Python using Git-python and Matplotlib.
 
-If you're more interested in the latter, feel free to <a href="#insights">jump directly to the last section of the blog post.<a>
+If you're more interested in the latter, you can <a href="#insights">jump directly to the last section of the blog post.<a>
+
 Feel free to read <a href="{% post_url 2021-10-31-blocking-lists-ips %}">this other blog post</a> if you want to learn more about the different IP blocklists I maintain.
 
 
