@@ -11,9 +11,9 @@ Proxies are often used by attackers to distribute their attack and make it look 
 
 ## Categories of proxies
 There exists different kinds of proxies:
-- Data-center: the proxy IP located in data-centers like AWS, Google, OVH. They tend to have a low latency due to their location in data-centers with good connectivity.
-- Residential: the IP belongs to an ISP, e.g. Comcast, Verizon, AT&T. The proxy is located on a real-user device. Thus, the latency tends to be higher than data-center proxies.
-- ISP: ISP proxies combine the best of data-center and residential proxies. The IP address of ISP proxies are registered under the name of well known ISPs like AT&T, but are located in data centers. Thus, these proxies combine a good IP reputation with a low latency connection.
+- **Data-center:** the proxy IP located in data-centers like AWS, Google, OVH. They tend to have a low latency due to their location in data-centers with good connectivity.
+- **Residential:** the IP belongs to an ISP, e.g. Comcast, Verizon, AT&T. The proxy is located on a real-user device. Thus, the latency tends to be higher than data-center proxies.
+- **ISP:** ISP proxies combine the best of data-center and residential proxies. The IP address of ISP proxies are registered under the name of well known ISPs like AT&T, but are located in data centers. Thus, these proxies combine a good IP reputation with a low latency connection.
 
 ## How do proxy providers obtain proxies?
 
@@ -27,16 +27,14 @@ When it comes to residential proxies, the situation may become a litle bit more 
 As I already discussed in this <a href="https://datadome.co/bot-management-protection/how-proxy-providers-get-residential-proxies/">DataDome blog post</a>, proxy providers obtained residential proxies using different.
 While some approaches are legal, while not being necessarly moral, others rely on malware and are clearly illegal.
 
-**Legal methods:**
-- Mobile and software SDKs: some proxy providers offer an SDK to be included in desktop software or mobile applications. These SDKs enable developers to monetize their applications instead of/in addition to ads. While this approach is legal as most SDKs tend to explicitly ask for user permission, a few people probably realize what it implies.
-- Browser extensions: proxy providers also contact some owners of popular browser extensions so that they include their proxy code in the extension.
+### Legal methods:
+- **Mobile and software SDKs:** some proxy providers offer an SDK to be included in desktop software or mobile applications. These SDKs enable developers to monetize their applications instead of/in addition to ads. While this approach is legal as most SDKs tend to explicitly ask for user permission, a few people probably realize what it implies.
+- **Browser extensions:** proxy providers also contact some owners of popular browser extensions so that they include their proxy code in the extension.
 
-**Illegal methods:**
+### Illegal methods:
 
-<a href="https://www-users.cse.umn.edu/~fengqian/paper/rpaas_sp19.pdf">Researchers</a> actively fingerprinted proxies to determine the type of devices on which proxies were running.
+- **Malware:** <a href="https://www-users.cse.umn.edu/~fengqian/paper/rpaas_sp19.pdf">Researchers</a> actively fingerprinted proxies to determine the type of devices on which proxies were running.
 Their analysis showed that some proxies of the proxy network they were using were linked to webcams and IoT devices probably part of a botnet (as it's not possible to explicitly give consent on these kinds of devices to install an SDK).
-
-
 
 Thus, I was curious to see if we could cluster proxies using ports open as a sort of cheap fingerprint.
 I had no particular expectations in mind, maybe see if some clusters of open ports would be linked:
