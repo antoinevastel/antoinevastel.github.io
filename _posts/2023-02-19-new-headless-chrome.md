@@ -531,11 +531,10 @@ It can be still detected independently of its instrumentation framework such as:
 
 However, the task has become more challenging than it used to be.
 As you can imagine, given my position at DataDome (a bot detection company), I'm not going to share any new detection signals as I used to do.
-
 Moreover keep in mind that when it comes to bot detection, browser fingerprinting is not the only signal.
 It's important to leverage other signals such as:
 - Behavior (client-side and server-side)
 - Different kinds of reputations (IP, sessions, user)
 - Proxy detection, in particular, residential proxy detection
 - Contextual information: time of the day, country, etc
-- TLS fingerprinting
+- TLS fingerprinting.
