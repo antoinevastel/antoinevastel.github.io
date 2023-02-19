@@ -1,6 +1,6 @@
 ---
 layout: post
-title: New headless Chrome has been released and has a near-perfect browser fingerprint.
+title: New headless Chrome has been released and has a near-perfect browser fingerprint
 categories: [Bot detection]
 tags: [Browser Fingerprinting]
 description: This post presents the new headless Chrome version and shows the main browser fingerprint differences that exist compare to the old headless Chrome.
