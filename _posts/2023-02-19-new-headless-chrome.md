@@ -5,6 +5,13 @@ categories: [Bot detection]
 tags: [Browser Fingerprinting]
 description: This post presents the new headless Chrome version and shows the main browser fingerprint differences that exist compare to the old headless Chrome.
 ---
+
+**Update**: I recently created <a href="https://deviceandbrowserinfo.com/info_device">a new website around the bot detection and fingerprinting topics.</a> You can see your browser fingerprint and different fingerprinting-related signals like your IP address, your canvas fingerprint, your HTTP headers, etc. Some information is accessible both through a webpage and through APIs.
+
+<br>
+<br>
+
+
 The new headless Chrome has been released in November 2022.
 For the moment, it hasn't become the standard headless mode.
 It's still hidden behind a `--headless=new` flag.
