@@ -5,6 +5,11 @@ categories: [NodeJS]
 tags: [NodeJS, Proxies]
 description: Short but optimized NodeJS example that showcases how you can make HTTPS requests routed through HTTP proxies without using any external dependencies.
 ---
+**Update**: I recently created <a href="https://deviceandbrowserinfo.com/info_device">a new website around the bot detection and fingerprinting topics.</a> You can see your browser fingerprint and different fingerprinting-related signals like your IP address, your canvas fingerprint, your HTTP headers, etc. Some information is accessible both through a webpage and through APIs.
+
+<br>
+<br>
+
 
 In <a href="{% post_url 2022-02-19-nodejs-https-proxy-no-dependencies %}">a previous blog post</a> I showed how to make HTTPs requests through HTTP proxies in NodeJS using no external dependencies.
 It's part of a series of articles where I present how to do frequent NodeJS/JavaScript tasks using no/less external dependencies.
